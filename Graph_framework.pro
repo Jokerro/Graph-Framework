@@ -16,3 +16,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp
+
+HEADERS += \
+    edge.h \
+    graph.h \
+    path.h \
+    vertex.h
