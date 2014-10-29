@@ -15,10 +15,12 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    saveMatrix.cpp
 
 HEADERS += \
     edge.h \
     graph.h \
     path.h \
-    vertex.h
+    vertex.h \
+    saveMatrix.h
