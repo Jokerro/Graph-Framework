@@ -11,8 +11,8 @@ private:
     int StartPoint;
     int EndPoint;
 public:
-    Graph(){
+    Path(){
     }
-    ~Graph(){
+    ~Path(){
     }
 };

@@ -1,4 +1,3 @@
-#include <iostream>
 #include <stdlib.h>
 #include <vector>
 #include "edge.h"
@@ -6,7 +5,6 @@
 
 using namespace std;
 
-class Path{};
 class Graph{
 private:
     vector <vertex> Vertexes;
@@ -26,4 +24,4 @@ public:
     //Path shortestPath (vertex startPoint, vertex endPoint);
     //опишите прототипы сами
 
-}
+};
