@@ -2,7 +2,7 @@
 #include <vector>
 #include "edge.h"
 #include "vertex.h"
-
+#include "qstring.h"
 using namespace std;
 
 class Graph{
@@ -15,10 +15,9 @@ private:
     int edgeCounter;
     int vertexCounter;
 public:
-    Graph(){
-    }
-    ~Graph(){
-    }
+    Graph();
+    ~Graph();
+    bool compare_graphs(QString path1, QString path2);
     //vertex deepSearch();
     //vertex wideSearch();
     //Path shortestPath (vertex startPoint, vertex endPoint);

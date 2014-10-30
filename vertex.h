@@ -7,6 +7,6 @@ class vertex{
         int id;
         int degree;
     public:
-        vertex(){}
+        vertex(){id=0; degree=0;}
         ~vertex(){}
 };

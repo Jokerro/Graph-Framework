@@ -11,7 +11,7 @@ private:
     int StartPoint;
     int EndPoint;
 public:
-    Path(){
+    Path():Graph(){
     }
     ~Path(){
     }

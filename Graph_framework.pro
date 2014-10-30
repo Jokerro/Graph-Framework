@@ -16,7 +16,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    saveMatrix.cpp
+    saveMatrix.cpp \
+    graph.cpp
 
 HEADERS += \
     edge.h \
