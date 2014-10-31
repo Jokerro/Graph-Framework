@@ -1,11 +1,10 @@
 #include "graph.h"
-<<<<<<< HEAD
-=======
+
 #include <iostream>
 #include <QString>
 #include <QStringList>
 #include <QFile>
->>>>>>> 0a90d2fee698eb6bb1c3e592f24a6e1a94331966
+
 
 Graph::Graph()
 {
@@ -105,10 +104,7 @@ int Graph::getEdgeCount(){
     return edgeCounter;
 }
 
-<<<<<<< HEAD
 int Graph::getAdjecensyMatrix(int i, int j){
     return adjacensyMatrix[i][j];
 }
 
-=======
->>>>>>> 0a90d2fee698eb6bb1c3e592f24a6e1a94331966
