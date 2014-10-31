@@ -1,14 +1,49 @@
 #include "saveMatrix.h"
 
-void saveMatrix::save(QString path){
+int saveMatrix::save(QString path, Graph* graph){
 
-    QFile newFile(path);
-    newFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    QFile* file = new QFile(path);
+    if (file->open(QIODevice::WriteOnly | QIODevice::Text)){
 
-    /*QTextStream out(&newFile);
-    out<<"hello World!";*/
-    //вызовем функцию записи данных в готовый файл newFile
+        saveMatrix::matrixToStr(graph, file);
 
-    newFile.close();
+        file->close();
+
+        return 0;
+
+    }else{
+
+        return 1;
+
+    }
+
+
+    return 0;
+
+}
+
+void saveMatrix::matrixToStr(Graph* graph, QFile* file){
+
+    QTextStream out(file);
+
+    for(int i=0; i<graph->getVertexCount(); i++){
+
+       bool flag=false;
+       out<<(i+1);
+       for(int j=0; j<graph->getVertexCount(); j++){
+
+           if (graph->getAdjecensyMatrix(i,j)==1)
+               if (flag)
+                    out<<","<<(j+1);
+               else{
+                    out<<":"<<(j+1);
+                    flag=true;
+               }
+
+       }
+       out<<";\n";
+
+    }
+
 
 }

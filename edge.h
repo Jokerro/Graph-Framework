@@ -1,3 +1,6 @@
+#ifndef EDGE_H
+#define EDGE_H
+
 using namespace std;
 
 class edge{
@@ -10,3 +13,5 @@ public:
     edge(){ id=0; weight = 0; capacity=0; streamValue=0;};
     ~edge(){};
 };
+
+#endif

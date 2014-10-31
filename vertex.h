@@ -1,3 +1,6 @@
+#ifndef VERTEX_H
+#define VERTEX_H
+
 #include <iostream>
 
 using namespace std;
@@ -10,3 +13,5 @@ class vertex{
         vertex(){id=0; degree=0;}
         ~vertex(){}
 };
+
+#endif

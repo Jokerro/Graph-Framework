@@ -1,6 +1,6 @@
-#include <iostream>
-#include <stdlib.h>
-#include <vector>
+#ifndef PATH_H
+#define PATH_H
+
 #include "graph.h"
 
 
@@ -16,3 +16,5 @@ public:
     ~Path(){
     }
 };
+
+#endif

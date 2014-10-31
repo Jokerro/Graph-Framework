@@ -3,10 +3,13 @@
 #include <QFile>
 #include <QString>
 #include <QTextStream>
+#include "graph.h"
 
 class saveMatrix{
 
-    public: static void save(QString);
+    public: static int save(QString, Graph*);
+
+    private: static void matrixToStr(Graph*, QFile*);
 
 };
 
