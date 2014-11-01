@@ -3,6 +3,7 @@
 #include <iostream>
 #include <QString>
 #include <QStringList>
+#include <QTextStream>
 #include <QFile>
 
 
@@ -36,8 +37,11 @@ QString Graph::readListFile(QString filename)//считывание файла �
 int Graph::getMaxVertex(QStringList vertex_pairs){ //определяет количество вершин
     int max=0;
     for(int i=0; i<vertex_pairs.length(); i++){
-        QStringList vertex = QString(vertex_pairs[i]).split(",");//разделение пары на отдельные вершиы
-        for(int j=0; j<vertex.length(); j++){
+        QStringList vertex = QString(vertex_pairs[i]).split(",");//разделение на отдельные вершиы
+        QStringList main= QString(vertex[0]).split(":");//получение ведущей вершины
+        vertex.insert(vertex.length(), main[0]);
+        vertex.insert(vertex.length(), main[1]);
+        for(int j=1; j<vertex.length(); j++){
             if (vertex[j].toInt()>max){
                 max=vertex[j].toInt();
             }
@@ -46,48 +50,32 @@ int Graph::getMaxVertex(QStringList vertex_pairs){ //определяет кол
     return max;
 }
 
-QStringList Graph::stringToList(QString temp){
-    QStringList vertex_pairs = temp.split("},{");//разрезание на пары вершин
-    //обрезка лишних символов
-    for(int i=0; i< vertex_pairs.length(); i++){
-        vertex_pairs[i].replace("{","\0");
-        vertex_pairs[i].replace("},","\0");
-        vertex_pairs[i].replace("}.","\0");
-        vertex_pairs[i].replace("}","\0");
-    }
-   return vertex_pairs;
-}
 
 void Graph::getFromListToMatrix(QString filename){
   //получает готовые пары вершин
-  QStringList vertex_pairs = stringToList(readListFile(filename));
-  int n=getMaxVertex(vertex_pairs);
-  //выдиление памяти под строки  матрицы инцедентности
-  adjacensyMatrix= new int*[n];
-
-  for(int i=0; i<n; i++){
-      //выдиление памяти под столбцы  матрицы инцедентности
-     adjacensyMatrix[i] = new int[n];
-      for(int j=0; j<n; j++){
-          //инициализация
-        adjacensyMatrix[i][j]=0;
-
-        for(int index= 0; index<vertex_pairs.length(); index++) {
-            //нарезка пар на вершины
-          QStringList vertex = QString(vertex_pairs[index]).split(",");
-           //заполнение
-          if((vertex[0].toInt()-1==i) &&(vertex[1].toInt()-1==j)){
-            adjacensyMatrix[i][j]=1;
-          }
+  QStringList linked_vertexes = readListFile(filename).split(";");
+  adjacensyMatrix= initMatrix(getMaxVertex(linked_vertexes));//matrix initialization
+  for(int i=0; i<linked_vertexes.length(); i++){
+     QStringList main_vertexs = QString(linked_vertexes[i]).split(":");//get basic vertex
+     QStringList sub_vertexs = QString(main_vertexs[1]).split(","); //get other vertex
+     if(sub_vertexs[0]!=""){
+        for(int j=0; j<sub_vertexs.length(); j++){
+            adjacensyMatrix[main_vertexs[0].toInt()-1][sub_vertexs[j].toInt()-1]=1;
+            adjacensyMatrix[sub_vertexs[j].toInt()-1][main_vertexs[0].toInt()-1]=1;
         }
-      }
+     }
   }
-    //для неориентированого графа
-  for(int i=0; i<n; i++){
-      for(int j=0; j<n; j++){
-         adjacensyMatrix[j][i]=adjacensyMatrix[i][j];
-       }
-  }
+}
+
+int** Graph::initMatrix(int n){
+    int** arr= new int*[n];
+    for(int i=0; i<n; i++){
+        arr[i]= new int[n];
+        for(int j=0; j<n; j++){
+          arr[i][j]=0;
+        }
+    }
+    return arr;
 }
 
 bool Graph::compare_graphs(QString path1, QString path2)
