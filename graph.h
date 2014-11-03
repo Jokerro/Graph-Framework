@@ -30,6 +30,8 @@ public:
     Graph();
     ~Graph();
 
+    void ReadMatrix(QString path);
+
     void getFromListToMatrix(QString filename);
     bool compare_graphs(QString path1, QString path2);
 

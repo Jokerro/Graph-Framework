@@ -4,6 +4,7 @@
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
+#include <QDataStream>
 #include <QFile>
 
 
@@ -82,6 +83,8 @@ bool Graph::compare_graphs(QString path1, QString path2)
 {
    QFile graph1(path1);
    QFile graph2(path2);
+
+   return false;
 }
 
 int Graph::getVertexCount(){
@@ -94,5 +97,24 @@ int Graph::getEdgeCount(){
 
 int Graph::getAdjecensyMatrix(int i, int j){
     return adjacensyMatrix[i][j];
+}
+void Graph::ReadMatrix(QString path){
+    QStringList columns = readListFile(path).split("\n");
+    int n= columns[0].toInt();
+    adjacensyMatrix = new int*[n];
+    for (int i = 0; i < n; ++i) {
+        adjacensyMatrix[i]= new int[n];
+        QStringList rows= QString(columns[i+1]).split(",");
+        for (int j = 0; j < n; ++j) {
+             adjacensyMatrix[i][j]=rows[j].toInt();
+           }
+    }
+
+       for (int i = 0; i < n; ++i) {
+           for (int j = 0; j < n; ++j) {
+               cout << adjacensyMatrix[i][j] << "\t";
+           }
+           cout << endl;
+       }
 }
 
