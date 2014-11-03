@@ -109,12 +109,5 @@ void Graph::ReadMatrix(QString path){
              adjacensyMatrix[i][j]=rows[j].toInt();
            }
     }
-
-       for (int i = 0; i < n; ++i) {
-           for (int j = 0; j < n; ++j) {
-               cout << adjacensyMatrix[i][j] << "\t";
-           }
-           cout << endl;
-       }
 }
 
