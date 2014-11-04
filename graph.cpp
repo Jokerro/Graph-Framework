@@ -55,16 +55,25 @@ int Graph::getMaxVertex(QStringList vertex_pairs){ //определяет кол
 void Graph::getFromListToMatrix(QString filename){
   //получает готовые пары вершин
   QStringList linked_vertexes = readListFile(filename).split(";");
-  adjacensyMatrix= initMatrix(getMaxVertex(linked_vertexes));//matrix initialization
+  vertexCounter=getMaxVertex(linked_vertexes);
+  adjacensyMatrix= initMatrix(vertexCounter);//matrix initialization
   for(int i=0; i<linked_vertexes.length(); i++){
      QStringList main_vertexs = QString(linked_vertexes[i]).split(":");//get basic vertex
      QStringList sub_vertexs = QString(main_vertexs[1]).split(","); //get other vertex
      if(sub_vertexs[0]!=""){
         for(int j=0; j<sub_vertexs.length(); j++){
             adjacensyMatrix[main_vertexs[0].toInt()-1][sub_vertexs[j].toInt()-1]=1;
+            edgeCounter+=1;
             adjacensyMatrix[sub_vertexs[j].toInt()-1][main_vertexs[0].toInt()-1]=1;
         }
      }
+  }
+  QTextStream cout(stdout);
+  for(int i=0; i<vertexCounter; i++){
+      for(int j=0; j<vertexCounter; j++){
+        cout<< adjacensyMatrix[i][j];
+      }
+      cout<< endl;
   }
 }
 
