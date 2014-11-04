@@ -2,20 +2,20 @@
 #define GRAPH_H
 
 #include <stdlib.h>
-#include <vector>
 #include "edge.h"
 #include "vertex.h"
 #include <QString>
 #include <iostream>
 #include <QFile>
+#include <QVector>
 
 using namespace std;
 
 class Graph{
 
 private:
-    vector <vertex> Vertexes;
-    vector <edge> Edges;
+    QVector <vertex> Vertexes;
+    QVector <edge> Edges;
     int** adjacensyMatrix;
     int** incidenceMatrix;
     int** weightMatrix;
@@ -24,22 +24,21 @@ private:
 
     QString readListFile(QString filename);//открывает файл что содержит список
     int getMaxVertex(QStringList vertex_pairs);//получает количество вершин
-    int** initMatrix(int n);//инициализация нулями матрицы смежности
+    int** initMatrix(int n);//инициализация нулями матрицы смежности (УДАЛИТЬ)
 
 public:
     Graph();
     ~Graph();
-
+    void init(int i_ECount, int i_VCount); // фактический конструктор, создает и инициализурет объект графа
+    void weightMatrixInit(); //инициализирует матрицу весов при необходимости
     void ReadMatrix(QString path);
 
     void getFromListToMatrix(QString filename);
-
+    bool compare_graphs(QString path1, QString path2);
 
     int getVertexCount();
     int getEdgeCount();
     int getAdjecensyMatrix(int i, int j);
-
-    bool operator ==(Graph to_cmp);
     //vertex deepSearch();
     //vertex wideSearch();
     //Path shortestPath (vertex startPoint, vertex endPoint);

@@ -11,6 +11,7 @@ class vertex{
         int degree;
     public:
         vertex(){id=0; degree=0;}
+        vertex(int i_id, int i_degree) : id(i_id), degree(i_degree){}
         ~vertex(){}
 };
 
