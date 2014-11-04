@@ -152,14 +152,21 @@ int Graph::getAdjecensyMatrix(int i, int j){
 }
 void Graph::ReadMatrix(QString path){
     QStringList columns = readListFile(path).split("\n");
-    int n= columns[0].toInt();
-    adjacensyMatrix = new int*[n];
-    for (int i = 0; i < n; ++i) {
-        adjacensyMatrix[i]= new int[n];
+    vertexCounter = columns[0].toInt();
+    edgeCounter=0;
+    adjacensyMatrix = new int*[vertexCounter];
+    int k=0;
+    for (int i = 0; i < vertexCounter; ++i) {
+        adjacensyMatrix[i]= new int[vertexCounter];
         QStringList rows= QString(columns[i+1]).split(",");
-        for (int j = 0; j < n; ++j) {
+        for (int j = 0; j < vertexCounter; ++j) {
              adjacensyMatrix[i][j]=rows[j].toInt();
-           }
+             if(j-i>=0)
+                edgeCounter+=adjacensyMatrix[i][j+k];
+        }
     }
+    QTextStream cout(stdout);
+    cout << edgeCounter << "\n" << endl;
+   // cout <<
 }
 

@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
    //temp.getFromListToMatrix("D:\\Qt\\Tools\\QtCreator\\path1.txt");
    // temp.ReadMatrix("C:\\Users\\mrev1l\\Downloads\\newFile.txt");
    //temp.compare_graphs("D:\\Qt\\Tools\\QtCreator\\path1.txt","D:\\Qt\\Tools\\QtCreator\\path2.txt");
-   temp.getFromListToMatrix("D:\\Qt\\Tools\\QtCreator\\path1.txt");
-   temp1.ReadMatrix("D:\\Qt\\Tools\\QtCreator\\path2.txt");
-   bool aa=(temp==temp);
+   //temp.getFromListToMatrix("D:\\Qt\\Tools\\QtCreator\\path1.txt");
+   temp1.ReadMatrix("D:\\mat.txt");
+   //bool aa=(temp==temp);
    return a.exec();
 }
