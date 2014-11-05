@@ -29,19 +29,20 @@ void saveMatrix::matrixToStr(Graph* graph, QFile* file){
     for(int i=0; i<graph->getVertexCount(); i++){
 
        bool flag=false;
-       out<<(i+1);
+       out<<(i+1)<<":";
        for(int j=0; j<graph->getVertexCount(); j++){
 
            if (graph->getAdjecensyMatrix(i,j)==1)
                if (flag)
                     out<<","<<(j+1);
                else{
-                    out<<":"<<(j+1);
+                    out<<(j+1);
                     flag=true;
                }
 
        }
-       out<<";\n";
+       if (i!=graph->getVertexCount()-1)
+                  out<<";\n";
 
     }
 

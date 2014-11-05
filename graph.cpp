@@ -23,30 +23,23 @@ Graph::~Graph() {
         delete [] adjacensyMatrix[i];
         delete [] incidenceMatrix[i];
        }
-    delete[] adjacensyMatrix;
-    delete[] incidenceMatrix;
     if(weightMatrix!=NULL)
-    {
         for(int i=0; i<vertexCounter; i++)
             delete [] weightMatrix[i];
-        delete [] weightMatrix;
-    }
     for (int i = Vertexes.length(); i--; i>=0)
         Vertexes.remove(i);
 }
 
-void Graph::initAdjacensy(int i_VCount){
-     vertexCounter=i_VCount;
-     adjacensyMatrix=new int* [vertexCounter];
-     for (int i=0; i<vertexCounter; i++)
-     {
-         adjacensyMatrix[i]=new int[vertexCounter];
-     }
-}
-void Graph::initIncidence(int i_ECount)
+void Graph::init(int i_ECount, int i_VCount)
 {
+    vertexCounter=i_VCount;
     edgeCounter=i_ECount;
+    adjacensyMatrix=new int* [vertexCounter];
     incidenceMatrix=new int* [vertexCounter];
+    for (int i=0; i<vertexCounter; i++)
+    {
+        adjacensyMatrix[i]=new int[vertexCounter];
+    }
     for(int i=0; i<vertexCounter; i++)
     {
         incidenceMatrix[i]=new int[edgeCounter];
@@ -105,17 +98,37 @@ int Graph::getMaxVertex(QStringList vertex_pairs){ //определяет кол
 void Graph::getFromListToMatrix(QString filename){
   //получает готовые пары вершин
   QStringList linked_vertexes = readListFile(filename).split(";");
-  initAdjacensy(getMaxVertex(linked_vertexes));//matrix initialization
+  vertexCounter=getMaxVertex(linked_vertexes);
+  adjacensyMatrix= initMatrix(vertexCounter);//matrix initialization
   for(int i=0; i<linked_vertexes.length(); i++){
      QStringList main_vertexs = QString(linked_vertexes[i]).split(":");//get basic vertex
      QStringList sub_vertexs = QString(main_vertexs[1]).split(","); //get other vertex
      if(sub_vertexs[0]!=""){
         for(int j=0; j<sub_vertexs.length(); j++){
             adjacensyMatrix[main_vertexs[0].toInt()-1][sub_vertexs[j].toInt()-1]=1;
+            edgeCounter+=1;
             adjacensyMatrix[sub_vertexs[j].toInt()-1][main_vertexs[0].toInt()-1]=1;
         }
      }
   }
+  QTextStream cout(stdout);
+  for(int i=0; i<vertexCounter; i++){
+      for(int j=0; j<vertexCounter; j++){
+        cout<< adjacensyMatrix[i][j];
+      }
+      cout<< endl;
+  }
+}
+
+int** Graph::initMatrix(int n){
+    int** arr= new int*[n];
+    for(int i=0; i<n; i++){
+        arr[i]= new int[n];
+        for(int j=0; j<n; j++){
+          arr[i][j]=0;
+        }
+    }
+    return arr;
 }
 
 bool Graph::compare_graphs(QString path1, QString path2)
@@ -137,16 +150,23 @@ int Graph::getEdgeCount(){
 int Graph::getAdjecensyMatrix(int i, int j){
     return adjacensyMatrix[i][j];
 }
-
 void Graph::ReadMatrix(QString path){
     QStringList columns = readListFile(path).split("\n");
-    int n= columns[0].toInt();
-    initAdjacensy(n);
-    for (int i = 0; i < n; ++i) {
+    vertexCounter = columns[0].toInt();
+    edgeCounter=0;
+    adjacensyMatrix = new int*[vertexCounter];
+    int k=0;
+    for (int i = 0; i < vertexCounter; ++i) {
+        adjacensyMatrix[i]= new int[vertexCounter];
         QStringList rows= QString(columns[i+1]).split(",");
-        for (int j = 0; j < n; ++j) {
+        for (int j = 0; j < vertexCounter; ++j) {
              adjacensyMatrix[i][j]=rows[j].toInt();
-           }
+             if(j-i>=0)
+                edgeCounter+=adjacensyMatrix[i][j+k];
+        }
     }
+    QTextStream cout(stdout);
+    cout << edgeCounter << "\n" << endl;
+   // cout <<
 }
 
