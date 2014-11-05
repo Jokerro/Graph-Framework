@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+   QCoreApplication a(argc, argv);
    Graph temp,temp1;
    //temp.getFromListToMatrix("D:\\Qt\\Tools\\QtCreator\\path1.txt");
    // temp.ReadMatrix("C:\\Users\\mrev1l\\Downloads\\newFile.txt");

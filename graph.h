@@ -28,7 +28,7 @@ private:
 
 public:
     Graph();
-    ~Graph();
+     ~Graph();
     void init(int i_ECount, int i_VCount); // фактический конструктор, создает и инициализурет объект графа
     void weightMatrixInit(); //инициализирует матрицу весов при необходимости
     void ReadMatrix(QString path);
@@ -36,9 +36,9 @@ public:
     void getFromListToMatrix(QString filename);
     bool compare_graphs(QString path1, QString path2);
 
-    int getVertexCount();
-    int getEdgeCount();
-    int getAdjecensyMatrix(int i, int j);
+    int getVertexCount();//get-ер количества вершин
+    int getEdgeCount();//get-ер количества ребер
+    int getAdjecensyMatrix(int i, int j);//get-ер элемента матрицы смежности
     //vertex deepSearch();
     //vertex wideSearch();
     //Path shortestPath (vertex startPoint, vertex endPoint);
