@@ -75,22 +75,22 @@ void Graph::cleanMemory(){
         for(int i=0; i<vertexCounter; i++)
             delete [] adjacensyMatrix[i];
         delete[] adjacensyMatrix;
+        adjacensyMatrix = NULL;
     }
     if(incidenceMatrix!=NULL)
     {
         for(int i=0; i<vertexCounter; i++)
             delete [] incidenceMatrix[i];
         delete[] incidenceMatrix;
+        incidenceMatrix = NULL;
     }
     if(weightMatrix!=NULL)
     {
         for(int i=0; i<vertexCounter; i++)
             delete [] weightMatrix[i];
         delete [] weightMatrix;
+        weightMatrix = NULL;
     }
-    weightMatrix = NULL;
-    incidenceMatrix = NULL;
-    adjacensyMatrix = NULL;
     for (int i = Vertexes.length()-1; i>=0; i--)
         Vertexes.remove(i);
     for (int i = Edges.length()-1; i>=0; i--)
