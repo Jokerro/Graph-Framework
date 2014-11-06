@@ -198,3 +198,16 @@ void Graph::ReadMatrix(QString path){
     cout << edgeCounter << "\n" << endl;
 }
 
+bool Graph::operator ==(Graph to_compare)
+{
+    if(this->edgeCounter!=to_compare.edgeCounter)
+        return false;
+
+    for(int i=0;i<this->edgeCounter;i++)
+        for(int j=0;j<this->edgeCounter;j++)
+            if(this->adjacensyMatrix[i][j]!=to_compare.adjacensyMatrix[i][j])
+                return false;
+
+    return true;
+}
+

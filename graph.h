@@ -40,6 +40,8 @@ public:
     int getVertexCount();
     int getEdgeCount();
     int getAdjecensyMatrixElem(int i, int j);
+
+    bool operator ==(Graph to_compare);
 };
 
 #endif
