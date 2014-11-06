@@ -28,7 +28,7 @@ void Graph::initAdjacensy(int i_VCount){
      {
          adjacensyMatrix[i]=new int[vertexCounter];
          for(int j=0; j<vertexCounter; j++)
-             adjacensyMatrix[i, j]=0;
+             adjacensyMatrix[i][j]=0;
      }
 
 }
@@ -39,6 +39,8 @@ void Graph::initIncidence(int i_ECount)
     for(int i=0; i<vertexCounter; i++)
     {
         incidenceMatrix[i]=new int[edgeCounter];
+        for(int j=0; j<edgeCounter; j++)
+            incidenceMatrix[i][j]=0;
     }
 }
 
@@ -69,6 +71,8 @@ void Graph::weightMatrixInit()
     for (int i=0; i<vertexCounter; i++)
     {
         weightMatrix[i]=new int[vertexCounter];
+        for(int j=0; j<vertexCounter; j++)
+            weightMatrix[i][j]=0;
     }
 }
 
