@@ -10,8 +10,8 @@ private:
     int capacity;
     int streamValue;
 public:
-    edge(){ id=0; weight = 0; capacity=0; streamValue=0;};
-    ~edge(){};
+    edge(){ id=0; weight = 0; capacity=0; streamValue=0;}
+    ~edge(){}
 };
 
 #endif

@@ -8,7 +8,6 @@
 class saveMatrix{
 
     public: static int save(QString, Graph*);
-
     private: static void matrixToStr(Graph*, QFile*);
 
 };

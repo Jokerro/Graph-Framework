@@ -6,12 +6,9 @@
 int main(int argc, char *argv[])
 {
    QCoreApplication a(argc, argv);
-   Graph temp,temp1;
-   //temp.getFromListToMatrix("D:\\Qt\\Tools\\QtCreator\\path1.txt");
-   // temp.ReadMatrix("C:\\Users\\mrev1l\\Downloads\\newFile.txt");
-   //temp.compare_graphs("D:\\Qt\\Tools\\QtCreator\\path1.txt","D:\\Qt\\Tools\\QtCreator\\path2.txt");
-   //temp.getFromListToMatrix("D:\\Qt\\Tools\\QtCreator\\path1.txt");
-   temp1.ReadMatrix("D:\\mat.txt");
-   //bool aa=(temp==temp);
+   Graph *temp=new Graph();
+   temp->ReadMatrix("E:\\ProgrammFiles\\Graph-Framework\\mat.txt");
+   saveMatrix::save("E:\\ProgrammFiles\\Graph-Framework\\saved.txt", temp);
+   delete temp;
    return a.exec();
 }

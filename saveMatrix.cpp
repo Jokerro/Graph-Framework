@@ -32,7 +32,7 @@ void saveMatrix::matrixToStr(Graph* graph, QFile* file){
        out<<(i+1)<<":";
        for(int j=0; j<graph->getVertexCount(); j++){
 
-           if (graph->getAdjecensyMatrix(i,j)==1)
+           if (graph->getAdjecensyMatrixElem(i,j)==1)
                if (flag)
                     out<<","<<(j+1);
                else{

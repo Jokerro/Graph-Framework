@@ -24,27 +24,22 @@ private:
 
     QString readListFile(QString filename);//открывает файл что содержит список
     int getMaxVertex(QStringList vertex_pairs);//получает количество вершин
-
 public:
     Graph();
     ~Graph();
     void initAdjacensy(int i_VCount); // выделение памяти под матрицу смежности
     void initIncidence(int i_ECount); // выделение памяти под матрицу инцидентности
     void weightMatrixInit(); //выделение памяти под матрицу весов при необходимости
+    void initVertexList();   //создание массивa вершин
+    void cleanMemory();      //очищение памяти от существующих массивов
 
     void ReadMatrix(QString path);
-
     void getFromListToMatrix(QString filename);
     bool compare_graphs(QString path1, QString path2);
 
     int getVertexCount();
     int getEdgeCount();
-    int getAdjecensyMatrix(int i, int j);
-    //vertex deepSearch();
-    //vertex wideSearch();
-    //Path shortestPath (vertex startPoint, vertex endPoint);
-    //опишите прототипы сами
-
+    int getAdjecensyMatrixElem(int i, int j);
 };
 
 #endif
