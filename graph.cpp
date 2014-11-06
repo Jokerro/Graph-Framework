@@ -27,7 +27,10 @@ void Graph::initAdjacensy(int i_VCount){
      for (int i=0; i<vertexCounter; i++)
      {
          adjacensyMatrix[i]=new int[vertexCounter];
+         for(int j=0; j<vertexCounter; j++)
+             adjacensyMatrix[i, j]=0;
      }
+
 }
 void Graph::initIncidence(int i_ECount)
 {
