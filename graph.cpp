@@ -12,15 +12,15 @@ Graph::Graph()
 {
     vertexCounter=0;
     edgeCounter=0;
-    weightMatrix = NULL;
-    incidenceMatrix = NULL;
-    adjacensyMatrix = NULL;
+    //weightMatrix = NULL;
+    //incidenceMatrix = NULL;
+    //adjacensyMatrix = NULL;
 }
 
 Graph::~Graph() {
     cleanMemory();
 }
-
+/*
 void Graph::initAdjacensy(int i_VCount){
      vertexCounter=i_VCount;
      adjacensyMatrix=new int* [vertexCounter];
@@ -31,7 +31,7 @@ void Graph::initAdjacensy(int i_VCount){
              adjacensyMatrix[i][j]=0;
      }
 
-}
+}z
 void Graph::initIncidence(int i_ECount)
 {
     edgeCounter=i_ECount;
@@ -43,8 +43,8 @@ void Graph::initIncidence(int i_ECount)
             incidenceMatrix[i][j]=0;
     }
 }
-
-void Graph::initVertexList()
+*/
+/*void Graph::initVertexList()
 {
         for(int i=0; i<vertexCounter; i++)
         {
@@ -54,7 +54,7 @@ void Graph::initVertexList()
             vertex Temp(i, i_deg);
             Vertexes.append(Temp);
        }
-}
+}*/
 
 //    for(int i=0; i<vertexCounter; i++)
 //    {
@@ -64,7 +64,7 @@ void Graph::initVertexList()
 //        vertex Temp=new vertex(i, i_deg);
 //        Vertexes.append(Temp);
 //    }
-
+/*
 void Graph::weightMatrixInit()
 {
     weightMatrix=new int*[vertexCounter];
@@ -75,33 +75,12 @@ void Graph::weightMatrixInit()
             weightMatrix[i][j]=0;
     }
 }
-
+*/
 void Graph::cleanMemory(){
-    if(adjacensyMatrix!=NULL)
+    for(int i=0; i<vertexList.length(); i++)
     {
-        for(int i=0; i<vertexCounter; i++)
-            delete [] adjacensyMatrix[i];
-        delete[] adjacensyMatrix;
-        adjacensyMatrix = NULL;
+        vertexList.removeAll();
     }
-    if(incidenceMatrix!=NULL)
-    {
-        for(int i=0; i<vertexCounter; i++)
-            delete [] incidenceMatrix[i];
-        delete[] incidenceMatrix;
-        incidenceMatrix = NULL;
-    }
-    if(weightMatrix!=NULL)
-    {
-        for(int i=0; i<vertexCounter; i++)
-            delete [] weightMatrix[i];
-        delete [] weightMatrix;
-        weightMatrix = NULL;
-    }
-    for (int i = Vertexes.length()-1; i>=0; i--)
-        Vertexes.remove(i);
-    for (int i = Edges.length()-1; i>=0; i--)
-        Edges.remove(i);
 }
 
 QString Graph::readListFile(QString filename)//считывание файла в строку

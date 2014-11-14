@@ -7,20 +7,22 @@
 #include <QString>
 #include <iostream>
 #include <QFile>
-#include <QVector>
+#include <QList>
 
 using namespace std;
 
 class Graph{
 
 private:
-    QVector <vertex> Vertexes;
-    QVector <edge> Edges;
-    int** adjacensyMatrix;
-    int** incidenceMatrix;
-    int** weightMatrix;
+    //QVector <vertex> Vertexes;
+    //QVector <edge> Edges;
+    //int** adjacensyMatrix;
+    //int** incidenceMatrix;
+    //int** weightMatrix;
     int edgeCounter;
     int vertexCounter;
+    QList<QList> vertexList;
+
 
     QString readListFile(QString filename);//открывает файл что содержит список
     int getMaxVertex(QStringList vertex_pairs);//получает количество вершин
