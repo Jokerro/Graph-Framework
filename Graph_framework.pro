@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core
+QT       += core opengl
 
 QT       -= gui
 
@@ -17,11 +17,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     saveMatrix.cpp \
-    graph.cpp
+    graph.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     edge.h \
     graph.h \
     path.h \
     vertex.h \
-    saveMatrix.h
+    saveMatrix.h \
+    mainwindow.h
