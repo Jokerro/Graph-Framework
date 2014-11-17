@@ -35,13 +35,22 @@ void MainWindow::paintGL(){
         for(int j=0; j<10000; j+=20)
         for(int i=0; i<10000; i+=20){
             drawVertex(i,j);
-//            drawEdge(i,j,i+i,j+j);
+            drawEdge(i,j,i+mVertexSize,j+mVertexSize);
         }
 
 
         qglColor(Qt::white);
 }
 
+void MainWindow::drawEdge(int x1, int y1, int x2, int y2){
+    glBegin(GL_LINE_STRIP);
+            glColor3f(1.0,0.0,1.0);// Цвет выделенной области
+            // Координаты выделенной области
+            glVertex2f(x1+0.5*mVertexSize, y1+0.5*mVertexSize);
+            glVertex2f(x2+0.5*mVertexSize, y2+0.5*mVertexSize);
+        glEnd();
+
+}
 
 void MainWindow::drawVertex(int x, int y){
     glBegin(GL_POLYGON);

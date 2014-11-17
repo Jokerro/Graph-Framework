@@ -34,6 +34,7 @@ protected:
 
 public:
     void drawVertex(int x, int y);
+    void drawEdge(int x1, int y1, int x2, int y2);
 
     // Скалирование сцены
     void scale_plus();
