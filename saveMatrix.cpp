@@ -1,6 +1,6 @@
 #include "saveMatrix.h"
 
-int saveMatrix::save(QString path, Graph* graph){
+/*int saveMatrix::save(QString path, Graph* graph){
 
     QFile* file = new QFile(path);
     if (file->open(QIODevice::WriteOnly | QIODevice::Text)){
@@ -47,5 +47,5 @@ void saveMatrix::matrixToStr(Graph* graph, QFile* file){
 
     }
 
+}*/
 
-}

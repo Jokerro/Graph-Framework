@@ -20,70 +20,14 @@ Graph::Graph()
 Graph::~Graph() {
     cleanMemory();
 }
-/*
-void Graph::initAdjacensy(int i_VCount){
-     vertexCounter=i_VCount;
-     adjacensyMatrix=new int* [vertexCounter];
-     for (int i=0; i<vertexCounter; i++)
-     {
-         adjacensyMatrix[i]=new int[vertexCounter];
-         for(int j=0; j<vertexCounter; j++)
-             adjacensyMatrix[i][j]=0;
-     }
 
-}z
-void Graph::initIncidence(int i_ECount)
-{
-    edgeCounter=i_ECount;
-    incidenceMatrix=new int* [vertexCounter];
-    for(int i=0; i<vertexCounter; i++)
-    {
-        incidenceMatrix[i]=new int[edgeCounter];
-        for(int j=0; j<edgeCounter; j++)
-            incidenceMatrix[i][j]=0;
-    }
-}
-*/
-/*void Graph::initVertexList()
-{
-        for(int i=0; i<vertexCounter; i++)
-        {
-            int i_deg=0;
-            for(int j=0; j<vertexCounter; j++)
-                i_deg+=adjacensyMatrix[i][j];
-            vertex Temp(i, i_deg);
-            Vertexes.append(Temp);
-       }
-}*/
-
-//    for(int i=0; i<vertexCounter; i++)
-//    {
-//        int i_deg=0;
-//        for(int j=0; j<vertexCounter; j++)      этот кусок кода выполднить в отдельной функции после заполнения матрицы значениями
-//            i_deg+=adjacensyMatrix[i][j];
-//        vertex Temp=new vertex(i, i_deg);
-//        Vertexes.append(Temp);
-//    }
-/*
-void Graph::weightMatrixInit()
-{
-    weightMatrix=new int*[vertexCounter];
-    for (int i=0; i<vertexCounter; i++)
-    {
-        weightMatrix[i]=new int[vertexCounter];
-        for(int j=0; j<vertexCounter; j++)
-            weightMatrix[i][j]=0;
-    }
-}
-*/
 void Graph::cleanMemory(){
-    for(int i=0; i<vertexList.length(); i++)
-    {
-        vertexList.removeAll();
-    }
+   for(int i=0; i<vertexList.length(); i++)
+       vertexList.removeAt(i);
+   vertexList.clear();
 }
 
-QString Graph::readListFile(QString filename)//считывание файла в строку
+/*QString Graph::readListFile(QString filename)//считывание файла в строку
 {
         QFile file(filename);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -146,7 +90,7 @@ bool Graph::compare_graphs(QString path1, QString path2)
 
    return false;
 }
-
+*/
 int Graph::getVertexCount(){
     return vertexCounter;
 }
@@ -154,7 +98,7 @@ int Graph::getVertexCount(){
 int Graph::getEdgeCount(){
     return edgeCounter;
 }
-
+/*
 int Graph::getAdjecensyMatrixElem(int i, int j){
     return adjacensyMatrix[i][j];
 }
@@ -189,4 +133,4 @@ bool Graph::operator ==(Graph to_compare)
 
     return true;
 }
-
+*/

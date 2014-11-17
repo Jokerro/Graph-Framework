@@ -21,12 +21,13 @@ private:
     //int** weightMatrix;
     int edgeCounter;
     int vertexCounter;
-    QList<QList> vertexList;
 
 
     QString readListFile(QString filename);//открывает файл что содержит список
     int getMaxVertex(QStringList vertex_pairs);//получает количество вершин
 public:
+    QList< QList<int> > vertexList;
+
     Graph();
     ~Graph();
     void initAdjacensy(int i_VCount); // выделение памяти под матрицу смежности
