@@ -6,7 +6,7 @@
 #include <QTextStream>
 #include <QDataStream>
 #include <QFile>
-
+#include <vector>
 
 Graph::Graph()
 {
@@ -98,6 +98,54 @@ int Graph::getVertexCount(){
 int Graph::getEdgeCount(){
     return edgeCounter;
 }
+
+bool isInside(vector<int> arr, int v)
+{
+    for(int i=0;i<arr.size();i++)
+        if(v==arr[i])
+            return true;
+    return false;
+}
+
+void DepthSearchStep(Graph* g,vector<int> vertexes,int endV)
+{
+    //смежна ли последняя концу?
+    for(int i=0;i<g->vertexList.at(vertexes[vertexes.size()-1]).size();i++)
+    {
+        if(g->vertexList[vertexes[vertexes.size()-1]][i].GetId()==endV)
+        {
+            vertexes.push_back(endV);
+            return;
+        }
+    }
+    //поиск смежных непройденных
+    bool hasNew=false;
+    for(int i=0;i<g->vertexList[vertexes[vertexes.size()-1]].size();i++)
+    {
+        if(!isInside(vertexes,g->vertexList[vertexes[vertexes.size()-1]][i].GetId()))
+            hasNew=true;
+        vertexes.push_back(g->vertexList[vertexes[vertexes.size()-1]][i].GetId());
+        return;
+    }
+    //нет смежных вершин. то, что сюда не дойдем, если смежные непройденные есть - понятно, но чтобы проще понимать - булевую переменную оставляю
+    if(!hasNew)
+    {
+        vertexes.push_back(vertexes[vertexes.size()-2]);
+        return;
+    }
+}
+
+void Graph::DFS(int vertex1, int vertex2)
+{///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!
+    vector<int> vertexes;  //вершины, по которым поиск будет идти
+    vertexes.push_back(vertex1);
+
+    while(vertexes[vertexes.size()-1]!=vertex2)
+    {
+        DepthSearchStep(this,vertexes,vertex2); \
+    }
+}
+
 /*
 int Graph::getAdjecensyMatrixElem(int i, int j){
     return adjacensyMatrix[i][j];
