@@ -79,6 +79,11 @@ void MainWindow::drawVertex(int x, int y){
 }
 
 
+void MainWindow::paintGraph(Graph *a)
+{
+
+}
+
 void MainWindow::mousePressEvent(QMouseEvent *pe){
     ptrMousePosition = pe->pos();
 }

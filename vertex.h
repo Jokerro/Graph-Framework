@@ -9,9 +9,14 @@ class vertex{
     private:
         int id;
         int degree;
+        int pos_x;
+        int pos_y;
+        bool painted;
     public:
-        vertex(){id=0; degree=0;}
-        vertex(int i_id, int i_degree) : id(i_id), degree(i_degree){}
+        vertex(){id=0; degree=0; pos_x=0; pos_y=0; painted=false;}
+        vertex(int i_id, int i_degree, int i_x, int i_y) :
+            id(i_id), degree(i_degree), pos_x(i_x), pos_y(i_y), painted(false)
+        {}
         ~vertex(){}
 };
 

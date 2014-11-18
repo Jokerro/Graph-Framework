@@ -26,7 +26,7 @@ private:
     QString readListFile(QString filename);//открывает файл что содержит список
     int getMaxVertex(QStringList vertex_pairs);//получает количество вершин
 public:
-    QList< QList<int> > vertexList;
+    QList< QList<vertex> > vertexList;
 
     Graph();
     ~Graph();

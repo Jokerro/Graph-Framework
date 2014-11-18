@@ -5,6 +5,7 @@
 #include <QGLWidget>
 #include <QtOpenGL>
 #include <QTimer>
+#include <graph.h>
 
 
 class MainWindow : public QGLWidget
@@ -35,7 +36,7 @@ protected:
 public:
     void drawVertex(int x, int y);
     void drawEdge(int x1, int y1, int x2, int y2);
-
+    void paintGraph(Graph* a);
     // Скалирование сцены
     void scale_plus();
     void scale_minus();
