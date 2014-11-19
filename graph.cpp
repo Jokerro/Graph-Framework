@@ -6,7 +6,7 @@
 #include <QTextStream>
 #include <QDataStream>
 #include <QFile>
-
+#include <vector>
 
 Graph::Graph()
 {
@@ -106,6 +106,93 @@ int Graph::getVertexCount(){
 int Graph::getEdgeCount(){
     return edgeCounter;
 }
+
+bool isInside(vector<int> arr, int v)
+{
+    for(int i=0;i<arr.size();i++)
+        if(v==arr[i])
+            return true;
+    return false;
+}
+
+void DepthSearchStep(Graph* g,vector<int> vertexes,int endV)
+{
+    //смежна ли последняя концу?
+    for(int i=0;i<g->vertexList.at(vertexes[vertexes.size()-1]).size();i++)
+    {
+        if(g->vertexList[vertexes[vertexes.size()-1]][i].GetId()==endV)
+        {
+            vertexes.push_back(endV);
+            return;
+        }
+    }
+    //поиск смежных непройденных
+    bool hasNew=false;
+    for(int i=0;i<g->vertexList[vertexes[vertexes.size()-1]].size();i++)
+    {
+        if(!isInside(vertexes,g->vertexList[vertexes[vertexes.size()-1]][i].GetId()))
+            hasNew=true;
+        vertexes.push_back(g->vertexList[vertexes[vertexes.size()-1]][i].GetId());
+        return;
+    }
+    //нет смежных вершин. то, что сюда не дойдем, если смежные непройденные есть - понятно, но чтобы проще понимать - булевую переменную оставляю
+    if(!hasNew)
+    {
+        vertexes.push_back(vertexes[vertexes.size()-2]);
+        return;
+    }
+}
+
+void Graph::OpenFileWithGraph(QString filename)
+{
+    int current_vertex=0, flag=0;
+    QList<vertex> tempVertexList;
+    QFile file(filename);
+    if(file.open(QIODevice::ReadOnly |QIODevice::Text))
+    {
+        while(!file.atEnd())
+        {
+            //читаем строку
+            QString str = file.readLine();
+            if(str[0] != '#')
+            {
+                QStringList list = str.split("\t");
+                if(list.length()>1){
+                    if(flag==0)
+                    {
+                        flag=1;
+                        current_vertex=list[0].toInt();
+                    }
+                    if(current_vertex==list[0].toInt())
+                    {
+                        current_vertex=list[0].toInt();
+                        vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
+                        tempVertexList.push_back(*tmp);
+                    }
+                    else{
+                        vertexList.push_back(tempVertexList);
+                        current_vertex=list[0].toInt();
+                        tempVertexList.clear();
+                        vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
+                        tempVertexList.push_back(*tmp);
+                    }
+               }
+           }
+       }
+   }
+}
+
+void Graph::DFS(int vertex1, int vertex2)
+{///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!
+    vector<int> vertexes;  //вершины, по которым поиск будет идти
+    vertexes.push_back(vertex1);
+
+    while(vertexes[vertexes.size()-1]!=vertex2)
+    {
+        DepthSearchStep(this,vertexes,vertex2); \
+    }
+}
+
 /*
 int Graph::getAdjecensyMatrixElem(int i, int j){
     return adjacensyMatrix[i][j];

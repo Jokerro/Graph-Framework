@@ -8,6 +8,7 @@
 int main(int argc, char *argv[])
 {
    QApplication a(argc, argv);
+<<<<<<< HEAD
 //   Graph *temp=new Graph();
 //     temp->ReadMatrix("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\mat.txt");
 //     saveMatrix::save("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\saved.txt", temp);
@@ -50,4 +51,16 @@ int main(int argc, char *argv[])
 
 
    return a.exec();
+=======
+   Graph *temp=new Graph();
+  // temp->ReadMatrix("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\mat.txt");
+   //saveMatrix::save("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\saved.txt", temp);
+   // temp->OpenFileWithGraph("D:\\CA-HepTh.txt");
+
+    delete temp;
+    MainWindow w;
+    w.show();
+
+   return 0;
+>>>>>>> origin/master
 }

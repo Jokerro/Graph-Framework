@@ -17,6 +17,7 @@ class vertex{
         vertex(int i_id, int i_degree, int i_x, int i_y) :
             id(i_id), degree(i_degree), pos_x(i_x), pos_y(i_y), painted(false)
         {}
+        int GetId(){return id;}
         ~vertex(){}
         bool isPainted(){return painted;}
         void markAsPainted() {painted=true;}

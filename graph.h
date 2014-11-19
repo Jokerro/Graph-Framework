@@ -35,7 +35,14 @@ public:
     void weightMatrixInit(); //выделение памяти под матрицу весов при необходимости
     void initVertexList();   //создание массивa вершин
     void cleanMemory();      //очищение памяти от существующих массивов
+<<<<<<< HEAD
     void calcPositions();
+=======
+
+    void DFS(int vertex1,int vertex2);
+
+    void OpenFileWithGraph(QString filename);
+>>>>>>> origin/master
     void ReadMatrix(QString path);
     void getFromListToMatrix(QString filename);
     bool compare_graphs(QString path1, QString path2);
