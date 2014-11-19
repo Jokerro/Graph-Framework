@@ -120,7 +120,7 @@ void DepthSearchStep(Graph* g,vector<int> vertexes,int endV)
     //смежна ли последняя концу?
     for(int i=0;i<g->vertexList.at(vertexes[vertexes.size()-1]).size();i++)
     {
-        if(g->vertexList[vertexes[vertexes.size()-1]][i].GetId()==endV)
+        if(g->vertexList[vertexes[vertexes.size()-1]][i]->GetId()==endV)
         {
             vertexes.push_back(endV);
             return;
@@ -130,9 +130,9 @@ void DepthSearchStep(Graph* g,vector<int> vertexes,int endV)
     bool hasNew=false;
     for(int i=0;i<g->vertexList[vertexes[vertexes.size()-1]].size();i++)
     {
-        if(!isInside(vertexes,g->vertexList[vertexes[vertexes.size()-1]][i].GetId()))
+        if(!isInside(vertexes,g->vertexList[vertexes[vertexes.size()-1]][i]->GetId()))
             hasNew=true;
-        vertexes.push_back(g->vertexList[vertexes[vertexes.size()-1]][i].GetId());
+        vertexes.push_back(g->vertexList[vertexes[vertexes.size()-1]][i]->GetId());
         return;
     }
     //нет смежных вершин. то, что сюда не дойдем, если смежные непройденные есть - понятно, но чтобы проще понимать - булевую переменную оставляю
@@ -146,7 +146,7 @@ void DepthSearchStep(Graph* g,vector<int> vertexes,int endV)
 void Graph::OpenFileWithGraph(QString filename)
 {
     int current_vertex=0, flag=0;
-    QList<vertex> tempVertexList;
+    QList<vertex*> tempVertexList;
     QFile file(filename);
     if(file.open(QIODevice::ReadOnly |QIODevice::Text))
     {
@@ -167,14 +167,14 @@ void Graph::OpenFileWithGraph(QString filename)
                     {
                         current_vertex=list[0].toInt();
                         vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
-                        tempVertexList.push_back(*tmp);
+                        tempVertexList.push_back(tmp);
                     }
                     else{
                         vertexList.push_back(tempVertexList);
                         current_vertex=list[0].toInt();
                         tempVertexList.clear();
                         vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
-                        tempVertexList.push_back(*tmp);
+                        tempVertexList.push_back(tmp);
                     }
                }
            }
