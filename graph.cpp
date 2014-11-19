@@ -124,7 +124,7 @@ void Graph::OpenFileWithGraph(QString filename)
     {
         while(!file.atEnd())
         {
-            //читаем строку
+        //читаем строку
             QString str = file.readLine();
             if(str[0] != '#')
             {
@@ -134,24 +134,24 @@ void Graph::OpenFileWithGraph(QString filename)
                     {
                         flag=1;
                         current_vertex=list[0].toInt();
+                        tempVertexList.push_back(new vertex(current_vertex));
                     }
-                    if(current_vertex==list[0].toInt())
-                    {
-                        current_vertex=list[0].toInt();
-                        vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
-                        tempVertexList.push_back(tmp);
+                if(current_vertex==list[0].toInt())
+                {
+                    current_vertex=list[0].toInt();
+                }
+                else{
+                    vertexList.push_back(tempVertexList);
+                    current_vertex=list[0].toInt();
+                    tempVertexList.clear();
+                    tempVertexList.push_back(new vertex(current_vertex));
                     }
-                    else{
-                        vertexList.push_back(tempVertexList);
-                        current_vertex=list[0].toInt();
-                        tempVertexList.clear();
-                        vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
-                        tempVertexList.push_back(tmp);
-                    }
-               }
-           }
-       }
-   }
+                        tempVertexList.push_back(new vertex(list[1].toInt()));
+                   }
+            }
+        }
+        vertexList.push_back(tempVertexList);
+    }
 }
 
 void Graph::DFS(int vertex1, int vertex2)
