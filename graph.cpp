@@ -115,34 +115,6 @@ bool isInside(vector<int> arr, int v)
     return false;
 }
 
-void DepthSearchStep(Graph* g,vector<int> vertexes,int endV)
-{
-    //смежна ли последняя концу?
-    for(int i=0;i<g->vertexList.at(vertexes[vertexes.size()-1]).size();i++)
-    {
-        if(g->vertexList[vertexes[vertexes.size()-1]][i]->GetId()==endV)
-        {
-            vertexes.push_back(endV);
-            return;
-        }
-    }
-    //поиск смежных непройденных
-    bool hasNew=false;
-    for(int i=0;i<g->vertexList[vertexes[vertexes.size()-1]].size();i++)
-    {
-        if(!isInside(vertexes,g->vertexList[vertexes[vertexes.size()-1]][i]->GetId()))
-            hasNew=true;
-        vertexes.push_back(g->vertexList[vertexes[vertexes.size()-1]][i]->GetId());
-        return;
-    }
-    //нет смежных вершин. то, что сюда не дойдем, если смежные непройденные есть - понятно, но чтобы проще понимать - булевую переменную оставляю
-    if(!hasNew)
-    {
-        vertexes.push_back(vertexes[vertexes.size()-2]);
-        return;
-    }
-}
-
 void Graph::OpenFileWithGraph(QString filename)
 {
     int current_vertex=0, flag=0;
@@ -184,13 +156,45 @@ void Graph::OpenFileWithGraph(QString filename)
 
 void Graph::DFS(int vertex1, int vertex2)
 {///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!
+
     vector<int> vertexes;  //вершины, по которым поиск будет идти
     vertexes.push_back(vertex1);
 
     while(vertexes[vertexes.size()-1]!=vertex2)
     {
-        DepthSearchStep(this,vertexes,vertex2); \
+        //DepthSearchStep(this,vertexes,vertex2);
+        //смежна ли последняя концу?
+        bool Endfound=false;
+        for(int i=0;i<this->vertexList[vertexes[vertexes.size()-1]].size();i++)
+        {
+            if(this->vertexList[vertexes[vertexes.size()-1]][i]->GetId()==vertex2)
+            {
+                vertexes.push_back(vertex2);
+                Endfound=true;
+                break;
+            }
+        }
+        if(Endfound)
+            break;
+        //поиск смежных непройденных
+        bool hasNew=false;
+        for(int i=0;i<this->vertexList[vertexes[vertexes.size()-1]].size();i++)
+        {
+            if(!isInside(vertexes,this->vertexList[vertexes[vertexes.size()-1]][i]->GetId()))
+            {
+                hasNew=true;
+                vertexes.push_back(this->vertexList[vertexes[vertexes.size()-1]][i]->GetId());
+                break;
+            }
+        }
+        //нет смежных вершин. то, что сюда не дойдем, если смежные непройденные есть - понятно, но чтобы проще понимать - булевую переменную оставляю
+        if(!hasNew)
+        {
+            vertexes.push_back(vertexes[vertexes.size()-2]);
+            continue;
+        }
     }
+    int a=0;
 }
 
 /*
