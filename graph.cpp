@@ -135,6 +135,45 @@ void DepthSearchStep(Graph* g,vector<int> vertexes,int endV)
     }
 }
 
+void Graph::OpenFileWithGraph(QString filename)
+{
+    int current_vertex=0, flag=0;
+    QList<vertex> tempVertexList;
+    QFile file(filename);
+    if(file.open(QIODevice::ReadOnly |QIODevice::Text))
+    {
+        while(!file.atEnd())
+        {
+            //читаем строку
+            QString str = file.readLine();
+            if(str[0] != '#')
+            {
+                QStringList list = str.split("\t");
+                if(list.length()>1){
+                    if(flag==0)
+                    {
+                        flag=1;
+                        current_vertex=list[0].toInt();
+                    }
+                    if(current_vertex==list[0].toInt())
+                    {
+                        current_vertex=list[0].toInt();
+                        vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
+                        tempVertexList.push_back(*tmp);
+                    }
+                    else{
+                        vertexList.push_back(tempVertexList);
+                        current_vertex=list[0].toInt();
+                        tempVertexList.clear();
+                        vertex  *tmp= new vertex(list[1].toInt(), 1, 0, 0);
+                        tempVertexList.push_back(*tmp);
+                    }
+               }
+           }
+       }
+   }
+}
+
 void Graph::DFS(int vertex1, int vertex2)
 {///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!
     vector<int> vertexes;  //вершины, по которым поиск будет идти

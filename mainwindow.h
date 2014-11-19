@@ -5,7 +5,7 @@
 #include <QGLWidget>
 #include <QtOpenGL>
 #include <QTimer>
-#include <graph.h>
+#include "graph.h"
 
 
 class MainWindow : public QGLWidget

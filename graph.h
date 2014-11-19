@@ -38,6 +38,7 @@ public:
 
     void DFS(int vertex1,int vertex2);
 
+    void OpenFileWithGraph(QString filename);
     void ReadMatrix(QString path);
     void getFromListToMatrix(QString filename);
     bool compare_graphs(QString path1, QString path2);
