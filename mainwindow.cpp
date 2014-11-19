@@ -82,18 +82,18 @@ void MainWindow::drawVertex(int x, int y){
 
 void MainWindow::paintGraph()
 {
-    for(int i=0; i<toPaint->getVertexList().length(); i++)
-    {
-        drawVertex(toPaint->getVertex(i,0).getX(), toPaint->getVertex(i,0).getY());
-        toPaint->getVertexList()[i][0]->markAsPainted();
-    }
+
     for(int i=0; i<toPaint->getVertexList().length(); i++)
         for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
         {
             drawEdge(toPaint->getVertexList()[i][0]->getX(), toPaint->getVertexList()[i][0]->getY(),
                     toPaint->getVertexList()[i][j]->getX(), toPaint->getVertexList()[i][j]->getY());
         }
-
+    for(int i=0; i<toPaint->getVertexList().length(); i++)
+    {
+        drawVertex(toPaint->getVertex(i,0).getX(), toPaint->getVertex(i,0).getY());
+        toPaint->getVertexList()[i][0]->markAsPainted();
+    }
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *pe){
