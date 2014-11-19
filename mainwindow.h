@@ -6,6 +6,7 @@
 #include <QtOpenGL>
 #include <QTimer>
 #include <graph.h>
+#include <qmath.h>
 
 
 class MainWindow : public QGLWidget
@@ -16,6 +17,8 @@ private:
     int mVertexSize;
     int mWindowWidth;
     int mWindowHeight;
+
+    Graph* toPaint;
 
     GLfloat zTra; // z текущая координата перемещения сцены
     GLfloat xTra; // x текущая координата перемещения сцены
@@ -34,9 +37,11 @@ protected:
     void wheelEvent(QWheelEvent* pe);
 
 public:
+
+    void setGraph(Graph *a){toPaint=a;}
     void drawVertex(int x, int y);
     void drawEdge(int x1, int y1, int x2, int y2);
-    void paintGraph(Graph* a);
+    void paintGraph();
     // Скалирование сцены
     void scale_plus();
     void scale_minus();

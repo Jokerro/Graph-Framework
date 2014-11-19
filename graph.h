@@ -26,7 +26,7 @@ private:
     QString readListFile(QString filename);//открывает файл что содержит список
     int getMaxVertex(QStringList vertex_pairs);//получает количество вершин
 public:
-    QList< QList<vertex> > vertexList;
+    QList< QList<vertex*> > vertexList;
 
     Graph();
     ~Graph();
@@ -35,7 +35,7 @@ public:
     void weightMatrixInit(); //выделение памяти под матрицу весов при необходимости
     void initVertexList();   //создание массивa вершин
     void cleanMemory();      //очищение памяти от существующих массивов
-
+    void calcPositions();
     void ReadMatrix(QString path);
     void getFromListToMatrix(QString filename);
     bool compare_graphs(QString path1, QString path2);
@@ -43,7 +43,8 @@ public:
     int getVertexCount();
     int getEdgeCount();
     int getAdjecensyMatrixElem(int i, int j);
-
+    QList < QList<vertex*> > getVertexList(){return vertexList;}
+    vertex getVertex(int i, int j){return *vertexList[i][j];}
     bool operator ==(Graph to_compare);
 };
 

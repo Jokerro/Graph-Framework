@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <qmath.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QGLWidget(parent)
@@ -31,12 +32,12 @@ void MainWindow::paintGL(){
 
         glTranslatef(xTra, zTra, 0.0f);
         glScalef(nSca, nSca, nSca);
-
-        for(int j=0; j<10000; j+=20)
-        for(int i=0; i<10000; i+=20){
-            drawVertex(i,j);
-            drawEdge(i,j,i+mVertexSize,j+mVertexSize);
-        }
+        paintGraph();
+     //   for(int j=0; j<10000; j+=20)
+    //    for(int i=0; i<10000; i+=20){
+    //        drawVertex(i,j);
+    //        drawEdge(i,j,i+mVertexSize,j+mVertexSize);
+    //    }
 
 
         qglColor(Qt::white);
@@ -79,8 +80,19 @@ void MainWindow::drawVertex(int x, int y){
 }
 
 
-void MainWindow::paintGraph(Graph *a)
+void MainWindow::paintGraph()
 {
+    for(int i=0; i<toPaint->getVertexList().length(); i++)
+    {
+        drawVertex(toPaint->getVertex(i,0).getX(), toPaint->getVertex(i,0).getY());
+        toPaint->getVertexList()[i][0]->markAsPainted();
+    }
+    for(int i=0; i<toPaint->getVertexList().length(); i++)
+        for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
+        {
+            drawEdge(toPaint->getVertexList()[i][0]->getX(), toPaint->getVertexList()[i][0]->getY(),
+                    toPaint->getVertexList()[i][j]->getX(), toPaint->getVertexList()[i][j]->getY());
+        }
 
 }
 
@@ -89,8 +101,8 @@ void MainWindow::mousePressEvent(QMouseEvent *pe){
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *pe){
-    xTra += ptrMousePosition.x() - pe->x();
-    zTra += ptrMousePosition.y() - pe->y();
+    xTra -= ptrMousePosition.x() - pe->x();
+    zTra -= ptrMousePosition.y() - pe->y();
 
     ptrMousePosition = pe->pos();
     updateGL();

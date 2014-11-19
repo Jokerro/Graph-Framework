@@ -27,6 +27,14 @@ void Graph::cleanMemory(){
    vertexList.clear();
 }
 
+void Graph::calcPositions(){
+    int rightBorder=vertexList.length()*25;
+    int bottomBorder=vertexList.length()*25;
+    for(int i=0; i<vertexList.length(); i++)
+        vertexList[i][0]->setPosition(rand()%rightBorder+5, rand()%bottomBorder+5);
+
+}
+
 /*QString Graph::readListFile(QString filename)//считывание файла в строку
 {
         QFile file(filename);
