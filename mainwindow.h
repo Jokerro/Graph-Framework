@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
 #include <QMainWindow>
 #include <QGLWidget>
 #include <QtOpenGL>
@@ -8,7 +9,7 @@
 #include <graph.h>
 #include <qmath.h>
 #include "graph.h"
-
+#include "colors.h"
 
 class MainWindow : public QGLWidget
 {
@@ -41,7 +42,7 @@ public:
 
     void setGraph(Graph *a){toPaint=a;}
     void drawVertex(int x, int y);
-    void drawEdge(int x1, int y1, int x2, int y2);
+    void drawEdge(int x1, int y1, int x2, int y2, color);
     void paintGraph();
     // Скалирование сцены
     void scale_plus();

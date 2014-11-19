@@ -26,4 +26,5 @@ HEADERS += \
     path.h \
     vertex.h \
     saveMatrix.h \
-    mainwindow.h
+    mainwindow.h \
+    colors.h

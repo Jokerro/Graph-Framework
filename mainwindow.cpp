@@ -43,10 +43,18 @@ void MainWindow::paintGL(){
         qglColor(Qt::white);
 }
 
-void MainWindow::drawEdge(int x1, int y1, int x2, int y2){
+void MainWindow::drawEdge(int x1, int y1, int x2, int y2, color c){
     glBegin(GL_LINE_STRIP);
-            glColor3f(1.0,0.0,1.0);// Цвет выделенной области
-            // Координаты выделенной области
+        switch(c){
+            case BLACK: glColor3f(COLOR_BLACK); break;
+            case WHITE: glColor3f(COLOR_WHITE); break;
+            case BLUE: glColor3f(COLOR_BLUE); break;
+            case RED: glColor3f(COLOR_RED); break;
+            case MAGENTA: glColor3f(COLOR_MAGENTA); break;
+            case CYAN: glColor3f(COLOR_CYAN); break;
+
+        default: glColor3f(0.0,0.0,0.0);
+        }
             glVertex2f(x1+0.5*mVertexSize, y1+0.5*mVertexSize);
             glVertex2f(x2+0.5*mVertexSize, y2+0.5*mVertexSize);
         glEnd();
@@ -87,7 +95,7 @@ void MainWindow::paintGraph()
         for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
         {
             drawEdge(toPaint->getVertexList()[i][0]->getX(), toPaint->getVertexList()[i][0]->getY(),
-                    toPaint->getVertexList()[i][j]->getX(), toPaint->getVertexList()[i][j]->getY());
+                    toPaint->getVertexList()[i][j]->getX(), toPaint->getVertexList()[i][j]->getY(), RED);
         }
     for(int i=0; i<toPaint->getVertexList().length(); i++)
     {
