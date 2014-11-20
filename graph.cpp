@@ -208,13 +208,22 @@ void Graph::OpenFileWithGraph(QString filename)
 bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
     QQueue<int> vertexQueue;
+    vector<int> p(vertexList.length());
+
     vertexQueue.enqueue(startVertex);
     visitedVertex->push_back(startVertex);
+    p[startVertex]=-1;
 
     while(!vertexQueue.isEmpty()){
 
         int node= vertexQueue.dequeue();
+
         if(node==finishVertex){
+            visitedVertex->clear();
+             for (int v=finishVertex; v!=-1; v=p[v]){
+                    visitedVertex->push_front (v);
+            }
+            p.clear();
             return true;
         }
 
@@ -226,6 +235,7 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
                         if(visitedVertex->indexOf(vertexList[i][j]->GetId())==-1){
                             vertexQueue.enqueue(vertexList[i][j]->GetId());
                             visitedVertex->push_back(vertexList[i][j]->GetId());
+                            p[vertexList[i][j]->GetId()] = node;
                         }
                     }
                     break;
