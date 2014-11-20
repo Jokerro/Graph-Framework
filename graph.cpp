@@ -7,7 +7,7 @@
 #include <QDataStream>
 #include <QFile>
 #include <vector>
-
+#include <QQueue>
 Graph::Graph()
 {
     vertexCounter=0;
@@ -203,9 +203,38 @@ void Graph::OpenFileWithGraph(QString filename)
             }vertexList.push_back(temp1);
         }
         tempVertexList.clear();
-
   }
 
+bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
+
+    QQueue<int> vertexQueue;
+    vertexQueue.enqueue(startVertex);
+    visitedVertex->push_back(startVertex);
+
+    while(!vertexQueue.isEmpty()){
+
+        int node= vertexQueue.dequeue();
+        if(node==finishVertex){
+            return true;
+        }
+
+        for(int i=0; i< vertexList.length(); i++ ){
+            if(vertexList[i].length()>1){
+                if(vertexList[i][0]->GetId()==node){
+                    for(int j=1; j<vertexList[i].length(); j++){
+
+                        if(visitedVertex->indexOf(vertexList[i][j]->GetId())==-1){
+                            vertexQueue.enqueue(vertexList[i][j]->GetId());
+                            visitedVertex->push_back(vertexList[i][j]->GetId());
+                        }
+                    }
+                }
+            }
+        }
+    }
+    visitedVertex->clear();
+    return false;
+}
 
 void Graph::DFS(int vertex1, int vertex2)
 {///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!

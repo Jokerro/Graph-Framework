@@ -36,7 +36,7 @@ public:
     void initVertexList();   //создание массивa вершин
     void cleanMemory();      //очищение памяти от существующих массивов
     void calcPositions();
-
+    bool BFS(int startVertex, int finishVertex, QList<int>* visitedVertex);
     void DFS(int vertex1,int vertex2);
 
     void OpenFileWithGraph(QString filename);
