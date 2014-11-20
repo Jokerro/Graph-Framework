@@ -15,9 +15,10 @@ int main(int argc, char *argv[])
 
 
     Graph* a1= new Graph();
-    a1->OpenFileWithGraph("E:\\ProgrammFiles\\Graph-Framework\\test.txt");
+    a1->OpenFileWithGraph("C:\\Users\\Ruslan\\Documents\\GitHub\\Graph-Framework\\email-Enron.txt");
     for(int j=0; j<a1->getVertexList()[0].length(); j++)
     std::cout<<(a1->getVertexList()[0][j]->GetId())<<" ";
+    std::cout<<a1->getVertexList().length();
     a1->calcPositions();
 
      MainWindow w;
