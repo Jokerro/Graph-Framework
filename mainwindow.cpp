@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QGLWidget(parent)
 {
     mVertexSize = 10;
+    xTra = 0.0f;
     zTra = 0.0f;
     nSca = 1;
 
@@ -33,12 +34,6 @@ void MainWindow::paintGL(){
         glTranslatef(xTra, zTra, 0.0f);
         glScalef(nSca, nSca, nSca);
         paintGraph();
-     //   for(int j=0; j<10000; j+=20)
-    //    for(int i=0; i<10000; i+=20){
-    //        drawVertex(i,j);
-    //        drawEdge(i,j,i+mVertexSize,j+mVertexSize);
-    //    }
-
 
         qglColor(Qt::white);
 }
@@ -90,17 +85,43 @@ void MainWindow::drawVertex(int x, int y){
 
 void MainWindow::paintGraph()
 {
-
-    for(int i=0; i<toPaint->getVertexList().length(); i++)
+    int tempX, tempX1;
+    int tempY, tempY1;
+  /*  for(int i=0; i<toPaint->getVertexList().length(); i++)
         for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
         {
-            drawEdge(toPaint->getVertexList()[i][0]->getX(), toPaint->getVertexList()[i][0]->getY(),
+            tempX=0;
+            tempX1=0;
+            tempY=0;
+            tempY1=0;
+            tempX=toPaint->getVertexList()[i][0]->getX();
+            tempX1=toPaint->getVertexList()[i][j]->getX();
+            tempY=toPaint->getVertexList()[i][0]->getY();
+            tempY1=toPaint->getVertexList()[i][j]->getY();
+            if((tempX < mWindowWidth-xTra && tempY < mWindowHeight-zTra)// &&
+                //    tempX > xTra-mWindowWidth && tempY > zTra-mWindowHeight)//||
+              // (tempX1 < mWindowWidth-xTra && tempY1 < mWindowHeight-zTra &&
+              //      tempX1 > xTra-mWindowWidth && tempY1 > zTra-mWindowHeight)
+                    )
+           {
+           drawEdge(toPaint->getVertexList()[i][0]->getX(), toPaint->getVertexList()[i][0]->getY(),
                     toPaint->getVertexList()[i][j]->getX(), toPaint->getVertexList()[i][j]->getY(), RED);
-        }
+            }
+            }*/
     for(int i=0; i<toPaint->getVertexList().length(); i++)
     {
-        drawVertex(toPaint->getVertex(i,0).getX(), toPaint->getVertex(i,0).getY());
-        toPaint->getVertexList()[i][0]->markAsPainted();
+        tempX = 0;
+        tempY = 0;
+
+        tempX = toPaint->getVertex(i,0).getX();
+        tempY = toPaint->getVertex(i,0).getY();
+        if(tempX < mWindowWidth-xTra && tempY < mWindowHeight-zTra &&
+               - tempX > xTra-mWindowWidth && -tempY > zTra-mWindowHeight
+                ){
+            drawVertex(tempX, tempY);
+            toPaint->getVertexList()[i][0]->markAsPainted();
+        }
+
     }
 }
 
