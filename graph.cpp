@@ -115,7 +115,7 @@ bool isInside(vector<int> arr, int v)
     return false;
 }
 
-void Graph::OpenFileWithGraph(QString filename)
+/*void Graph::OpenFileWithGraph(QString filename)
 {
     int current_vertex=0, flag=0;
     QList<vertex*> tempVertexList;
@@ -152,7 +152,58 @@ void Graph::OpenFileWithGraph(QString filename)
         }
         vertexList.push_back(tempVertexList);
     }
-}
+}*/
+
+
+void Graph::OpenFileWithGraph(QString filename)
+{
+    int prev=-1, curr=-1, flag=0;
+    QList<vertex*> tempVertexList;
+    QList<vertex*> temp1;
+    QFile file(filename);
+    if(file.open(QIODevice::ReadOnly |QIODevice::Text))
+    {
+        while(!file.atEnd())
+        {
+             QString str = file.readLine();
+             if(str[0] == '#')
+                  continue;
+             QStringList list = str.split("\t");
+             if(prev!=list[0].toInt())
+                 tempVertexList.push_back(new vertex(list[0].toInt()));
+             prev=list[0].toInt();
+        }
+    }
+        file.close();
+        if(file.open(QIODevice::ReadOnly |QIODevice::Text))
+        {
+            while(!file.atEnd())
+            {
+                 QString str = file.readLine();
+                 if(str[0] == '#')
+                      continue;
+                 QStringList list = str.split("\t");
+                 if(list[0].toInt()!=curr)
+                 {
+                        if(flag==1)
+                        {
+                            vertexList.push_back(temp1);
+                            temp1.clear();
+                        }
+                        temp1.push_back(tempVertexList[list[0].toInt()-1]);
+                        temp1.push_back(tempVertexList[list[1].toInt()-1]);
+                        curr=list[0].toInt();
+                        flag=1;
+                 }else{
+                     temp1.push_back(tempVertexList[list[1].toInt()-1]);
+                 }
+
+            }vertexList.push_back(temp1);
+        }
+        tempVertexList.clear();
+
+  }
+
 
 void Graph::DFS(int vertex1, int vertex2)
 {///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!
