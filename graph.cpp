@@ -191,11 +191,13 @@ void Graph::OpenFileWithGraph(QString filename)
                             temp1.clear();
                         }
                         temp1.push_back(tempVertexList[list[0].toInt()-1]);
-                        temp1.push_back(tempVertexList[list[1].toInt()-1]);
+                        if(list.length()>1 && list[1]!="")
+                            temp1.push_back(tempVertexList[list[1].toInt()-1]);
                         curr=list[0].toInt();
                         flag=1;
                  }else{
-                     temp1.push_back(tempVertexList[list[1].toInt()-1]);
+                     if(list.length()>1&& list[1]!="")
+                        temp1.push_back(tempVertexList[list[1].toInt()-1]);
                  }
 
             }vertexList.push_back(temp1);
