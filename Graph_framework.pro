@@ -8,6 +8,12 @@ QT       += core opengl
 
 QT       -= gui
 
+#QMAKE_LIBS+=-static -lgomp -lpthread
+
+LIBS += -fopenmp
+QMAKE_CXXFLAGS += -fopenmp
+QMAKE_LFLAGS += -fopenmp
+
 TARGET = Graph_framework
 CONFIG   += console
 CONFIG   -= app_bundle
