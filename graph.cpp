@@ -28,6 +28,7 @@ void Graph::cleanMemory(){
 }
 
 void Graph::calcPositions(){
+    srand(12);
     int rightBorder=vertexList.length()*25;
     int bottomBorder=vertexList.length()*25;
     for(int i=0; i<vertexList.length(); i++)
