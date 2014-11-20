@@ -66,7 +66,6 @@ int Graph::getMaxVertex(QStringList vertex_pairs){ //определяет кол
     return max;
 }
 
-
 void Graph::getFromListToMatrix(QString filename){
   //получает готовые пары вершин
   QStringList linked_vertexes = readListFile(filename).split(";");
@@ -229,6 +228,7 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
                             visitedVertex->push_back(vertexList[i][j]->GetId());
                         }
                     }
+                    break;
                 }
             }
         }
