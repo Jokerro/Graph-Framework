@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
        }
    }*/
 
-    a1->OpenFileWithGraph("C:\\Users\\Ruslan\\Documents\\GitHub\\Graph-Framework\\email-Enron.txt");
+    a1->OpenFileWithGraph("E:\\ProgrammFiles\\Graph-Framework\\test.txt");
     for(int j=0; j<a1->getVertexList()[0].length(); j++)
     std::cout<<(a1->getVertexList()[0][j]->GetId())<<" ";
     std::cout<<a1->getVertexList().length();
