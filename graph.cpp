@@ -49,7 +49,7 @@ int Graph::getEdgeCount(){
 
 bool isInside(vector<int> arr, int v)
 {
-    for(int i=0;i<arr.size();i++)
+    for(uint i=0;i<arr.size();i++)
         if(v==arr[i])
             return true;
     return false;
@@ -190,6 +190,5 @@ void Graph::DFS(int vertex1, int vertex2)
             continue;
         }
     }
-    int a=0;
 }
 
