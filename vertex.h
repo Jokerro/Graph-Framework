@@ -21,6 +21,7 @@ class vertex{
         ~vertex(){}
         bool isPainted(){return painted;}
         void markAsPainted() {painted=true;}
+        void noPaint(){painted=false;}
         int getX(){return pos_x;}
         int getY(){return pos_y;}
 

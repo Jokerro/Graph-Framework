@@ -85,29 +85,29 @@ void MainWindow::drawVertex(int x, int y){
 
 void MainWindow::paintGraph()
 {
-    int tempX, tempX1;
-    int tempY, tempY1;
-  /*  for(int i=0; i<toPaint->getVertexList().length(); i++)
-        for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
-        {
-            tempX=0;
-            tempX1=0;
-            tempY=0;
-            tempY1=0;
-            tempX=toPaint->getVertexList()[i][0]->getX();
-            tempX1=toPaint->getVertexList()[i][j]->getX();
-            tempY=toPaint->getVertexList()[i][0]->getY();
-            tempY1=toPaint->getVertexList()[i][j]->getY();
-            if((tempX < mWindowWidth-xTra && tempY < mWindowHeight-zTra)// &&
-                //    tempX > xTra-mWindowWidth && tempY > zTra-mWindowHeight)//||
-              // (tempX1 < mWindowWidth-xTra && tempY1 < mWindowHeight-zTra &&
-              //      tempX1 > xTra-mWindowWidth && tempY1 > zTra-mWindowHeight)
-                    )
-           {
-           drawEdge(toPaint->getVertexList()[i][0]->getX(), toPaint->getVertexList()[i][0]->getY(),
-                    toPaint->getVertexList()[i][j]->getX(), toPaint->getVertexList()[i][j]->getY(), RED);
-            }
-            }*/
+    int tempX=0;
+    int tempY=0;
+    int tempX1=0;
+    int tempY1=0;
+
+    int lowX, highX, lowY, highY;
+    if(xTra>=0)
+    {
+        lowX=0;
+        highX=mWindowWidth-xTra;
+    }else{
+        lowX=-xTra;
+        highX=mWindowWidth-xTra;
+    }
+    if(zTra>=0)
+    {
+        lowY=0;
+        highY=mWindowHeight-zTra;
+    }else{
+        lowY=-zTra;
+        highY=mWindowHeight-zTra;
+    }
+
     for(int i=0; i<toPaint->getVertexList().length(); i++)
     {
         tempX = 0;
@@ -115,14 +115,27 @@ void MainWindow::paintGraph()
 
         tempX = toPaint->getVertex(i,0).getX();
         tempY = toPaint->getVertex(i,0).getY();
-        if(tempX < mWindowWidth-xTra && tempY < mWindowHeight-zTra &&
-               - tempX > xTra-mWindowWidth && -tempY > zTra-mWindowHeight
-                ){
+        if (tempX>lowX && tempX<highX && tempY >lowY && tempY<highY)
+        {
             drawVertex(tempX, tempY);
             toPaint->getVertexList()[i][0]->markAsPainted();
         }
 
     }
+
+    for(int i=0; i<toPaint->getVertexList().length(); i++)
+        if(toPaint->getVertex(i,0).isPainted())
+        {
+            tempX=toPaint->getVertexList()[i][0]->getX();
+            tempY=toPaint->getVertexList()[i][0]->getY();
+            for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
+            {
+                tempX1=toPaint->getVertexList()[i][j]->getX();
+                tempY1=toPaint->getVertexList()[i][j]->getY();
+                drawEdge(tempX, tempY, tempX1, tempY1, RED);
+            }
+         }
+    toPaint->throwPaint();
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *pe){
