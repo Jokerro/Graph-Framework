@@ -39,6 +39,8 @@ void MainWindow::paintGL(){
 }
 
 void MainWindow::drawEdge(int x1, int y1, int x2, int y2, color c){
+    glEnable(GL_LINE_SMOOTH);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
     glBegin(GL_LINE_STRIP);
         switch(c){
             case BLACK: glColor3f(COLOR_BLACK); break;
@@ -52,25 +54,34 @@ void MainWindow::drawEdge(int x1, int y1, int x2, int y2, color c){
         }
             glVertex2f(x1+0.5*mVertexSize, y1+0.5*mVertexSize);
             glVertex2f(x2+0.5*mVertexSize, y2+0.5*mVertexSize);
+
+//          В случае круглых вершин
+//              glVertex2f(x1, y1);
+//              glVertex2f(x2, y2);
         glEnd();
 
 }
 
 void MainWindow::drawVertex(int x, int y){
-    glBegin(GL_POLYGON);
+//    /*
+    glBegin(GL_TRIANGLE_STRIP);
             glColor3f(1.0,0.0,1.0);// Цвет выделенной области
             // Координаты выделенной области
             glVertex2f(x, y);
             glVertex2f(x+mVertexSize, y);
-            glVertex2f(x+mVertexSize, y+mVertexSize);
             glVertex2f(x, y+mVertexSize);
+            glVertex2f(x+mVertexSize, y+mVertexSize);
+
         glEnd();
+//    */
 
     // Форма вершины - окружность
-   /*
-    int r = 5;
-    int num_segments = 16;
-    glBegin(GL_LINE_LOOP);
+    /*
+    int r = 10;
+    int num_segments = 8;
+    glBegin(GL_POLYGON);
+    glEnable(GL_POLYGON_SMOOTH);
+    glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
     glColor3f(1.0,0.0,1.0);//
         for (int ii = 0; ii < num_segments; ii++)   {
             float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);//get the current angle
@@ -79,7 +90,8 @@ void MainWindow::drawVertex(int x, int y){
             glVertex2f(x + cx, y + cy);//output vertex
         }
         glEnd();
-   */
+    */
+
 }
 
 
