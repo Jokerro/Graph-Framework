@@ -156,11 +156,26 @@ void MainWindow::wheelEvent(QWheelEvent* pe){
 }
 
 void MainWindow::scale_minus(){
-    nSca = nSca / 1.1;
+    nSca = nSca / 1.01;
+    int tempWinWidth;
+    int tempWinHeight;
+
+    tempWinWidth = round(mWindowWidth * nSca);
+    tempWinHeight = round(mWindowHeight * nSca);
+    mWindowWidth += abs(mWindowWidth - tempWinWidth);
+    mWindowHeight += abs(mWindowHeight - tempWinHeight);
 }
 
 void MainWindow::scale_plus(){
-    nSca = nSca * 1.1;
+    nSca = nSca * 1.01;
+    int tempWinWidth;
+    int tempWinHeight;
+
+    tempWinWidth = round(mWindowWidth * nSca);
+    tempWinHeight = round(mWindowHeight * nSca);
+    mWindowWidth -= abs(mWindowWidth - tempWinWidth);
+    mWindowHeight -= abs(mWindowHeight - tempWinHeight);
+
 }
 
 MainWindow::~MainWindow()
