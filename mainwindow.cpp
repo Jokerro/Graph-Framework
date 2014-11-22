@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::initializeGL(){
-    qglClearColor(Qt::white);
+    qglClearColor(Qt::black);
 }
 
 void MainWindow::resizeGL(int w, int h){
@@ -57,13 +57,13 @@ void MainWindow::drawEdge(int x1, int y1, int x2, int y2, color c){
 }
 
 void MainWindow::drawVertex(int x, int y){
-    glBegin(GL_POLYGON);
-            glColor3f(1.0,0.0,1.0);// Цвет выделенной области
+    glBegin(GL_TRIANGLE_STRIP);
+            glColor3f(1.0,1.0,1.0);// Цвет выделенной области
             // Координаты выделенной области
             glVertex2f(x, y);
             glVertex2f(x+mVertexSize, y);
-            glVertex2f(x+mVertexSize, y+mVertexSize);
             glVertex2f(x, y+mVertexSize);
+            glVertex2f(x+mVertexSize, y+mVertexSize);
         glEnd();
 
     // Форма вершины - окружность
@@ -89,7 +89,6 @@ void MainWindow::paintGraph()
     int tempY=0;
     int tempX1=0;
     int tempY1=0;
-
     int lowX, highX, lowY, highY;
     if(xTra>=0)
     {
@@ -107,7 +106,6 @@ void MainWindow::paintGraph()
         lowY=-zTra;
         highY=mWindowHeight-zTra;
     }
-
     for(int i=0; i<toPaint->getVertexList().length(); i++)
     {
         tempX = 0;
@@ -119,22 +117,14 @@ void MainWindow::paintGraph()
         {
             drawVertex(tempX, tempY);
             toPaint->getVertexList()[i][0]->markAsPainted();
-        }
-
-    }
-
-    for(int i=0; i<toPaint->getVertexList().length(); i++)
-        if(toPaint->getVertex(i,0).isPainted())
-        {
-            tempX=toPaint->getVertexList()[i][0]->getX();
-            tempY=toPaint->getVertexList()[i][0]->getY();
             for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
-            {
-                tempX1=toPaint->getVertexList()[i][j]->getX();
-                tempY1=toPaint->getVertexList()[i][j]->getY();
-                drawEdge(tempX, tempY, tempX1, tempY1, RED);
-            }
-         }
+             {
+                  tempX1=toPaint->getVertexList()[i][j]->getX();
+                  tempY1=toPaint->getVertexList()[i][j]->getY();
+                  drawEdge(tempX, tempY, tempX1, tempY1, RED);
+             }
+        }
+    }
     toPaint->throwPaint();
 }
 
