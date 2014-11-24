@@ -159,6 +159,10 @@ void MainWindow::scale_minus(){
     nSca = nSca / 1.01;
     int tempWinWidth;
     int tempWinHeight;
+    int tempSize;
+
+    tempSize = round(mVertexSize * nSca);
+    mVertexSize += abs(mVertexSize - tempSize);
 
     tempWinWidth = round(mWindowWidth * nSca);
     tempWinHeight = round(mWindowHeight * nSca);
@@ -170,6 +174,10 @@ void MainWindow::scale_plus(){
     nSca = nSca * 1.01;
     int tempWinWidth;
     int tempWinHeight;
+    int tempSize;
+
+    tempSize = round(mVertexSize * nSca);
+    mVertexSize -= abs(mVertexSize - tempSize);
 
     tempWinWidth = round(mWindowWidth * nSca);
     tempWinHeight = round(mWindowHeight * nSca);

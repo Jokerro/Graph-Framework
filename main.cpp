@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
       bool DFS_test(Graph* t, QList<int>* list);
       int choice=-1;
 
-      test->OpenFileWithGraph("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\newGraph.txt");
+      test->OpenFileWithGraph("C:\\Users\\Ruslan\\Documents\\GitHub\\Graph-Framework\\newGraph.txt");
 
           system("cls");
 
