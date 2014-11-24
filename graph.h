@@ -27,7 +27,7 @@ public:
     void cleanMemory();      //очищение памяти от существующих массивов
     void calcPositions();
     bool BFS(int startVertex, int finishVertex, QList<int>* visitedVertex);
-    void DFS(int vertex1,int vertex2);
+    void DFS(int vertex1,int vertex2,QList<int>* vertexes);
     void OpenFileWithGraph(QString filename);
     bool compare_graphs(QString path1, QString path2);
     int getVertexCount();
