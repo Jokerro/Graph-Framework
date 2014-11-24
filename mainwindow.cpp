@@ -63,23 +63,13 @@ void MainWindow::drawEdge(int x1, int y1, int x2, int y2, color c){
 }
 
 void MainWindow::drawVertex(int x, int y){
-<<<<<<< HEAD
     glBegin(GL_TRIANGLE_STRIP);
             glColor3f(1.0,1.0,1.0);// Цвет выделенной области
-=======
-//    /*
-    glBegin(GL_TRIANGLE_STRIP);
-            glColor3f(1.0,0.0,1.0);// Цвет выделенной области
->>>>>>> origin/master
             // Координаты выделенной области
             glVertex2f(x, y);
             glVertex2f(x+mVertexSize, y);
             glVertex2f(x, y+mVertexSize);
             glVertex2f(x+mVertexSize, y+mVertexSize);
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
         glEnd();
 //    */
 
@@ -137,12 +127,12 @@ void MainWindow::paintGraph()
         {
             drawVertex(tempX, tempY);
             toPaint->getVertexList()[i][0]->markAsPainted();
-            for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
-             {
-                  tempX1=toPaint->getVertexList()[i][j]->getX();
-                  tempY1=toPaint->getVertexList()[i][j]->getY();
-                  drawEdge(tempX, tempY, tempX1, tempY1, RED);
-             }
+        }
+        for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
+        {
+             tempX1=toPaint->getVertexList()[i][j]->getX();
+             tempY1=toPaint->getVertexList()[i][j]->getY();
+             drawEdge(tempX, tempY, tempX1, tempY1, RED);
         }
     }
     toPaint->throwPaint();
