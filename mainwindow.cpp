@@ -127,13 +127,14 @@ void MainWindow::paintGraph()
         {
             drawVertex(tempX, tempY);
             toPaint->getVertexList()[i][0]->markAsPainted();
+            for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
+            {
+                 tempX1=toPaint->getVertexList()[i][j]->getX();
+                 tempY1=toPaint->getVertexList()[i][j]->getY();
+                 drawEdge(tempX, tempY, tempX1, tempY1, RED);
+            }
         }
-        for(int j=1; j<toPaint->getVertexList()[i].length(); j++)
-        {
-             tempX1=toPaint->getVertexList()[i][j]->getX();
-             tempY1=toPaint->getVertexList()[i][j]->getY();
-             drawEdge(tempX, tempY, tempX1, tempY1, RED);
-        }
+
     }
     toPaint->throwPaint();
 }
