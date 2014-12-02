@@ -36,6 +36,8 @@ public:
     vertex getVertex(int i, int j){return *vertexList[i][j];}
     bool operator ==(Graph to_compare);
     void throwPaint();
+
+    void setGraphFromVK(int uid, QList<vertex*> friends);
 };
 
 #endif

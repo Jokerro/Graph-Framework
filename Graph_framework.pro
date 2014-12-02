@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core opengl
+QT       += core opengl network
 
 QT       -= gui
 
@@ -24,7 +24,8 @@ TEMPLATE = app
 SOURCES += main.cpp \
     saveMatrix.cpp \
     graph.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    httprequest.cpp
 
 HEADERS += \
     edge.h \
@@ -33,4 +34,5 @@ HEADERS += \
     vertex.h \
     saveMatrix.h \
     mainwindow.h \
-    colors.h
+    colors.h \
+    httprequest.h

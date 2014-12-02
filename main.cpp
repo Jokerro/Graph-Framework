@@ -2,12 +2,22 @@
 #include <QApplication>
 #include "saveMatrix.h"
 #include "mainwindow.h"
-
-
+//#include <qt3dversion.h>
+#include "httprequest.h"
 
 int main(int argc, char *argv[])
 {
-   QApplication a(argc, argv);/*
+   QApplication a(argc, argv);
+   Graph *temp=new Graph();
+   HttpRequest req;
+   QString str="http://api.vk.com/method/friends.get?user_id=29121358";
+   req.processRequest(str, temp, 29121358);
+   MainWindow w;
+   a.setActiveWindow(&w);
+   w.setGraph(temp);
+      w.show();
+
+   /*
 //   Graph *temp=new Graph();
 //     temp->ReadMatrix("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\mat.txt");
 //     saveMatrix::save("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\saved.txt", temp);
@@ -32,7 +42,7 @@ int main(int argc, char *argv[])
      a.setActiveWindow(&w);
      w.setGraph(a1);
          w.show();
-*/
+
    Graph* test = new Graph();
    MainWindow w;
    a.setActiveWindow(&w);
@@ -43,7 +53,7 @@ int main(int argc, char *argv[])
       bool DFS_test(Graph* t, QList<int>* list);
       int choice=-1;
 
-      test->OpenFileWithGraph("C:\\Users\\Ruslan\\Documents\\GitHub\\Graph-Framework\\newGraph.txt");
+      test->OpenFileWithGraph("D:\\Dropbox\\University\\Graph-Framework\\test.txt");
 
           system("cls");
 
@@ -90,7 +100,7 @@ int main(int argc, char *argv[])
 
 
           }
-
+*/
 
       return a.exec();
 

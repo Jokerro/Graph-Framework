@@ -191,3 +191,26 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
     }
     int a=0;
 }
+
+
+
+
+
+void Graph::setGraphFromVK(int uid, QList<vertex*> friends)
+{
+    int prev=-1, curr=-1, flag=0;
+    QList<vertex*> tempVertexList;
+    QList<vertex*> temp1;
+    tempVertexList = friends;
+    //friends.removeFirst();
+    for (int i = 1; i< tempVertexList.count(); i++)
+        temp1.append(tempVertexList[i]);
+    vertexList.append(temp1);
+    temp1.clear();
+    for (int j = 1; j< tempVertexList.count(); j++){
+        temp1.append(friends[j]);
+        vertexList.append(temp1);
+        temp1.clear();
+    }
+    this->calcPositions();
+}
