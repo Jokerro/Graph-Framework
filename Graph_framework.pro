@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core opengl network
+QT       += core opengl network 3dquick
 
 QT       -= gui
 
@@ -25,7 +25,9 @@ SOURCES += main.cpp \
     saveMatrix.cpp \
     graph.cpp \
     mainwindow.cpp \
-    httprequest.cpp
+    httprequest.cpp \
+    modelview.cpp \
+    shaders.cpp
 
 HEADERS += \
     edge.h \
@@ -35,4 +37,6 @@ HEADERS += \
     saveMatrix.h \
     mainwindow.h \
     colors.h \
-    httprequest.h
+    httprequest.h \
+    modelview.h \
+    shaders.h

@@ -15,10 +15,7 @@ void ModelView::initializeGL(QGLPainter *painter)
 {
     Q_UNUSED(painter);
 
-    QGLMaterial *mat=new QGLMaterial();
-    text.setImage(QImage("E:\\Qt\\text.png"));
-    mat->setTexture(&text);
-    m_scene = QGLAbstractScene::loadScene("E:\\Qt\\Earth.obj");
+    m_scene = QGLAbstractScene::loadScene("Earth.obj");
 }
 
 void ModelView::paintGL(QGLPainter *painter)

@@ -2,7 +2,8 @@
 #include <QApplication>
 #include "saveMatrix.h"
 #include "mainwindow.h"
-//#include <qt3dversion.h>
+#include <qt3dversion.h>
+#include "modelview.h"
 #include "httprequest.h"
 
 int main(int argc, char *argv[])
@@ -16,6 +17,8 @@ int main(int argc, char *argv[])
    a.setActiveWindow(&w);
    w.setGraph(temp);
       w.show();
+   ModelView go;
+   go.show();
 
    /*
 //   Graph *temp=new Graph();
