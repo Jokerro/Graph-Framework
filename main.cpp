@@ -2,7 +2,6 @@
 #include <QApplication>
 #include "saveMatrix.h"
 #include "mainwindow.h"
-#include <Qt3D>
 #include "modelview.h"
 
 int main(int argc, char *argv[])
