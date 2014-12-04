@@ -8,6 +8,7 @@
 #include <QFile>
 #include <vector>
 #include <QQueue>
+#include <QDebug>
 Graph::Graph()
 {
     vertexCounter=0;
@@ -196,21 +197,44 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 
 
 
-void Graph::setGraphFromVK(int uid, QList<vertex*> friends)
+void Graph::setGraphFromVK(int uid, QList<int> friends)
 {
-    int prev=-1, curr=-1, flag=0;
     QList<vertex*> tempVertexList;
-    QList<vertex*> temp1;
-    tempVertexList = friends;
-    //friends.removeFirst();
-    for (int i = 1; i< tempVertexList.count(); i++)
-        temp1.append(tempVertexList[i]);
-    vertexList.append(temp1);
-    temp1.clear();
-    for (int j = 1; j< tempVertexList.count(); j++){
-        temp1.append(friends[j]);
-        vertexList.append(temp1);
-        temp1.clear();
+
+    bool flag = false;
+    for (int i = 0; i< vertexList.size(); i++)
+        if (friends[0] == vertexList[i].at(0)->GetId()){
+            flag = true;
+            tempVertexList.append(vertexList[i].at(0));
+            vertexList.removeAt(i);
+            break;
+        }
+    if (!flag){
+        tempVertexList.append(new vertex(friends[0], new Node(widget)));
+        widget->scene()->addItem(tempVertexList[0]->getNode());
     }
+    for (int i = 1; i< friends.size(); i++){
+        bool flag = false;
+        for (int j = 0; j< vertexList.size(); j++)
+        if (friends[i] == vertexList[j].at(0)->GetId()){
+            flag=true;
+            tempVertexList.append(vertexList[j].at(0));
+            break;
+        }
+        if (!flag){
+            QList<vertex*> temp1;
+            temp1.append(new vertex(friends[i], new Node(widget)));
+            vertexList.append(temp1);
+            tempVertexList.append(temp1[0]);
+            temp1.clear();
+            widget->scene()->addItem(tempVertexList[tempVertexList.size()-1]->getNode());
+            tempVertexList[tempVertexList.size()-1]->getNode()->setPos(i,i*5);
+        }
+        widget->scene()->addItem(
+                    new Edge(tempVertexList[0]->getNode(), tempVertexList[tempVertexList.size()-1]->getNode()));
+
+
+    }
+    qDebug()<<vertexList.size();
     this->calcPositions();
 }

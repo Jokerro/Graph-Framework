@@ -2,23 +2,46 @@
 #include <QApplication>
 #include "saveMatrix.h"
 #include "mainwindow.h"
-#include <qt3dversion.h>
-#include "modelview.h"
+//#include <qt3dversion.h>
+//#include "modelview.h"
 #include "httprequest.h"
+#include <QTime>
+#include <QMainWindow>
+#include "graphwidget.h"
+#include "node.h"
+
 
 int main(int argc, char *argv[])
 {
    QApplication a(argc, argv);
-   Graph *temp=new Graph();
+   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+
+   GraphWidget *widget = new GraphWidget;
+   QMainWindow mainWindow;
+   mainWindow.setCentralWidget(widget);
+
+   mainWindow.show();
+   //Node *node = new Node(widget);
+    //widget->scene()->addItem(node);
+   Graph *temp=new Graph(widget);
+
    HttpRequest req;
-   QString str="http://api.vk.com/method/friends.get?user_id=29121358";
-   req.processRequest(str, temp, 29121358);
-   MainWindow w;
-   a.setActiveWindow(&w);
-   w.setGraph(temp);
-      w.show();
-   ModelView go;
-   go.show();
+   QString str="http://api.vk.com/method/friends.get?user_id=13307709";
+
+   req.processRequest(str, temp, 13307709);
+
+    str="http://api.vk.com/method/friends.get?user_id=29121358";
+    req.processRequest(str, temp, 29121358);
+
+    str="http://api.vk.com/method/friends.get?user_id=16180281";
+    req.processRequest(str, temp, 16180281);
+
+    str="http://api.vk.com/method/friends.get?user_id=27290742";
+    req.processRequest(str, temp, 27290742);
+
+
+   //ModelView go;
+   //go.show();
 
    /*
 //   Graph *temp=new Graph();

@@ -38,11 +38,11 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
                 {
                     if(jsonDoc.isObject())
                     {
-                        QList<vertex*> friends;
-                        friends.append(new vertex(uid));
+                        QList<int> friends;
+                        friends.append(uid);
                         //qDebug()<<jsonDoc.object().value("response").toArray().count();
                         for (int i=0; i<jsonDoc.object().value("response").toArray().count(); i++){
-                            friends.append(new vertex(jsonDoc.object().value("response").toArray().takeAt(i).toInt()));
+                            friends.append(jsonDoc.object().value("response").toArray().takeAt(i).toInt());
                         }
                         graph->setGraphFromVK(uid, friends);
                     }

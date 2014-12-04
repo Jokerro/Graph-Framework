@@ -3,7 +3,9 @@
 
 #include <stdlib.h>
 #include "edge.h"
+#include "node.h"
 #include "vertex.h"
+#include "graphwidget.h"
 #include <QString>
 #include <iostream>
 #include <QFile>
@@ -14,6 +16,7 @@ using namespace std;
 class Graph{
 
 private:
+    GraphWidget *widget;
     int edgeCounter;
     int vertexCounter;
     QList< QList<vertex*> > vertexList;
@@ -21,6 +24,7 @@ private:
     int getMaxVertex(QStringList vertex_pairs);//получает количество вершин
 public:
     Graph();
+    Graph(GraphWidget *wdg):widget(wdg){}
     ~Graph();
     void weightMatrixInit(); //выделение памяти под матрицу весов при необходимости
     void initVertexList();   //создание массивa вершин
@@ -37,7 +41,7 @@ public:
     bool operator ==(Graph to_compare);
     void throwPaint();
 
-    void setGraphFromVK(int uid, QList<vertex*> friends);
+    void setGraphFromVK(int uid, QList<int> friends);
 };
 
 #endif

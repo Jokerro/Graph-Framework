@@ -38,38 +38,43 @@
 **
 ****************************************************************************/
 
-#ifndef EDGE_H
-#define EDGE_H
+#ifndef GRAPHWIDGET_H
+#define GRAPHWIDGET_H
 
-#include <QGraphicsItem>
+#include <QGraphicsView>
 
 class Node;
 
 //! [0]
-class Edge : public QGraphicsItem
+class GraphWidget : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
-    Edge(Node *sourceNode, Node *destNode);
+    GraphWidget(QWidget *parent = 0);
 
-    Node *sourceNode() const;
-    Node *destNode() const;
+    void itemMoved();
 
-    void adjust();
-
-    enum { Type = UserType + 2 };
-    int type() const { return Type; }
+public slots:
+    void shuffle();
+    void zoomIn();
+    void zoomOut();
 
 protected:
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void keyPressEvent(QKeyEvent *event);
+    void timerEvent(QTimerEvent *event);
+#ifndef QT_NO_WHEELEVENT
+    void wheelEvent(QWheelEvent *event);
+#endif
+    void drawBackground(QPainter *painter, const QRectF &rect);
+
+    void scaleView(qreal scaleFactor);
 
 private:
-    Node *source, *dest;
+    int timerId;
+    Node *centerNode;
 
-    QPointF sourcePoint;
-    QPointF destPoint;
-    qreal arrowSize;
 };
 //! [0]
 
-#endif // EDGE_H
+#endif // GRAPHWIDGET_H
