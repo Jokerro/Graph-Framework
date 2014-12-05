@@ -44,13 +44,12 @@ int main(int argc, char *argv[])
    //go.show();
 
    /*
-//   Graph *temp=new Graph();
-//     temp->ReadMatrix("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\mat.txt");
-//     saveMatrix::save("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\saved.txt", temp);
-//     delete temp;
+   Graph *temp=new Graph();
+    temp->ReadMatrix("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\mat.txt");
+     saveMatrix::save("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\saved.txt", temp);
+     delete temp;
 
-
-    Graph* a1= new Graph();
+*/
    /*QList<int> simple;
    if (a1->BFS(1, 4, &simple)){
        std::cout<<"road"<<std::endl;
