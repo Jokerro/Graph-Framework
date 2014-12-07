@@ -1,14 +1,17 @@
 #include <QCoreApplication>
 #include <QApplication>
 #include "saveMatrix.h"
-#include "mainwindow.h"
 //#include <qt3dversion.h>
 //#include "modelview.h"
 #include "httprequest.h"
 #include <QTime>
 #include <QMainWindow>
+#include <QToolBar>
+#include <QPushButton>
 #include "graphwidget.h"
+#include "mainwindow.h"
 #include "node.h"
+#include <qdebug.h>
 
 
 int main(int argc, char *argv[])
@@ -16,117 +19,32 @@ int main(int argc, char *argv[])
    QApplication a(argc, argv);
    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
-   GraphWidget *widget = new GraphWidget;
-   QMainWindow mainWindow;
-   mainWindow.setCentralWidget(widget);
-
-   mainWindow.show();
-   //Node *node = new Node(widget);
-    //widget->scene()->addItem(node);
-   Graph *temp=new Graph(widget);
+   GraphWidget *graphWidget = new GraphWidget;
+   Graph *temp=new Graph(graphWidget);
 
    HttpRequest req;
    QString str="http://api.vk.com/method/friends.get?user_id=13307709";
 
    req.processRequest(str, temp, 13307709);
 
-    str="http://api.vk.com/method/friends.get?user_id=29121358";
-    req.processRequest(str, temp, 29121358);
+   str="http://api.vk.com/method/friends.get?user_id=29121358";
+   req.processRequest(str, temp, 29121358);
 
-    str="http://api.vk.com/method/friends.get?user_id=16180281";
-    req.processRequest(str, temp, 16180281);
+   str="http://api.vk.com/method/friends.get?user_id=16180281";
+   req.processRequest(str, temp, 16180281);
 
-    str="http://api.vk.com/method/friends.get?user_id=27290742";
-    req.processRequest(str, temp, 27290742);
+   str="http://api.vk.com/method/friends.get?user_id=27290742";
+   req.processRequest(str, temp, 27290742);
 
+   str="http://api.vk.com/method/friends.get?user_id=81812013";
+   req.processRequest(str, temp, 81812013);
 
-   //ModelView go;
-   //go.show();
+   MainWindow mainWindow;
 
-   /*
-//   Graph *temp=new Graph();
-//     temp->ReadMatrix("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\mat.txt");
-//     saveMatrix::save("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\saved.txt", temp);
-//     delete temp;
+   mainWindow.setGraphWidget(graphWidget);
+   mainWindow.setCentralWidget(graphWidget);
+   mainWindow.showMaximized();
 
-
-    Graph* a1= new Graph();
-   /*QList<int> simple;
-   if (a1->BFS(1, 4, &simple)){
-       std::cout<<"road"<<std::endl;
-       for(int j=0; j<simple.length(); j++){
-           std::cout<<simple[j]<<" ";
-       }
-   }*/
-/*
-    a1->OpenFileWithGraph("E:\\ProgrammFiles\\Graph-framework\\test.txt");
-    for(int j=0; j<a1->getVertexList()[0].length(); j++)
-    std::cout<<(a1->getVertexList()[0][j]->GetId())<<" ";
-    std::cout<<a1->getVertexList().length();
-    a1->calcPositions();
-     MainWindow w;
-     a.setActiveWindow(&w);
-     w.setGraph(a1);
-         w.show();
-
-   Graph* test = new Graph();
-   MainWindow w;
-   a.setActiveWindow(&w);
-
-      void getGraph(Graph* t);
-      void showMenu();
-      bool BFS_test(Graph* t, QList<int>* list);
-      bool DFS_test(Graph* t, QList<int>* list);
-      int choice=-1;
-
-      test->OpenFileWithGraph("D:\\Dropbox\\University\\Graph-Framework\\test.txt");
-
-          system("cls");
-
-          showMenu();
-          cin>>choice;
-
-          if(choice==1)
-          {
-              test->OpenFileWithGraph("D:\\Qt\\Tools\\QtCreator\\bin\\Graph_framework\\newGraph.txt");
-              choice=2;
-          }
-          else if(choice==2)
-          {
-              test->calcPositions();
-              w.setGraph(test);
-              w.show();
-
-
-          }
-          else if(choice==3)
-          {
-              QList<int> path;
-              if(BFS_test(test,&path)){
-                  cout<<"path: "<<endl;
-              for(int i=0;i<path.length()-1;i++)
-                  cout<<path.at(i)<<"->";
-              cout<<path.at(path.length()-1);
-          }
-              else
-                  cout<<"there is no path"<<endl;
-
-      }
-          else if(choice==4)
-          {
-              QList<int> path;
-              if(DFS_test(test,&path)){
-                  cout<<"path: "<<endl;
-              for(int i=0;i<path.length()-1;i++)
-                  cout<<path.at(i)<<"->";
-              cout<<path.at(path.length()-1);
-              }
-              else
-                  cout<<"there is no path";
-
-
-          }
-*/
 
       return a.exec();
 

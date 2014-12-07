@@ -1,55 +1,32 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
 #include <QMainWindow>
-#include <QGLWidget>
-#include <QtOpenGL>
-#include <QTimer>
-#include <graph.h>
-#include <qmath.h>
-#include "graph.h"
-#include "colors.h"
+#include <QPushButton>
+#include <QToolBar>
+#include "graphwidget.h"
 
-class MainWindow : public QGLWidget
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    virtual ~MainWindow();
+    void setGraphWidget(GraphWidget *widget);
+
+
+signals:
+
+public slots:
+
+private slots:
+    void handleButton();
 
 private:
-    int mVertexSize;
-    int mWindowWidth;
-    int mWindowHeight;
+    QPushButton *btnGo;
+    QToolBar *toolBar;
+    GraphWidget *graphWidget;
 
-    Graph* toPaint;
-
-    GLfloat zTra; // z текущая координата перемещения сцены
-    GLfloat xTra; // x текущая координата перемещения сцены
-    GLfloat nSca; // коэф масштабирования
-
-    QPoint ptrMousePosition; // координата указателя мыши
-
-
-protected:
-    void initializeGL();
-    void resizeGL(int width, int height);
-    void paintGL();
-
-    void mouseMoveEvent(QMouseEvent* pe);
-    void mousePressEvent(QMouseEvent* pe);
-    void wheelEvent(QWheelEvent* pe);
-
-public:
-
-    void setGraph(Graph *a){toPaint=a;}
-    void drawVertex(int x, int y);
-    void drawEdge(int x1, int y1, int x2, int y2, color);
-    void paintGraph();
-    // Скалирование сцены
-    void scale_plus();
-    void scale_minus();
-
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
 };
 
 #endif // MAINWINDOW_H

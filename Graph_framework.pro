@@ -24,13 +24,13 @@ TEMPLATE = app
 SOURCES += main.cpp \
     saveMatrix.cpp \
     graph.cpp \
-    mainwindow.cpp \
     httprequest.cpp \
 #    modelview.cpp \
     shaders.cpp \
     edge.cpp \
     graphwidget.cpp \
-    node.cpp
+    node.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     edge.h \
@@ -38,10 +38,10 @@ HEADERS += \
     path.h \
     vertex.h \
     saveMatrix.h \
-    mainwindow.h \
     colors.h \
     httprequest.h \
 #    modelview.h \
     shaders.h \
     graphwidget.h \
-    node.h
+    node.h \
+    mainwindow.h

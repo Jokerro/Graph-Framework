@@ -46,6 +46,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
+#include <qdebug.h>
 
 //! [0]
 Node::Node(GraphWidget *graphWidget)
@@ -115,7 +116,7 @@ void Node::calculateForces()
 //! [4]
 
 //! [5]
-    if (qAbs(xvel) < 0.1 && qAbs(yvel) < 0.1)
+    if (qAbs(xvel) < 0.8 && qAbs(yvel) < 0.8)
         xvel = yvel = 0;
 //! [5]
 
@@ -166,8 +167,8 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     if (option->state & QStyle::State_Sunken) {
         gradient.setCenter(3, 3);
         gradient.setFocalPoint(3, 3);
-        gradient.setColorAt(1, QColor(Qt::yellow).light(120));
-        gradient.setColorAt(0, QColor(Qt::darkYellow).light(120));
+        gradient.setColorAt(1, QColor(Qt::red).light(120));
+        gradient.setColorAt(0, QColor(Qt::darkRed).light(120));
     } else {
         gradient.setColorAt(0, Qt::yellow);
         gradient.setColorAt(1, Qt::darkYellow);
@@ -201,6 +202,7 @@ void Node::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     update();
     QGraphicsItem::mousePressEvent(event);
+
 }
 
 void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -209,3 +211,4 @@ void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseReleaseEvent(event);
 }
 //! [12]
+

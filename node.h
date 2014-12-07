@@ -77,6 +77,7 @@ protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+//    void wheelEvent(QGraphicsSceneWheelEvent *event);
 
 private:
     QList<Edge *> edgeList;

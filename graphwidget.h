@@ -54,6 +54,8 @@ public:
     GraphWidget(QWidget *parent = 0);
 
     void itemMoved();
+    void setPhysicsEnable(bool enable);
+    bool isPhysicsDisabled();
 
 public slots:
     void shuffle();
@@ -72,6 +74,8 @@ protected:
 
 private:
     int timerId;
+    bool isPhysicsEnabled;
+
     Node *centerNode;
 
 };

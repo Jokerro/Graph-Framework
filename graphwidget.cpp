@@ -55,24 +55,36 @@ GraphWidget::GraphWidget(QWidget *parent)
     scene->setSceneRect(-20000, -20000, 40000, 40000);
     setScene(scene);
     setCacheMode(CacheBackground);
-    setViewportUpdateMode(SmartViewportUpdate);
+    setViewportUpdateMode(BoundingRectViewportUpdate);
     setRenderHint(QPainter::Antialiasing);
     setTransformationAnchor(AnchorUnderMouse);
     scale(qreal(0.8), qreal(0.8));
     setMinimumSize(400, 400);
     setWindowTitle(tr("Elastic Nodes"));
+
+    this->isPhysicsEnabled = true;
 //! [0]
 
 //! [1]
 
 }
 //! [1]
+void GraphWidget::setPhysicsEnable(bool enable){
+    if(enable)
+        this->isPhysicsEnabled = true;
+    else
+        this->isPhysicsEnabled = false;
+}
+
+bool GraphWidget::isPhysicsDisabled(){
+    return this->isPhysicsEnabled;
+}
 
 //! [2]
 void GraphWidget::itemMoved()
 {
     if (!timerId)
-        timerId = startTimer(1000 / 55);
+        timerId = startTimer(1000 / 60);
 }
 //! [2]
 
@@ -113,24 +125,28 @@ void GraphWidget::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event);
 
-    QList<Node *> nodes;
-    foreach (QGraphicsItem *item, scene()->items()) {
-        if (Node *node = qgraphicsitem_cast<Node *>(item))
-            nodes << node;
-    }
+    if(this->isPhysicsEnabled){
+        QList<Node *> nodes;
+        foreach (QGraphicsItem *item, scene()->items()) {
+            if (Node *node = qgraphicsitem_cast<Node *>(item))
+                nodes << node;
+        }
 
-    foreach (Node *node, nodes)
-        node->calculateForces();
 
-    bool itemsMoved = false;
-    foreach (Node *node, nodes) {
-        if (node->advance())
-            itemsMoved = true;
-    }
+        foreach (Node *node, nodes)
+            node->calculateForces();
 
-    if (!itemsMoved) {
-        killTimer(timerId);
-        timerId = 0;
+
+        bool itemsMoved = false;
+        foreach (Node *node, nodes) {
+            if (node->advance())
+                itemsMoved = true;
+        }
+
+        if (!itemsMoved) {
+            killTimer(timerId);
+            timerId = 0;
+        }
     }
 }
 //! [4]
@@ -139,10 +155,11 @@ void GraphWidget::timerEvent(QTimerEvent *event)
 //! [5]
 void GraphWidget::wheelEvent(QWheelEvent *event)
 {
-    scaleView(pow((double)2, -event->delta() / 240.0));
+    scaleView(pow((double)2, event->delta() / 240.0));
 }
 //! [5]
 #endif
+
 
 //! [6]
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect)
