@@ -195,8 +195,6 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 
 
 
-
-
 void Graph::setGraphFromVK(int uid, QList<int> friends)
 {
     QList<vertex*> tempVertexList;
@@ -237,4 +235,78 @@ void Graph::setGraphFromVK(int uid, QList<int> friends)
     }
     qDebug()<<vertexList.size();
     this->calcPositions();
+}
+
+
+
+void Graph::transposeGraph(QList<QList<int> >* resultGraph){
+    QList<int> marked;
+    for(int i=0; i<vertexList.length(); i++){
+        for(int j=1; j<vertexList[i].length(); j++){
+            if(marked.indexOf(vertexList[i][j]->GetId())==-1){
+                marked.push_back(vertexList[i][j]->GetId());
+                QList<int> tempList;
+                tempList.push_back(vertexList[i][j]->GetId());
+                tempList.push_back(vertexList[i][0]->GetId());
+                resultGraph->push_back(tempList);
+            }else{
+               for(int k=0; k<resultGraph->length(); k++){
+                   if(resultGraph->at(k)[0]==vertexList[i][j]->GetId())
+                     resultGraph->operator [](k).push_back(vertexList[i][0]->GetId());
+               }
+            }
+        }
+    }
+   marked.clear();
+}
+
+void Graph::strongComponentDFS(int v) {
+    used.push_back(v);
+    for(int i=0; i<vertexList.length(); i++){
+       if (vertexList[i].at(0)->GetId()==v){
+           if (vertexList[i].size()>1){
+            for (int j=1; j<vertexList[i].size(); ++j)
+            {
+                if (used.indexOf(vertexList[i].at(j)->GetId())==-1)
+                    strongComponentDFS( vertexList[i].at(j)->GetId());
+            }
+           }
+       }
+    }
+    order.push_back (v);
+}
+
+void Graph::transposedGraphDFS(int v, QList<QList<int> >* transposedGraph, QList<int>* component) {
+    used.push_back(v);
+    component->push_back(v);
+    for(int i=0; i<transposedGraph->length(); i++){
+       if (transposedGraph->at(i).at(0)==v){
+           if (transposedGraph->at(i).size()>1){
+            for (int j=1; j<transposedGraph->at(i).size(); ++j) {
+                if (used.indexOf(transposedGraph->at(i).at(j))==-1)
+                    transposedGraphDFS(transposedGraph->at(i).at(j), transposedGraph, component);
+            }
+           }
+       }
+    }
+}
+
+void Graph::getStrongComponents(QList<QList<int> >* components) {
+    QList<QList<int> > t;
+    QList<int> component;
+    transposeGraph(&t);
+
+    for(int i=0; i<vertexList.length(); i++)
+        if(used.indexOf(vertexList[i][0]->GetId())==-1)
+            strongComponentDFS(vertexList[i][0]->GetId());
+
+    used.clear();
+    for(int i=0; i<vertexList.length(); i++){
+        int v = order[vertexList.length()-1-i];
+        if(used.indexOf(v)==-1){
+            component.clear();
+            transposedGraphDFS(v, &t, &component);
+            components->append(component);
+        }
+    }
 }
