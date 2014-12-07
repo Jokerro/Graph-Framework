@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
    Graph *temp=new Graph(graphWidget);
 
    HttpRequest req;
-   QString str="http://api.vk.com/method/friends.get?user_id=13307709&fields=photo_50&v=5.27";
+   QString str="http://api.vk.com/method/friends.get?user_id=13307709&fields=photo_50,country,city&v=5.27";
 
    req.processRequest(str, temp, 13307709);
 

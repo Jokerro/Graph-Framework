@@ -28,7 +28,6 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
     {
         // Читаем ответ от сервера
         QByteArray bytes = reply->readAll();
-        QString string(bytes);
 
         // Выводим ответ на экран
 

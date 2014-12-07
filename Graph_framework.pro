@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     node.cpp \
     mainwindow.cpp \
     imagedownloader.cpp \
-    uimainwindow.cpp
+    uimainwindow.cpp \
+    geolocation.cpp
 
 HEADERS += \
     edge.h \
@@ -49,4 +50,5 @@ HEADERS += \
     mainwindow.h \
     imagedownloader.h \
     uimainwindow.h \
-    VKResponse.h
+    VKResponse.h \
+    geolocation.h
