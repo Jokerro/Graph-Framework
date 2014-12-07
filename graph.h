@@ -10,6 +10,7 @@
 #include <iostream>
 #include <QFile>
 #include <QList>
+#include "VKResponse.h"
 
 using namespace std;
 
@@ -31,7 +32,6 @@ public:
     void weightMatrixInit(); //выделение памяти под матрицу весов при необходимости
     void initVertexList();   //создание массивa вершин
     void cleanMemory();      //очищение памяти от существующих массивов
-    void calcPositions();
 
     bool BFS(int startVertex, int finishVertex, QList<int>* visitedVertex);
     void DFS(int vertex1,int vertex2,QList<int>* vertexes);
@@ -46,9 +46,8 @@ public:
     QList < QList<vertex*> > getVertexList(){return vertexList;}
     vertex getVertex(int i, int j){return *vertexList[i][j];}
     bool operator ==(Graph to_compare);
-    void throwPaint();
 
-    void setGraphFromVK(int uid, QList<int> friends);
+    void setGraphFromVK(int uid, QList<VKResponse> friends);
 };
 
 #endif

@@ -13,6 +13,7 @@
 #include <QJsonArray>
 #include "graph.h"
 #include "vertex.h"
+#include "VKResponse.h"
 
 class HttpRequest : public QObject
 {

@@ -25,20 +25,6 @@ void Graph::cleanMemory(){
    vertexList.clear();
 }
 
-void Graph::calcPositions(){
-    srand(12);
-    int rightBorder=vertexList.length()*25;
-    int bottomBorder=vertexList.length()*25;
-    for(int i=0; i<vertexList.length(); i++)
-        vertexList[i][0]->setPosition(rand()%rightBorder+5, rand()%bottomBorder+5);
-
-}
-
-void Graph::throwPaint(){
-    for(int i=0; i<vertexList.length(); i++)
-        for(int j=0; j<vertexList[i].length(); j++)
-            vertexList[i][j]->noPaint();
-}
 
 int Graph::getVertexCount(){
     return vertexCounter;
@@ -195,13 +181,13 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 
 
 
-void Graph::setGraphFromVK(int uid, QList<int> friends)
+void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
 {
     QList<vertex*> tempVertexList;
 
     bool flag = false;
     for (int i = 0; i< vertexList.size(); i++)
-        if (friends[0] == vertexList[i].at(0)->GetId()){
+        if (friends[0].id == vertexList[i].at(0)->GetId()){
             flag = true;
             tempVertexList.append(vertexList[i].at(0));
             vertexList.removeAt(i);
@@ -211,10 +197,10 @@ void Graph::setGraphFromVK(int uid, QList<int> friends)
         tempVertexList.append(new vertex(friends[0], new Node(widget)));
         widget->scene()->addItem(tempVertexList[0]->getNode());
     }
-    for (int i = 1; i< friends.size(); i++){
+    for (int i = 1; i<friends.size(); i++){
         bool flag = false;
         for (int j = 0; j< vertexList.size(); j++)
-        if (friends[i] == vertexList[j].at(0)->GetId()){
+        if (friends[i].id == vertexList[j].at(0)->GetId()){
             flag=true;
             tempVertexList.append(vertexList[j].at(0));
             break;
@@ -233,8 +219,8 @@ void Graph::setGraphFromVK(int uid, QList<int> friends)
 
 
     }
+    vertexList.append(tempVertexList);
     qDebug()<<vertexList.size();
-    this->calcPositions();
 }
 
 

@@ -29,7 +29,7 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
         // Читаем ответ от сервера
         QByteArray bytes = reply->readAll();
         QString string(bytes);
-        qDebug()<<"yes";
+
         // Выводим ответ на экран
 
         QJsonParseError  parseError;
@@ -38,11 +38,19 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
                 {
                     if(jsonDoc.isObject())
                     {
-                        QList<int> friends;
-                        friends.append(uid);
+                        QList<VKResponse> friends;
+                        VKResponse temp_friend;
+                        temp_friend.id = uid;
+                        friends.append(temp_friend);
                         //qDebug()<<jsonDoc.object().value("response").toArray().count();
-                        for (int i=0; i<jsonDoc.object().value("response").toArray().count(); i++){
-                            friends.append(jsonDoc.object().value("response").toArray().takeAt(i).toInt());
+                        for (int i=0; i<jsonDoc.object().value("response").toObject().value("count").toInt(); i++){
+                            temp_friend.id = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("id").toInt();
+                            temp_friend.country = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("country").toObject().value("title").toString();
+                            temp_friend.city = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("city").toObject().value("title").toString();
+                            temp_friend.first_name = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("first_name").toString();
+                            temp_friend.last_name = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("last_name").toString();
+                            temp_friend.photo_50 = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("photo_50").toString();
+                            friends.append(temp_friend);
                         }
                         graph->setGraphFromVK(uid, friends);
                     }

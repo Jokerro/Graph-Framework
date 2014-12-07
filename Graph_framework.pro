@@ -30,7 +30,9 @@ SOURCES += main.cpp \
     edge.cpp \
     graphwidget.cpp \
     node.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    imagedownloader.cpp \
+    uimainwindow.cpp
 
 HEADERS += \
     edge.h \
@@ -44,4 +46,7 @@ HEADERS += \
     shaders.h \
     graphwidget.h \
     node.h \
-    mainwindow.h
+    mainwindow.h \
+    imagedownloader.h \
+    uimainwindow.h \
+    VKResponse.h

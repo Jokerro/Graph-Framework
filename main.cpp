@@ -23,21 +23,9 @@ int main(int argc, char *argv[])
    Graph *temp=new Graph(graphWidget);
 
    HttpRequest req;
-   QString str="http://api.vk.com/method/friends.get?user_id=13307709";
+   QString str="http://api.vk.com/method/friends.get?user_id=13307709&fields=photo_50&v=5.27";
 
    req.processRequest(str, temp, 13307709);
-
-   str="http://api.vk.com/method/friends.get?user_id=29121358";
-   req.processRequest(str, temp, 29121358);
-
-   str="http://api.vk.com/method/friends.get?user_id=16180281";
-   req.processRequest(str, temp, 16180281);
-
-   str="http://api.vk.com/method/friends.get?user_id=27290742";
-   req.processRequest(str, temp, 27290742);
-
-   str="http://api.vk.com/method/friends.get?user_id=81812013";
-   req.processRequest(str, temp, 81812013);
 
    MainWindow mainWindow;
 
