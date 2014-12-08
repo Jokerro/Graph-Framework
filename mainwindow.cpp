@@ -4,14 +4,14 @@
 #include "httprequest.h"
 #include <QSize>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     QMainWindow(parent)
 {
     btnGo = new QPushButton("Go", this);
     connect(btnGo, SIGNAL(released()), this, SLOT(pressGo()));
     btnPlay = new QPushButton("Play/pause", this);
     connect(btnPlay, SIGNAL(released()), this, SLOT(pressPlay()));
-
+    graph=gr;
 
 
     tlId = new QTextLine();
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::setGraphWidget(GraphWidget *widget){
     graphWidget = widget;
-    graph = new Graph(graphWidget);
+
 }
 
 void MainWindow::pressGo(){
