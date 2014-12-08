@@ -179,12 +179,27 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
     int a=0;
 }
 
+void Graph::addVertexFromVK(VKResponse user){
 
+    bool flag = false;
+    for (int i=0; i<vertexList.size(); i++){
+        if(vertexList[i][0]->GetId() == user.id){
+            flag=true;
+            break;
+        }
+    }
+    if(!flag){
+        QList<vertex*> tempVertexList;
+        tempVertexList.append(new vertex(user, new Node(widget)));
+        widget->scene()->addItem(tempVertexList[0]->getNode());
+        vertexList.append(tempVertexList);
+    }
+
+}
 
 void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
 {
     QList<vertex*> tempVertexList;
-
     bool flag = false;
     for (int i = 0; i< vertexList.size(); i++)
         if (friends[0].id == vertexList[i].at(0)->GetId()){

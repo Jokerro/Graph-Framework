@@ -7,6 +7,7 @@
 #include <QTextEdit>
 #include <QTextLine>
 #include "graphwidget.h"
+#include "httprequest.h"
 
 class MainWindow : public QMainWindow
 {
@@ -32,6 +33,8 @@ private:
     QPushButton *btnPlay;
     QToolBar *toolBar;
     GraphWidget *graphWidget;
+    HttpRequest* req;
+    Graph *graph;
 
 };
 

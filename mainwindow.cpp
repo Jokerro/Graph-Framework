@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     btnPlay = new QPushButton("Play/pause", this);
     connect(btnPlay, SIGNAL(released()), this, SLOT(pressPlay()));
 
+
+
     tlId = new QTextLine();
     teId = new QTextEdit();
     QSize teIdSize = teId->document()->size().toSize();
@@ -33,10 +35,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::setGraphWidget(GraphWidget *widget){
     graphWidget = widget;
+    graph = new Graph(graphWidget);
 }
 
 void MainWindow::pressGo(){
-    //do something
+    QString str="http://api.vk.com/method/users.get?user_ids="+teId->toPlainText()+"&fields=photo_100,country,city&v=5.27";
+    qDebug()<<str;
+    req = new HttpRequest();
+    req->processRequest(str, graph, teId->toPlainText().toInt(), req);
 }
 
 void MainWindow::pressPlay(){
