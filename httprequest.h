@@ -20,7 +20,7 @@ class HttpRequest : public QObject
     Q_OBJECT
 public:
     explicit HttpRequest(QObject *parent = 0);
-    void processRequest(QString URLaddress, Graph* gr, int id);
+    void processRequest(QString URLaddress, Graph* gr, int id, HttpRequest* req);
     Graph *graph;
     int uid;
 
@@ -30,6 +30,7 @@ public slots:
     void finishedSlot(QNetworkReply* reply);
 private:
     QNetworkAccessManager* nam;
+    HttpRequest *request;
 
 };
 
