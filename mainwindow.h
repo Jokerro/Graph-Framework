@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QToolBar>
+#include <QTextEdit>
+#include <QTextLine>
 #include "graphwidget.h"
 
 class MainWindow : public QMainWindow
@@ -20,10 +22,14 @@ signals:
 public slots:
 
 private slots:
-    void handleButton();
+    void pressGo();
+    void pressPlay();
 
 private:
+    QTextLine *tlId;
+    QTextEdit *teId;
     QPushButton *btnGo;
+    QPushButton *btnPlay;
     QToolBar *toolBar;
     GraphWidget *graphWidget;
 
