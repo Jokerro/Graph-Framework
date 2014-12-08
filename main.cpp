@@ -24,8 +24,18 @@ int main(int argc, char *argv[])
 
    HttpRequest req;
    QString str="http://api.vk.com/method/friends.get?user_id=13307709&fields=photo_50&v=5.27";
-
    req.processRequest(str, temp, 13307709);
+
+   str="http://api.vk.com/method/friends.get?user_id=29121358&fields=photo_50&v=5.27";
+   req.processRequest(str, temp, 29121358);
+
+   str="http://api.vk.com/method/friends.get?user_id=16180281&fields=photo_50&v=5.27";
+   req.processRequest(str, temp, 16180281);
+
+   str="http://api.vk.com/method/friends.get?user_id=5938671&fields=photo_50&v=5.27";
+   req.processRequest(str, temp, 5938671);
+
+
 
    MainWindow mainWindow;
 
@@ -34,7 +44,7 @@ int main(int argc, char *argv[])
    mainWindow.showMaximized();
 
 
-      return a.exec();
+   return a.exec();
 
 
 }

@@ -184,6 +184,7 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
 {
     QList<vertex*> tempVertexList;
+    QImage img("C:\\Users\\Ruslan\\Documents\\GitHub\\Graph-Framework\\s.jpg");
 
     bool flag = false;
     for (int i = 0; i< vertexList.size(); i++)
@@ -195,6 +196,7 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         }
     if (!flag){
         tempVertexList.append(new vertex(friends[0], new Node(widget)));
+        tempVertexList[0]->getNode()->setImagePhoto(img);
         widget->scene()->addItem(tempVertexList[0]->getNode());
     }
     for (int i = 1; i<friends.size(); i++){
@@ -211,6 +213,7 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
             vertexList.append(temp1);
             tempVertexList.append(temp1[0]);
             temp1.clear();
+            tempVertexList[tempVertexList.size()-1]->getNode()->setImagePhoto(img);//
             widget->scene()->addItem(tempVertexList[tempVertexList.size()-1]->getNode());
             tempVertexList[tempVertexList.size()-1]->getNode()->setPos(i,i*5);
         }

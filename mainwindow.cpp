@@ -23,7 +23,6 @@ void MainWindow::setGraphWidget(GraphWidget *widget){
 
 void MainWindow::handleButton(){
     //action here
-    qDebug()<<"GO is pressed";
     if(graphWidget->isPhysicsDisabled())
         graphWidget->setPhysicsEnable(false);
     else
