@@ -184,7 +184,6 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
 {
     QList<vertex*> tempVertexList;
-    QImage img("C:\\Users\\Ruslan\\Documents\\GitHub\\Graph-Framework\\s.jpg");
 
     bool flag = false;
     for (int i = 0; i< vertexList.size(); i++)
@@ -196,7 +195,6 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         }
     if (!flag){
         tempVertexList.append(new vertex(friends[0], new Node(widget)));
-        tempVertexList[0]->getNode()->setImagePhoto(img);
         widget->scene()->addItem(tempVertexList[0]->getNode());
     }
     for (int i = 1; i<friends.size(); i++){
@@ -205,21 +203,30 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         if (friends[i].id == vertexList[j].at(0)->GetId()){
             flag=true;
             tempVertexList.append(vertexList[j].at(0));
+            bool isInside=false;
+            for(int temp=0; temp<vertexList[j].size();temp++)
+                if(vertexList[j].at(temp)==tempVertexList[0]){
+                    isInside = true;
+                    break;
+                }
+            if(!isInside){
+                vertexList[j].append(tempVertexList[0]);
+            }
             break;
         }
         if (!flag){
             QList<vertex*> temp1;
             temp1.append(new vertex(friends[i], new Node(widget)));
+            temp1.append(tempVertexList[0]);
             vertexList.append(temp1);
             tempVertexList.append(temp1[0]);
             temp1.clear();
-            tempVertexList[tempVertexList.size()-1]->getNode()->setImagePhoto(img);//
             widget->scene()->addItem(tempVertexList[tempVertexList.size()-1]->getNode());
             tempVertexList[tempVertexList.size()-1]->getNode()->setPos(i,i*5);
         }
         widget->scene()->addItem(
                     new Edge(tempVertexList[0]->getNode(), tempVertexList[tempVertexList.size()-1]->getNode()));
-
+        tempVertexList[0]->getNode()->edges().at(tempVertexList[0]->getNode()->edges().size()-1)->setZValue(-99999);
 
     }
     vertexList.append(tempVertexList);

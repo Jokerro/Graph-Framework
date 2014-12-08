@@ -48,7 +48,7 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
                             temp_friend.city = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("city").toObject().value("title").toString();
                             temp_friend.first_name = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("first_name").toString();
                             temp_friend.last_name = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("last_name").toString();
-                            temp_friend.photo_50 = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("photo_50").toString();
+                            temp_friend.photo_50 = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("photo_100").toString();
                             friends.append(temp_friend);
                         }
                         graph->setGraphFromVK(uid, friends);

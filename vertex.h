@@ -33,10 +33,12 @@ class vertex{
         vertex(VKResponse resp, Node *nd):id(resp.id),first_name(resp.first_name),last_name(resp.last_name),
                                         country(resp.country),city(resp.city),photo_50(resp.photo_50),node(nd){
             req = new imageDownloader;
-            req->processRequest(resp.photo_50,QString::number(resp.id));
-
-            reqgeo = new geoLocation;
-            reqgeo->processRequest("http://geocode-maps.yandex.ru/1.x/?format=json&geocode="+country+","+city+"&results=1", this);
+            req->processRequest(resp.photo_50,QString::number(resp.id), nd);
+            /*if(resp.country!=""){
+                reqgeo = new geoLocation;
+                reqgeo->processRequest("http://geocode-maps.yandex.ru/1.x/?format=json&geocode="+country+"&results=1", this);
+            }else
+                SetCoords(0,0);*/
 
         }
         ~vertex(){}

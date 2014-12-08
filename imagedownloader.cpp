@@ -11,9 +11,10 @@ imageDownloader::imageDownloader(QObject *parent) :
              this, SLOT(finishedSlot(QNetworkReply*)));
 }
 
-void imageDownloader::processRequest(QString URLaddress, QString n)
+void imageDownloader::processRequest(QString URLaddress, QString n, Node* nd)
 {
     // 2. осуществляем вызов нужного УРЛа
+    ver = nd;
     name = n;
     QUrl url(URLaddress);
     QNetworkReply* reply = nam->get(QNetworkRequest(url));
@@ -29,7 +30,9 @@ void imageDownloader::finishedSlot(QNetworkReply* reply)
         // Читаем ответ от сервера
         QByteArray bytes = reply->readAll();
         QImage image = QImage::fromData(bytes);
-        image.save("images/"+name+".jpg");
+        ver->setImagePhoto(image);
+        ver->update();
+        //image.save("images/"+name+".jpg");
 
     }
     // Произошла какая-то ошибка

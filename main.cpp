@@ -22,10 +22,15 @@ int main(int argc, char *argv[])
    GraphWidget *graphWidget = new GraphWidget;
    Graph *temp=new Graph(graphWidget);
 
-   HttpRequest req;
-   QString str="http://api.vk.com/method/friends.get?user_id=13307709&fields=photo_50,country,city&v=5.27";
+   HttpRequest* req = new HttpRequest();
+   HttpRequest* req2 = new HttpRequest();
+   QString str="http://api.vk.com/method/friends.get?user_id=13307709&fields=photo_100,country,city&v=5.27";
 
-   req.processRequest(str, temp, 13307709);
+   req->processRequest(str, temp, 13307709);
+
+   str="http://api.vk.com/method/friends.get?user_id=16180281&fields=photo_100,country,city&v=5.27";
+
+   req2->processRequest(str, temp, 16180281);
 
 
 
