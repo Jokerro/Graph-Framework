@@ -1,9 +1,8 @@
 #include <QCoreApplication>
 #include <QApplication>
 #include "saveMatrix.h"
-//#include <qt3dversion.h>
-//#include "modelview.h"
-#include "httprequest.h"
+#include <qt3dversion.h>
+#include "modelview.h"
 #include <QTime>
 #include <QMainWindow>
 #include <QToolBar>
@@ -20,21 +19,16 @@ int main(int argc, char *argv[])
    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
    GraphWidget *graphWidget = new GraphWidget;
-   Graph *temp=new Graph(graphWidget);
+   Graph* graph = new Graph(graphWidget);
 
-   HttpRequest req;
-   QString str="http://api.vk.com/method/friends.get?user_id=13307709&fields=photo_50,country,city&v=5.27";
-
-   req.processRequest(str, temp, 13307709);
-
-   MainWindow mainWindow;
+   MainWindow mainWindow(NULL,graph);
 
    mainWindow.setGraphWidget(graphWidget);
    mainWindow.setCentralWidget(graphWidget);
    mainWindow.showMaximized();
 
 
-      return a.exec();
+   return a.exec();
 
 
 }

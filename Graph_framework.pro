@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core opengl network widgets
-#3dquick
+QT       += core opengl network widgets 3dquick
 QT       -= gui
 
 #QMAKE_LIBS+=-static -lgomp -lpthread
@@ -25,7 +24,7 @@ SOURCES += main.cpp \
     saveMatrix.cpp \
     graph.cpp \
     httprequest.cpp \
-#    modelview.cpp \
+    modelview.cpp \
     shaders.cpp \
     edge.cpp \
     graphwidget.cpp \
@@ -41,9 +40,8 @@ HEADERS += \
     path.h \
     vertex.h \
     saveMatrix.h \
-    colors.h \
     httprequest.h \
-#    modelview.h \
+    modelview.h \
     shaders.h \
     graphwidget.h \
     node.h \

@@ -42,6 +42,7 @@
 #define NODE_H
 
 #include <QGraphicsItem>
+#include <QImage>
 #include <QList>
 
 class Edge;
@@ -72,6 +73,8 @@ public:
     int getId(){return id;}
     void setId(int iid){id= iid;}
 
+    void setImagePhoto(QImage img);
+
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
@@ -80,6 +83,7 @@ protected:
 //    void wheelEvent(QGraphicsSceneWheelEvent *event);
 
 private:
+    QImage imgPhoto;
     QList<Edge *> edgeList;
     QPointF newPos;
     GraphWidget *graph;

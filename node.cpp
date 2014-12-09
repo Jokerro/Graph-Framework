@@ -66,6 +66,11 @@ void Node::addEdge(Edge *edge)
     edge->adjust();
 }
 
+void Node::setImagePhoto(QImage img){
+
+    imgPhoto = img;
+}
+
 QList<Edge *> Node::edges() const
 {
     return edgeList;
@@ -116,7 +121,7 @@ void Node::calculateForces()
 //! [4]
 
 //! [5]
-    if (qAbs(xvel) < 0.8 && qAbs(yvel) < 0.8)
+    if (qAbs(xvel) < 0.9 && qAbs(yvel) < 0.9)
         xvel = yvel = 0;
 //! [5]
 
@@ -142,7 +147,7 @@ bool Node::advance()
 //! [8]
 QRectF Node::boundingRect() const
 {
-    qreal adjust = 2;
+    qreal adjust = 4;
     return QRectF( -10 - adjust, -10 - adjust, 23 + adjust, 23 + adjust);
 }
 //! [8]
@@ -151,7 +156,7 @@ QRectF Node::boundingRect() const
 QPainterPath Node::shape() const
 {
     QPainterPath path;
-    path.addEllipse(-10, -10, 20, 20);
+    path.addRect(-17, -17, 34, 34);
     return path;
 }
 //! [9]
@@ -160,23 +165,28 @@ QPainterPath Node::shape() const
 void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
     painter->setPen(Qt::NoPen);
-    painter->setBrush(Qt::darkGray);
-    painter->drawEllipse(-7, -7, 20, 20);
-
-    QRadialGradient gradient(-3, -3, 10);
+    painter->setBrush(Qt::gray);
+//    painter->drawRect(-9, -9, 24, 24);
+//    QRadialGradient gradient(-3, -3, 10);
     if (option->state & QStyle::State_Sunken) {
-        gradient.setCenter(3, 3);
-        gradient.setFocalPoint(3, 3);
-        gradient.setColorAt(1, QColor(Qt::red).light(120));
-        gradient.setColorAt(0, QColor(Qt::darkRed).light(120));
+//        gradient.setCenter(3, 3);
+//        gradient.setFocalPoint(3, 3);
+//        gradient.setColorAt(1, QColor(Qt::red).light(120));
+//        gradient.setColorAt(0, QColor(Qt::darkRed).light(120));
+        painter->setBrush(Qt::darkGray);
+        painter->drawRect(-10, -10, 21, 21);
+        QRect rect(-11,-11,21,21);
+        painter->drawImage(rect, imgPhoto);
     } else {
-        gradient.setColorAt(0, Qt::yellow);
-        gradient.setColorAt(1, Qt::darkYellow);
+//        gradient.setColorAt(0, Qt::yellow);
+//        gradient.setColorAt(1, Qt::darkYellow);
+        painter->drawRect(-10,-10,24,24);
+        QRect rect(-12,-12,24,24);
+        painter->drawImage(rect, imgPhoto);
     }
-    painter->setBrush(gradient);
+//    painter->setBrush(gradient);
 
-    painter->setPen(QPen(Qt::black, 0));
-    painter->drawEllipse(-10, -10, 20, 20);
+
 }
 //! [10]
 

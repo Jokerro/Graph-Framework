@@ -4,13 +4,16 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QToolBar>
+#include <QTextEdit>
+#include <QTextLine>
 #include "graphwidget.h"
+#include "httprequest.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0,Graph* gr=0);
     virtual ~MainWindow();
     void setGraphWidget(GraphWidget *widget);
 
@@ -20,12 +23,20 @@ signals:
 public slots:
 
 private slots:
-    void handleButton();
+    void pressGo();
+    void pressPlay();
+    void press3d();
 
 private:
+    QTextLine *tlId;
+    QTextEdit *teId;
     QPushButton *btnGo;
+    QPushButton *btnPlay;
+    QPushButton *_3drender;
     QToolBar *toolBar;
     GraphWidget *graphWidget;
+    HttpRequest* req;
+    Graph *graph;
 
 };
 

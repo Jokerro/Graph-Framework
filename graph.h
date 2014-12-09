@@ -48,6 +48,7 @@ public:
     bool operator ==(Graph to_compare);
 
     void setGraphFromVK(int uid, QList<VKResponse> friends);
+    void addVertexFromVK(VKResponse user);
 };
 
 #endif
