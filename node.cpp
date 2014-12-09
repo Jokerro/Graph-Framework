@@ -42,11 +42,13 @@
 #include "node.h"
 #include "graphwidget.h"
 #include "mainwindow.h"
+#include <QMessageBox>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 #include <qdebug.h>
+#include "graph.h"
 
 //! [0]
 Node::Node(GraphWidget *graphWidget)
@@ -56,6 +58,7 @@ Node::Node(GraphWidget *graphWidget)
     setFlag(ItemSendsGeometryChanges);
     setCacheMode(DeviceCoordinateCache);
     setZValue(-1);
+    el=&edgeList;
 }
 //! [0]
 
@@ -202,7 +205,10 @@ void Node::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     update();
     QGraphicsItem::mousePressEvent(event);
-
+    //qDebug()<<"///";
+    //qDebug()<<Graph::first_selected;
+    //qDebug()<<Graph::second_selected;
+    Graph::setChoosed(this->true_id);
 }
 
 void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

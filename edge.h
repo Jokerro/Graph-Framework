@@ -42,6 +42,7 @@
 #define EDGE_H
 
 #include <QGraphicsItem>
+#include <QPainter>
 
 class Node;
 
@@ -54,17 +55,20 @@ public:
     Node *sourceNode() const;
     Node *destNode() const;
 
+    Node *source, *dest;
     void adjust();
-
+Qt::GlobalColor color;
     enum { Type = UserType + 2 };
     int type() const { return Type; }
+
 
 protected:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    Node *source, *dest;
+    //Node *source, *dest;
+
 
     QPointF sourcePoint;
     QPointF destPoint;

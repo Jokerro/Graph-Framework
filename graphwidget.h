@@ -42,8 +42,8 @@
 #define GRAPHWIDGET_H
 
 #include <QGraphicsView>
-
 class Node;
+
 
 //! [0]
 class GraphWidget : public QGraphicsView
@@ -57,6 +57,7 @@ public:
     void setPhysicsEnable(bool enable);
     bool isPhysicsDisabled();
     void setAntialiasingEnable(bool b);
+    void upd(){repaint();}
 
 public slots:
     void shuffle();

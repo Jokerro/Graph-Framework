@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
    GraphWidget *graphWidget = new GraphWidget;
+   Graph* graph = new Graph(graphWidget);
 
-
-   MainWindow mainWindow;
+   MainWindow mainWindow(NULL,graph);
 
    mainWindow.setGraphWidget(graphWidget);
    mainWindow.setCentralWidget(graphWidget);
