@@ -42,7 +42,8 @@
 #define GRAPHWIDGET_H
 
 #include <QGraphicsView>
-
+#include "imagedownloader.h"
+#include "geolocation.h"
 class Node;
 
 //! [0]
@@ -56,6 +57,8 @@ public:
     void itemMoved();
     void setPhysicsEnable(bool enable);
     bool isPhysicsDisabled();
+    ImagesDownloader* imgDownloader;
+    GeoLocation* geoLocation;
 
 public slots:
     void shuffle();

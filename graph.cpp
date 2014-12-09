@@ -180,7 +180,7 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 }
 
 void Graph::addVertexFromVK(VKResponse user){
-
+    QImage img;
     bool flag = false;
     for (int i=0; i<vertexList.size(); i++){
         if(vertexList[i][0]->GetId() == user.id){
@@ -191,6 +191,10 @@ void Graph::addVertexFromVK(VKResponse user){
     if(!flag){
         QList<vertex*> tempVertexList;
         tempVertexList.append(new vertex(user, new Node(widget)));
+        if(!img.load("images/"+QString::number(tempVertexList[0]->GetId())+".jpg"))
+            widget->imgDownloader->addImagetoDownload(tempVertexList[0]);
+        else
+            tempVertexList[0]->getNode()->setImagePhoto(img);
         widget->scene()->addItem(tempVertexList[0]->getNode());
         vertexList.append(tempVertexList);
     }
@@ -200,6 +204,7 @@ void Graph::addVertexFromVK(VKResponse user){
 void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
 {
     QList<vertex*> tempVertexList;
+    QImage img;
     bool flag = false;
     for (int i = 0; i< vertexList.size(); i++)
         if (friends[0].id == vertexList[i].at(0)->GetId()){
@@ -210,6 +215,10 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         }
     if (!flag){
         tempVertexList.append(new vertex(friends[0], new Node(widget)));
+        if(!img.load("images/"+QString::number(tempVertexList[0]->GetId())+".jpg"))
+            widget->imgDownloader->addImagetoDownload(tempVertexList[0]);
+        else
+            tempVertexList[0]->getNode()->setImagePhoto(img);
         widget->scene()->addItem(tempVertexList[0]->getNode());
     }
     for (int i = 1; i<friends.size(); i++){
@@ -232,6 +241,10 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         if (!flag){
             QList<vertex*> temp1;
             temp1.append(new vertex(friends[i], new Node(widget)));
+            if(!img.load("images/"+QString::number(temp1[0]->GetId())+".jpg"))
+                widget->imgDownloader->addImagetoDownload(temp1[0]);
+            else
+                temp1[0]->getNode()->setImagePhoto(img);
             temp1.append(tempVertexList[0]);
             vertexList.append(temp1);
             tempVertexList.append(temp1[0]);
@@ -242,6 +255,7 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         widget->scene()->addItem(
                     new Edge(tempVertexList[0]->getNode(), tempVertexList[tempVertexList.size()-1]->getNode()));
         tempVertexList[0]->getNode()->edges().at(tempVertexList[0]->getNode()->edges().size()-1)->setZValue(-99999);
+
 
     }
     vertexList.append(tempVertexList);

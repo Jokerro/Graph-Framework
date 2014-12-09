@@ -36,6 +36,7 @@ private:
     HttpRequest* req;
     Graph *graph;
 
+
 };
 
 #endif // MAINWINDOW_H

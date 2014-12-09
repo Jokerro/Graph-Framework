@@ -9,22 +9,26 @@
 #include <QNetworkReply>
 #include <QThread>
 #include <QImage>
-#include "node.h"
 
-class imageDownloader : public QObject
+class vertex;
+
+class ImagesDownloader : public QObject
 {
     Q_OBJECT
 public:
-    explicit imageDownloader(QObject *parent = 0);
-    void processRequest(QString URLaddress, QString n, Node* v);
-    QString name;
+    explicit ImagesDownloader(QObject *parent = 0);
+    void addImagetoDownload(vertex* vert);
+    bool isFinished(){return finished;}
+
 signals:
 
 public slots:
     void finishedSlot(QNetworkReply* reply);
 private:
     QNetworkAccessManager* nam;
-    Node* ver;
+    QList<vertex*> vertexes;
+    bool finished;
+    ImagesDownloader* subDownloader;
 
 };
 

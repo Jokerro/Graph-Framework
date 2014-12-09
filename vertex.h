@@ -1,4 +1,4 @@
-#ifndef VERTEX_H
+﻿#ifndef VERTEX_H
 #define VERTEX_H
 
 #include <iostream>
@@ -20,20 +20,21 @@ class vertex{
         QString last_name;
         QString country;
         QString city;
-        QString photo_50;
+        QString photoUrl;
         float latitude;
         float longitude;
-        imageDownloader *req;
-        geoLocation *reqgeo;
+        //ImagesDownloader *req;
+        GeoLocation *reqgeo;
         Node *node;
 
     public:
         vertex(int iid){id=iid;}
         vertex(int iid, Node *nd){id=iid; node=nd;}
         vertex(VKResponse resp, Node *nd):id(resp.id),first_name(resp.first_name),last_name(resp.last_name),
-                                        country(resp.country),city(resp.city),photo_50(resp.photo_50),node(nd){
-            req = new imageDownloader;
-            req->processRequest(resp.photo_50,QString::number(resp.id), nd);
+                                        country(resp.country),city(resp.city),photoUrl(resp.photoUrl),node(nd){
+            //req = new ImagesDownloader;
+            //req->processRequest(resp.photoUrl, this);
+
             /*if(resp.country!=""){
                 reqgeo = new geoLocation;
                 reqgeo->processRequest("http://geocode-maps.yandex.ru/1.x/?format=json&geocode="+country+"&results=1", this);
@@ -44,8 +45,10 @@ class vertex{
         ~vertex(){}
 
         int GetId(){return id;}
+        QString getPhotoUrl(){return photoUrl;}
+        QString getCountry(){return country;}
         Node* getNode(){return node;}
-
+        GeoLocation* getHttpGeo(){return reqgeo;}
         void SetCoords(float lat, float lon){latitude = lat; longitude = lon;}
 };
 
