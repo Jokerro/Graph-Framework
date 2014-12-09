@@ -41,12 +41,14 @@
 #include "edge.h"
 #include "node.h"
 #include "graphwidget.h"
-
+#include "mainwindow.h"
+#include <QMessageBox>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <QStyleOption>
 #include <qdebug.h>
+#include "graph.h"
 
 //! [0]
 Node::Node(GraphWidget *graphWidget)
@@ -56,6 +58,7 @@ Node::Node(GraphWidget *graphWidget)
     setFlag(ItemSendsGeometryChanges);
     setCacheMode(DeviceCoordinateCache);
     setZValue(-1);
+    el=&edgeList;
 }
 //! [0]
 
@@ -166,6 +169,7 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 {
     painter->setPen(Qt::NoPen);
     painter->setBrush(Qt::gray);
+<<<<<<< HEAD
 //    painter->drawRect(-9, -9, 24, 24);
 //    QRadialGradient gradient(-3, -3, 10);
     if (option->state & QStyle::State_Sunken) {
@@ -173,19 +177,28 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 //        gradient.setFocalPoint(3, 3);
 //        gradient.setColorAt(1, QColor(Qt::red).light(120));
 //        gradient.setColorAt(0, QColor(Qt::darkRed).light(120));
+=======
+    if (option->state & QStyle::State_Sunken) {
+>>>>>>> origin/master
         painter->setBrush(Qt::darkGray);
         painter->drawRect(-10, -10, 21, 21);
         QRect rect(-11,-11,21,21);
         painter->drawImage(rect, imgPhoto);
     } else {
+<<<<<<< HEAD
 //        gradient.setColorAt(0, Qt::yellow);
 //        gradient.setColorAt(1, Qt::darkYellow);
+=======
+>>>>>>> origin/master
         painter->drawRect(-10,-10,24,24);
         QRect rect(-12,-12,24,24);
         painter->drawImage(rect, imgPhoto);
     }
+<<<<<<< HEAD
 //    painter->setBrush(gradient);
 
+=======
+>>>>>>> origin/master
 
 }
 //! [10]
@@ -212,7 +225,10 @@ void Node::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     update();
     QGraphicsItem::mousePressEvent(event);
-
+    //qDebug()<<"///";
+    //qDebug()<<Graph::first_selected;
+    //qDebug()<<Graph::second_selected;
+    Graph::setChoosed(this->true_id);
 }
 
 void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -220,5 +236,12 @@ void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     update();
     QGraphicsItem::mouseReleaseEvent(event);
 }
+
+void Node::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event){
+    QGraphicsItem::mouseDoubleClickEvent(event);
+
+    qDebug()<<this->id;
+}
+
 //! [12]
 

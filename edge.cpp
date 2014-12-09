@@ -57,6 +57,7 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     dest = destNode;
     source->addEdge(this);
     dest->addEdge(this);
+    color = Qt::black;
     adjust();
 }
 //! [0]
@@ -123,7 +124,7 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 
 //! [5]
     // Draw the line itself
-    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter->setPen(QPen(color, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter->drawLine(line);
 //! [5]
 

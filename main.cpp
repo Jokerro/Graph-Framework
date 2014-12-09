@@ -1,8 +1,13 @@
 #include <QCoreApplication>
 #include <QApplication>
 #include "saveMatrix.h"
+<<<<<<< HEAD
 #include <qt3dversion.h>
 #include "modelview.h"
+=======
+//#include <qt3dversion.h>
+//#include "modelview.h"
+>>>>>>> origin/master
 #include <QTime>
 #include <QMainWindow>
 #include <QToolBar>

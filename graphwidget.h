@@ -42,8 +42,10 @@
 #define GRAPHWIDGET_H
 
 #include <QGraphicsView>
-
+#include "imagedownloader.h"
+#include "geolocation.h"
 class Node;
+
 
 //! [0]
 class GraphWidget : public QGraphicsView
@@ -56,6 +58,10 @@ public:
     void itemMoved();
     void setPhysicsEnable(bool enable);
     bool isPhysicsDisabled();
+    ImagesDownloader* imgDownloader;
+    GeoLocation* geoLocation;
+    void setAntialiasingEnable(bool b);
+    void upd(){repaint();}
 
 public slots:
     void shuffle();
@@ -75,6 +81,7 @@ protected:
 private:
     int timerId;
     bool isPhysicsEnabled;
+    bool isAntialiasingEnabled;
 
     Node *centerNode;
 

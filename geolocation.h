@@ -15,12 +15,13 @@
 
 class vertex;
 
-class geoLocation : public QObject
+class GeoLocation : public QObject
 {
     Q_OBJECT
 public:
-    explicit geoLocation(QObject *parent = 0);
-    void processRequest(QString URLaddress, vertex* v);
+    explicit GeoLocation(QObject *parent = 0);
+    void addGeotoDetect(vertex* v);
+    bool isFinished(){return finished;}
 
 signals:
 
@@ -28,7 +29,10 @@ public slots:
     void finishedSlot(QNetworkReply* reply);
 private:
     QNetworkAccessManager* nam;
-    vertex* ver;
+    QList<vertex*> vertexes;
+    bool finished;
+    QString request;
+    QString numberOfres;
 };
 
 

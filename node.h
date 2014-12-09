@@ -59,6 +59,9 @@ public:
 
     void addEdge(Edge *edge);
     QList<Edge *> edges() const;
+    QList<Edge *> get_edges(){return edgeList;}
+    QList<Edge *> *el;
+
 
     enum { Type = UserType + 1 };
     int type() const { return Type; }
@@ -70,8 +73,11 @@ public:
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    int getTrueId(){return true_id;}
     int getId(){return id;}
     void setId(int iid){id= iid;}
+    void setTrueId(int tid){true_id=tid;}
+    void setImagePhoto(QImage img);
 
     void setImagePhoto(QImage img);
 
@@ -80,7 +86,7 @@ protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-//    void wheelEvent(QGraphicsSceneWheelEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QImage imgPhoto;
@@ -88,6 +94,7 @@ private:
     QPointF newPos;
     GraphWidget *graph;
     int id;
+    int true_id;
 };
 //! [0]
 
