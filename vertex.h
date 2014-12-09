@@ -16,6 +16,9 @@ using namespace std;
 class vertex{
     private:
         int id;
+        //////
+        int user_id;
+        /////
         QString first_name;
         QString last_name;
         QString country;
@@ -24,22 +27,23 @@ class vertex{
         float latitude;
         float longitude;
         //ImagesDownloader *req;
-        GeoLocation *reqgeo;
         Node *node;
 
     public:
         vertex(int iid){id=iid;}
-        vertex(int iid, Node *nd){id=iid; node=nd;}
-        vertex(VKResponse resp, Node *nd):id(resp.id),first_name(resp.first_name),last_name(resp.last_name),
+        vertex(int iid, Node *nd){
+                               ///////////////////
+                                user_id=iid;
+                                /////////////
+                                  node=nd;
+                                   //////////////
+                                  node->setTrueId(iid);
+                                  ///
+                                    }
+        vertex(VKResponse resp, Node *nd):/* !!*/ user_id(resp.id),first_name(resp.first_name),last_name(resp.last_name),
                                         country(resp.country),city(resp.city),photoUrl(resp.photoUrl),node(nd){
-            //req = new ImagesDownloader;
-            //req->processRequest(resp.photoUrl, this);
-
-            /*if(resp.country!=""){
-                reqgeo = new geoLocation;
-                reqgeo->processRequest("http://geocode-maps.yandex.ru/1.x/?format=json&geocode="+country+"&results=1", this);
-            }else
-                SetCoords(0,0);*/
+            node->setId(resp.id);
+            node->setTrueId(user_id);
 
         }
         ~vertex(){}
@@ -48,7 +52,8 @@ class vertex{
         QString getPhotoUrl(){return photoUrl;}
         QString getCountry(){return country;}
         Node* getNode(){return node;}
-        GeoLocation* getHttpGeo(){return reqgeo;}
+        int GetUserId(){return user_id;}
+        int setID(int iid){this->id=iid;}
         void SetCoords(float lat, float lon){latitude = lat; longitude = lon;}
 };
 

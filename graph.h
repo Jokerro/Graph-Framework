@@ -43,12 +43,21 @@ public:
     bool compare_graphs(QString path1, QString path2);
     int getVertexCount();
     int getEdgeCount();
+    int getIndex(int id);
     QList < QList<vertex*> > getVertexList(){return vertexList;}
     vertex getVertex(int i, int j){return *vertexList[i][j];}
     bool operator ==(Graph to_compare);
 
     void setGraphFromVK(int uid, QList<VKResponse> friends);
     void addVertexFromVK(VKResponse user);
+
+    /////////
+    int ListSize(){return vertexList.size();}
+
+    //выбор вершин для поиска
+        static int first_selected;
+        static int second_selected;
+        static void setChoosed(int v);
 };
 
 #endif

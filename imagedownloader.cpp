@@ -41,7 +41,7 @@ void ImagesDownloader::finishedSlot(QNetworkReply* reply)
         QImage image = QImage::fromData(bytes);
         vertexes[0]->getNode()->setImagePhoto(image);
         vertexes[0]->getNode()->update();
-        image.save("images/"+QString::number(vertexes[0]->GetId())+".jpg");
+        image.save("images/"+QString::number(vertexes[0]->GetUserId())+".jpg");
         vertexes.removeAt(0);
         if (vertexes.size()>0)
             nam->get(QNetworkRequest(vertexes[0]->getPhotoUrl()));

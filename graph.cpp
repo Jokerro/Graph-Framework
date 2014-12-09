@@ -9,6 +9,7 @@
 #include <vector>
 #include <QQueue>
 #include <QDebug>
+
 Graph::Graph()
 {
     vertexCounter=0;
@@ -18,6 +19,16 @@ Graph::Graph()
 Graph::~Graph() {
     cleanMemory();
 }
+
+void Graph::setChoosed(int f)
+{
+    qDebug()<<f;
+    if(Graph::first_selected==0)
+        Graph::first_selected=f;
+    else if(Graph::second_selected==0)
+        Graph::second_selected=f;
+}
+
 
 void Graph::cleanMemory(){
    for(int i=0; i<vertexList.length(); i++)
@@ -100,9 +111,21 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
     QQueue<int> vertexQueue;
     vector<int> p(vertexList.length());
 
+    //Индексы
+    QList<int>*v=new QList<int>;
+    int finishVertex_iterator;
+
+    for(int i=0;i<vertexList.size();i++){
+         if(vertexList[i][0]->GetUserId()==startVertex)
+            v->push_back(vertexList[i][0]->GetId());
+         if(vertexList[i][0]->GetUserId()==finishVertex)
+         { finishVertex_iterator=vertexList[i][0]->GetId();}
+    }
+
+
     vertexQueue.enqueue(startVertex);
     visitedVertex->push_back(startVertex);
-    p[startVertex]=-1;
+    p[v->at(0)]=-1;
 
     while(!vertexQueue.isEmpty()){
 
@@ -110,8 +133,8 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
         if(node==finishVertex){
             visitedVertex->clear();
-             for (int v=finishVertex; v!=-1; v=p[v]){
-                    visitedVertex->push_front (v);
+             for (int l=finishVertex_iterator; l!=-1; l=p[l]){
+                    visitedVertex->push_front (vertexList[l][0]->GetUserId());
             }
             p.clear();
             return true;
@@ -119,13 +142,14 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
         for(int i=0; i< vertexList.length(); i++ ){
             if(vertexList[i].length()>1){
-                if(vertexList[i][0]->GetId()==node){
+                if(vertexList[i][0]->GetUserId()==node){
                     for(int j=1; j<vertexList[i].length(); j++){
 
-                        if(visitedVertex->indexOf(vertexList[i][j]->GetId())==-1){
-                            vertexQueue.enqueue(vertexList[i][j]->GetId());
-                            visitedVertex->push_back(vertexList[i][j]->GetId());
-                            p[vertexList[i][j]->GetId()] = node;
+                        if(visitedVertex->indexOf(vertexList[i][j]->GetUserId())==-1){
+                            vertexQueue.enqueue(vertexList[i][j]->GetUserId());
+                            visitedVertex->push_back(vertexList[i][j]->GetUserId());
+                            v->push_back(vertexList[i][j]->GetId());
+                            p[vertexList[i][j]->GetId()] = vertexList[i][0]->GetId();;
                         }
                     }
                     break;
@@ -137,19 +161,35 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
     return false;
 }
 
+
+int Graph::getIndex(int id)
+{
+    for(int i=0;i<vertexList.size();i++)
+        if(vertexList[i][0]->GetId()==id)
+            return i;
+}
+
+
 void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 {///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!
 
+    //Индексы
+    QList<int>*v=new QList<int>;
+
+    for(int i=0;i<vertexList.size();i++)
+        if(vertexList[i][0]->GetUserId()==vertex1)
+           v->push_back(vertexList[i][0]->GetId());
+
     vertexes->push_back(vertex1);
 
-    while(vertexes->at(vertexes->length()-1)!=vertex2)
+    while((vertexes->at(v->length()-1))!=vertex2)
     {
-        //DepthSearchStep(this,vertexes,vertex2);
         //смежна ли последняя концу?
         bool Endfound=false;
-        for(int i=1;i<this->vertexList[(vertexes->at(vertexes->length()-1)-1)].size();i++)
+
+        for(int i=1;i<this->vertexList[getIndex(v->at(v->size()-1))].size();i++)
         {
-            if(this->vertexList[(vertexes->at(vertexes->size()-1))-1][i]->GetId()==vertex2)
+            if(this->vertexList[getIndex(v->at(v->size()-1))][i]->GetUserId()==vertex2)
             {
                 vertexes->push_back(vertex2);
                 Endfound=true;
@@ -160,23 +200,26 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
             break;
         //поиск смежных непройденных
         bool hasNew=false;
-        for(int i=1;i<this->vertexList[(vertexes->at(vertexes->length()-1))-1].size();i++)
+
+        for(int i=1;i<this->vertexList[ getIndex(v->at(v->size()-1)) ].size();i++)
         {
-            if(!isInside(vertexes,this->vertexList[(vertexes->at(vertexes->length()-1))-1][i]->GetId()))
+            if(!isInside(vertexes,this->vertexList[getIndex(v->at(v->size()-1))][i]->GetUserId()))
             {
                 hasNew=true;
-                vertexes->push_back(this->vertexList[(vertexes->at(vertexes->length()-1))-1][i]->GetId());
+                vertexes->push_back(this->vertexList[getIndex(v->at(v->size()-1))][i]->GetUserId());
+                v->push_back(this->vertexList[getIndex(v->at(v->size()-1))][i]->GetId());
+
                 break;
             }
         }
         //нет смежных вершин. то, что сюда не дойдем, если смежные непройденные есть - понятно, но чтобы проще понимать - булевую переменную оставляю
         if(!hasNew)
         {
-            vertexes->push_back(vertexes->at(vertexes->length()-2));
-            continue;
+            vertexes->push_back(vertexes->at(v->length()-2));
+            v->push_back(v->at(v->length()-2));
+                        continue;
         }
     }
-    int a=0;
 }
 
 void Graph::addVertexFromVK(VKResponse user){
@@ -206,8 +249,9 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
     QList<vertex*> tempVertexList;
     QImage img;
     bool flag = false;
+
     for (int i = 0; i< vertexList.size(); i++)
-        if (friends[0].id == vertexList[i].at(0)->GetId()){
+        if (friends[0].id == vertexList[i].at(0)->GetUserId()){
             flag = true;
             tempVertexList.append(vertexList[i].at(0));
             vertexList.removeAt(i);
@@ -220,11 +264,12 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         else
             tempVertexList[0]->getNode()->setImagePhoto(img);
         widget->scene()->addItem(tempVertexList[0]->getNode());
+        tempVertexList[0]->setID(vertexList.size());
     }
     for (int i = 1; i<friends.size(); i++){
         bool flag = false;
         for (int j = 0; j< vertexList.size(); j++)
-        if (friends[i].id == vertexList[j].at(0)->GetId()){
+        if (friends[i].id == vertexList[j].at(0)->GetUserId()){
             flag=true;
             tempVertexList.append(vertexList[j].at(0));
             bool isInside=false;
@@ -254,11 +299,17 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         }
         widget->scene()->addItem(
                     new Edge(tempVertexList[0]->getNode(), tempVertexList[tempVertexList.size()-1]->getNode()));
+        //tempVertexList[0]->getNode()->get_edges().at(tempVertexList[0]->getNode()->edges().size()-1)->color=Qt::red;
+        //tempVertexList[0]->getNode()->get_edges().at(tempVertexList[0]->getNode()->edges().size()-1)->update();
         tempVertexList[0]->getNode()->edges().at(tempVertexList[0]->getNode()->edges().size()-1)->setZValue(-99999);
 
 
     }
     vertexList.append(tempVertexList);
+
+    for(int i=0;i<this->vertexList.size();i++)
+        vertexList[i][0]->setID(i);
+
     qDebug()<<vertexList.size();
 }
 
