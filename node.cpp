@@ -229,7 +229,10 @@ void Node::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void Node::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event){
     QGraphicsItem::mouseDoubleClickEvent(event);
 
-    qDebug()<<this->id;
+    QString str="http://api.vk.com/method/users.get?user_ids="+QString::number(id)+"&fields=photo_100,country,city&v=5.27";
+    HttpRequest* req = new HttpRequest();
+    req->processRequest(str, graph->getGraph(), id, req);
+
 }
 
 //! [12]

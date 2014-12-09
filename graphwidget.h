@@ -45,7 +45,7 @@
 #include "imagedownloader.h"
 #include "geolocation.h"
 class Node;
-
+class Graph;
 
 //! [0]
 class GraphWidget : public QGraphicsView
@@ -62,6 +62,8 @@ public:
     GeoLocation* geoLocation;
     void setAntialiasingEnable(bool b);
     void upd(){repaint();}
+    void setGraph(Graph* gr){graph = gr;}
+    Graph* getGraph(){return graph;}
 
 public slots:
     void shuffle();
@@ -82,7 +84,7 @@ private:
     int timerId;
     bool isPhysicsEnabled;
     bool isAntialiasingEnabled;
-
+    Graph* graph;
     Node *centerNode;
 
 };

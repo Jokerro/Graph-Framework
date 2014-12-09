@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
    GraphWidget *graphWidget = new GraphWidget;
    Graph* graph = new Graph(graphWidget);
 
+   graphWidget->setGraph(graph);
    MainWindow mainWindow(NULL,graph);
 
    mainWindow.setGraphWidget(graphWidget);
