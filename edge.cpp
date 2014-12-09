@@ -57,6 +57,7 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     dest = destNode;
     source->addEdge(this);
     dest->addEdge(this);
+    color = Qt::black;
     adjust();
 }
 //! [0]

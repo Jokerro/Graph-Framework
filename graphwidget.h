@@ -42,8 +42,8 @@
 #define GRAPHWIDGET_H
 
 #include <QGraphicsView>
-
 class Node;
+
 
 //! [0]
 class GraphWidget : public QGraphicsView
@@ -56,6 +56,7 @@ public:
     void itemMoved();
     void setPhysicsEnable(bool enable);
     bool isPhysicsDisabled();
+    void upd(){this->scene()->update();}
 
 public slots:
     void shuffle();
@@ -75,7 +76,6 @@ protected:
 private:
     int timerId;
     bool isPhysicsEnabled;
-
     Node *centerNode;
 
 };

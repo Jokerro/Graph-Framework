@@ -51,6 +51,7 @@ GraphWidget::GraphWidget(QWidget *parent)
     : QGraphicsView(parent), timerId(0)
 {
     QGraphicsScene *scene = new QGraphicsScene(this);
+
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
     scene->setSceneRect(-20000, -20000, 40000, 40000);
     setScene(scene);

@@ -16,6 +16,9 @@ public:
     explicit MainWindow(QWidget *parent = 0,Graph* gr=0);
     virtual ~MainWindow();
     void setGraphWidget(GraphWidget *widget);
+    /////
+    void setGraph(Graph* t);
+    //////
 
 
 signals:
@@ -26,11 +29,16 @@ private slots:
     void pressGo();
     void pressPlay();
 
+    void DFS_handler();
+    void BFS_handler();
+
 private:
     QTextLine *tlId;
     QTextEdit *teId;
     QPushButton *btnGo;
     QPushButton *btnPlay;
+    QPushButton *btnDFS;
+    QPushButton *btnBFS;
     QToolBar *toolBar;
     GraphWidget *graphWidget;
     HttpRequest* req;

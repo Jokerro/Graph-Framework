@@ -59,6 +59,9 @@ public:
 
     void addEdge(Edge *edge);
     QList<Edge *> edges() const;
+    QList<Edge *> get_edges(){return edgeList;}
+    QList<Edge *> *el;
+
 
     enum { Type = UserType + 1 };
     int type() const { return Type; }
@@ -70,9 +73,10 @@ public:
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    int getTrueId(){return true_id;}
     int getId(){return id;}
     void setId(int iid){id= iid;}
-
+    void setTrueId(int tid){true_id=tid;}
     void setImagePhoto(QImage img);
 
 protected:
@@ -88,6 +92,7 @@ private:
     QPointF newPos;
     GraphWidget *graph;
     int id;
+    int true_id;
 };
 //! [0]
 
