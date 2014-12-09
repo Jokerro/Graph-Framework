@@ -56,7 +56,7 @@ public:
     void itemMoved();
     void setPhysicsEnable(bool enable);
     bool isPhysicsDisabled();
-    void upd(){this->scene()->update();}
+    void upd(){repaint();}
 
 public slots:
     void shuffle();

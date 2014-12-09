@@ -131,6 +131,7 @@ void MainWindow::DFS_handler()
                 }
             }
         }
+
         this->graphWidget->upd();
         for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
             this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
