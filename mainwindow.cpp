@@ -4,29 +4,18 @@
 #include "modelview.h"
 #include "httprequest.h"
 #include <QSize>
-<<<<<<< HEAD
-
-
-=======
 #include <QMessageBox>
 #include <QList>
 
 int Graph::first_selected = 0;
 int Graph::second_selected = 0;
->>>>>>> origin/master
 MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     QMainWindow(parent)
 {
     btnGo = new QPushButton("Go", this);
     connect(btnGo, SIGNAL(released()), this, SLOT(pressGo()));
-<<<<<<< HEAD
-    btnPlay = new QPushButton("Play/pause", this);
-    connect(btnPlay, SIGNAL(released()), this, SLOT(pressPlay()));
     _3drender = new QPushButton("3D", this);
     connect(_3drender, SIGNAL(released()), this, SLOT(press3d()));
-    graph=gr;
-
-=======
     btnPlay = new QCheckBox("Physics", this);
     connect(btnPlay, SIGNAL(released()), this, SLOT(changePlay()));
     cbAntialiasing = new QCheckBox();
@@ -40,38 +29,28 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     btnBFS = new QPushButton("BFS",this);
     connect(btnBFS, SIGNAL(released()), this, SLOT(BFS_handler()));
 
->>>>>>> origin/master
-
     tlId = new QTextLine();
     teId = new QTextEdit();
     QSize teIdSize = teId->document()->size().toSize();
     teIdSize.setWidth(80);
     teIdSize.setHeight(23);
     teId->setMaximumSize(teIdSize);
-<<<<<<< HEAD
-=======
     cbAntialiasing->setText("Antialiasing");
     cbAntialiasing->setChecked(true);
     btnPlay->setChecked(true);
 
->>>>>>> origin/master
 
     toolBar = new QToolBar;
     toolBar->addWidget(teId);
     toolBar->addWidget(btnGo);
-<<<<<<< HEAD
     toolBar->addSeparator();
     toolBar->addWidget(btnPlay);
     toolBar->addWidget(_3drender);
-=======
     toolBar->addWidget(btnDFS);
     toolBar->addWidget(btnBFS);
 
     toolBar->addSeparator();
-    toolBar->addWidget(btnPlay);
-    toolBar->addSeparator();
     toolBar->addWidget(cbAntialiasing);
->>>>>>> origin/master
 
     this->addToolBar(toolBar);
 
@@ -98,8 +77,6 @@ void MainWindow::setGraphWidget(GraphWidget *widget){
 
 }
 
-<<<<<<< HEAD
-=======
 void MainWindow::BFS_handler()
 {
     if(Graph::first_selected==0||Graph::second_selected==0)
@@ -186,7 +163,6 @@ void MainWindow::DFS_handler()
 }
 
 
->>>>>>> origin/master
 void MainWindow::pressGo(){
     QString str="http://api.vk.com/method/users.get?user_ids="+teId->toPlainText()+"&fields=photo_100,country,city&v=5.27";
     qDebug()<<str;
@@ -194,37 +170,25 @@ void MainWindow::pressGo(){
     req->processRequest(str, graph, teId->toPlainText().toInt(), req);
 }
 
-<<<<<<< HEAD
-void MainWindow::pressPlay(){
-=======
-void MainWindow::openFriend(int id){
-    QString str="http://api.vk.com/method/users.get?user_ids="+QString::number(id)+"&fields=photo_100,country,city&v=5.27";
-    qDebug()<<str;
-    req = new HttpRequest();
-    req->processRequest(str, graph, id, req);
-}
+
 
 void MainWindow::changePlay(){
->>>>>>> origin/master
     //action here
     if(graphWidget->isPhysicsDisabled())
         graphWidget->setPhysicsEnable(false);
     else
         graphWidget->setPhysicsEnable(true);
 
-<<<<<<< HEAD
 }
 void MainWindow::press3d(){
-    int iLen=graph->getVertexList().length();
-    for(int i=0; i<iLen; i++)
-        for(int j=0; j<graph->getVertexList()[i].length(); j++)
-            graph->getVertexList()[i][j]->calcCoords();
-
-    ModelView *w1 = new ModelView();
-    w1->setGraph(graph);
-    w1->showMaximized();
-=======
->>>>>>> origin/master
+    qDebug()<<graphWidget->geoLocation->isFinished();
+    if (graphWidget->geoLocation->isFinished()){
+        ModelView *w1 = new ModelView();
+        w1->setGraph(graph);
+        w1->showMaximized();
+    }else{
+        QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
+    }
 }
 
 MainWindow::~MainWindow()

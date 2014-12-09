@@ -18,7 +18,7 @@ void GeoLocation::addGeotoDetect(vertex* v)
     // 2. осуществляем вызов нужного УРЛа
     vertexes.append(v);
     if(finished){
-        QUrl url(request+v->getCountry()+numberOfres);
+        QUrl url(request+v->getCity()+numberOfres);
         finished = false;
         QNetworkReply* reply = nam->get(QNetworkRequest(url));
     }
@@ -53,19 +53,25 @@ void GeoLocation::finishedSlot(QNetworkReply* reply)
                     qDebug()<<parseError.errorString();
                 }
         vertexes.removeAt(0);
+
         if (vertexes.size()>0)
-            nam->get(QNetworkRequest(request+vertexes[0]->getCountry()+numberOfres));
-        else
+            nam->get(QNetworkRequest(request+vertexes[0]->getCity()+numberOfres));
+        else{
             finished = true;
+        }
 
     }
     // Произошла какая-то ошибка
     else
     {
         // обрабатываем ошибку
+        //qDebug()<< reply->error();
+
         qDebug() << reply->errorString();
-        if (reply->error()!=203)
+        if (reply->error()!=302)
             vertexes.append(vertexes[0]);
+        else
+            vertexes[0]->SetCoords(0,0);
         vertexes.removeAt(0);
         nam->get(QNetworkRequest(request+vertexes[0]->getCountry()+numberOfres));
     }

@@ -51,11 +51,7 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
                                 temp_friend.city = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("city").toObject().value("title").toString();
                                 temp_friend.first_name = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("first_name").toString();
                                 temp_friend.last_name = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("last_name").toString();
-<<<<<<< HEAD
-                                temp_friend.photo_50 = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("photo_100").toString();
-=======
                                 temp_friend.photoUrl = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("photo_50").toString();
->>>>>>> origin/master
                                 friends.append(temp_friend);
                             }
                             graph->setGraphFromVK(uid, friends);
@@ -64,19 +60,11 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
                             centralUser.id=uid;
                             centralUser.first_name = jsonDoc.object().value("response").toArray()[0].toObject().value("first_name").toString();
                             centralUser.last_name = jsonDoc.object().value("response").toArray()[0].toObject().value("last_name").toString();
-<<<<<<< HEAD
-                            centralUser.photo_50 = jsonDoc.object().value("response").toArray()[0].toObject().value("photo_100").toString();
-                            centralUser.country = jsonDoc.object().value("response").toArray()[0].toObject().value("country").toObject().value("title").toString();
-                            centralUser.city = jsonDoc.object().value("response").toArray()[0].toObject().value("city").toObject().value("title").toString();
-                            graph->addVertexFromVK(centralUser);
-                            QString str="http://api.vk.com/method/friends.get?user_id="+QString::number(uid)+"&fields=photo_100,country,city&v=5.27";
-=======
                             centralUser.photoUrl = jsonDoc.object().value("response").toArray()[0].toObject().value("photo_100").toString();
                             centralUser.country = jsonDoc.object().value("response").toArray()[0].toObject().value("country").toObject().value("title").toString();
                             centralUser.city = jsonDoc.object().value("response").toArray()[0].toObject().value("city").toObject().value("title").toString();
                             graph->addVertexFromVK(centralUser);
                             QString str="http://api.vk.com/method/friends.get?user_id="+QString::number(uid)+"&fields=photo_50,country,city&v=5.27";
->>>>>>> origin/master
                             request->processRequest(str, graph, uid,request);
                         }
                     }

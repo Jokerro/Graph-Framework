@@ -35,10 +35,10 @@ ModelView::~ModelView()
 void ModelView::initializeGL(QGLPainter *painter)
 {
     Q_UNUSED(painter);
-    m_scene = QGLAbstractScene::loadScene("E:\\Qt\\Earth.obj");
+    m_scene = QGLAbstractScene::loadScene("res/Earth.obj");
     sphereTexture=new QGLTexture2D();
     QColor red(255,0,0,1);
-    textureImage=new QImage("E:\\Qt\\logo.png");
+    textureImage=new QImage("res/logo.png");
     sphereTexture->setImage(*textureImage);
     sphereMaterial->setTexture(sphereTexture);
     sphereMaterial->setShininess(128);

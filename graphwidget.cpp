@@ -62,12 +62,8 @@ GraphWidget::GraphWidget(QWidget *parent)
     scale(qreal(0.8), qreal(0.8));
     setMinimumSize(400, 400);
     setWindowTitle(tr("Social Graph Vizualization"));
-<<<<<<< HEAD
-
-=======
     imgDownloader = new ImagesDownloader();
     geoLocation = new GeoLocation();
->>>>>>> origin/master
     this->isPhysicsEnabled = true;
 //! [0]
 

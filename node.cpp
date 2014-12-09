@@ -169,36 +169,25 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 {
     painter->setPen(Qt::NoPen);
     painter->setBrush(Qt::gray);
-<<<<<<< HEAD
-//    painter->drawRect(-9, -9, 24, 24);
 //    QRadialGradient gradient(-3, -3, 10);
-    if (option->state & QStyle::State_Sunken) {
 //        gradient.setCenter(3, 3);
 //        gradient.setFocalPoint(3, 3);
 //        gradient.setColorAt(1, QColor(Qt::red).light(120));
 //        gradient.setColorAt(0, QColor(Qt::darkRed).light(120));
-=======
     if (option->state & QStyle::State_Sunken) {
->>>>>>> origin/master
         painter->setBrush(Qt::darkGray);
         painter->drawRect(-10, -10, 21, 21);
         QRect rect(-11,-11,21,21);
         painter->drawImage(rect, imgPhoto);
     } else {
-<<<<<<< HEAD
 //        gradient.setColorAt(0, Qt::yellow);
 //        gradient.setColorAt(1, Qt::darkYellow);
-=======
->>>>>>> origin/master
         painter->drawRect(-10,-10,24,24);
         QRect rect(-12,-12,24,24);
         painter->drawImage(rect, imgPhoto);
     }
-<<<<<<< HEAD
 //    painter->setBrush(gradient);
 
-=======
->>>>>>> origin/master
 
 }
 //! [10]

@@ -227,7 +227,7 @@ void Graph::addVertexFromVK(VKResponse user){
     QImage img;
     bool flag = false;
     for (int i=0; i<vertexList.size(); i++){
-        if(vertexList[i][0]->GetId() == user.id){
+        if(vertexList[i][0]->GetUserId() == user.id){
             flag=true;
             break;
         }
@@ -235,7 +235,8 @@ void Graph::addVertexFromVK(VKResponse user){
     if(!flag){
         QList<vertex*> tempVertexList;
         tempVertexList.append(new vertex(user, new Node(widget)));
-        if(!img.load("images/"+QString::number(tempVertexList[0]->GetId())+".jpg"))
+        widget->geoLocation->addGeotoDetect(tempVertexList[0]);
+        if(!img.load("images/"+QString::number(tempVertexList[0]->GetUserId())+".jpg"))
             widget->imgDownloader->addImagetoDownload(tempVertexList[0]);
         else
             tempVertexList[0]->getNode()->setImagePhoto(img);
@@ -262,6 +263,7 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         }
     if (!flag){
         tempVertexList.append(new vertex(friends[0], new Node(widget)));
+        widget->geoLocation->addGeotoDetect(tempVertexList[0]);
         if(!img.load("images/"+QString::number(tempVertexList[0]->GetId())+".jpg"))
             widget->imgDownloader->addImagetoDownload(tempVertexList[0]);
         else
@@ -289,8 +291,8 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         if (!flag){
             QList<vertex*> temp1;
             temp1.append(new vertex(friends[i], new Node(widget)));
-
-            if(!img.load("images/"+QString::number(temp1[0]->GetId())+".jpg"))
+            widget->geoLocation->addGeotoDetect(temp1[0]);
+            if(!img.load("images/"+QString::number(temp1[0]->GetUserId())+".jpg"))
                 widget->imgDownloader->addImagetoDownload(temp1[0]);
             else
                 temp1[0]->getNode()->setImagePhoto(img);

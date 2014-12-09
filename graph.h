@@ -50,8 +50,6 @@ public:
 
     void setGraphFromVK(int uid, QList<VKResponse> friends);
     void addVertexFromVK(VKResponse user);
-<<<<<<< HEAD
-=======
 
     /////////
     int ListSize(){return vertexList.size();}
@@ -60,7 +58,6 @@ public:
         static int first_selected;
         static int second_selected;
         static void setChoosed(int v);
->>>>>>> origin/master
 };
 
 #endif
