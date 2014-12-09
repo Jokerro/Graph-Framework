@@ -6,6 +6,7 @@
 #include <QToolBar>
 #include <QTextEdit>
 #include <QTextLine>
+#include <QCheckBox>
 #include "graphwidget.h"
 #include "httprequest.h"
 
@@ -16,6 +17,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     virtual ~MainWindow();
     void setGraphWidget(GraphWidget *widget);
+    void openFriend(int id);
 
 
 signals:
@@ -24,13 +26,16 @@ public slots:
 
 private slots:
     void pressGo();
-    void pressPlay();
+    void changePlay();
+    void changeAntialiasing();
+
 
 private:
     QTextLine *tlId;
     QTextEdit *teId;
     QPushButton *btnGo;
-    QPushButton *btnPlay;
+    QCheckBox *btnPlay;
+    QCheckBox *cbAntialiasing;
     QToolBar *toolBar;
     GraphWidget *graphWidget;
     HttpRequest* req;

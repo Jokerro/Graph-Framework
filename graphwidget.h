@@ -56,6 +56,7 @@ public:
     void itemMoved();
     void setPhysicsEnable(bool enable);
     bool isPhysicsDisabled();
+    void setAntialiasingEnable(bool b);
 
 public slots:
     void shuffle();
@@ -75,6 +76,7 @@ protected:
 private:
     int timerId;
     bool isPhysicsEnabled;
+    bool isAntialiasingEnabled;
 
     Node *centerNode;
 

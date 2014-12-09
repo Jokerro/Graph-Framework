@@ -76,6 +76,18 @@ void GraphWidget::setPhysicsEnable(bool enable){
         this->isPhysicsEnabled = false;
 }
 
+void GraphWidget::setAntialiasingEnable(bool b){
+    if(b){
+        this->isAntialiasingEnabled = true;
+        setRenderHint(QPainter::Antialiasing);
+    }
+    else{
+        this->isAntialiasingEnabled = false;
+        setRenderHint(QPainter::Antialiasing, false);
+    }
+    repaint();
+}
+
 bool GraphWidget::isPhysicsDisabled(){
     return this->isPhysicsEnabled;
 }
@@ -83,8 +95,9 @@ bool GraphWidget::isPhysicsDisabled(){
 //! [2]
 void GraphWidget::itemMoved()
 {
+
     if (!timerId)
-        timerId = startTimer(1000 / 60);
+        timerId = startTimer(1000 / 50);
 }
 //! [2]
 

@@ -32,6 +32,7 @@ class vertex{
         vertex(int iid, Node *nd){id=iid; node=nd;}
         vertex(VKResponse resp, Node *nd):id(resp.id),first_name(resp.first_name),last_name(resp.last_name),
                                         country(resp.country),city(resp.city),photo_50(resp.photo_50),node(nd){
+            node->setId(resp.id);
             req = new imageDownloader;
             req->processRequest(resp.photo_50,QString::number(resp.id), nd);
             /*if(resp.country!=""){
