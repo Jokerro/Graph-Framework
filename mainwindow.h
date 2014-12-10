@@ -9,7 +9,7 @@
 #include <QCheckBox>
 #include "graphwidget.h"
 #include "httprequest.h"
-
+#include "modelview.h"
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -37,6 +37,7 @@ private slots:
     void BFS_handler();
 
 private:
+    ModelView *viewport;
     QTextLine *tlId;
     QTextEdit *teId;
     QPushButton *btnGo;

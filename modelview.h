@@ -5,9 +5,7 @@
 #include "qglview.h"
 #include <QGLTexture2D>
 #include <qglbuilder.h>
-#include <QGLCube>
 #include <QGLSphere>
-#include <QGLCylinder>
 #include <QGLMaterial>
 
 class QGLAbstractScene;
@@ -22,11 +20,10 @@ public:
 
     QVector3DArray CalcArc(float R, float cx, float cy, float cz, QVector3D normal, int segments);\
     QVector3D CalcCoordinate(float lat, float lon);
-    void drawArc(float r, QVector3D startPoint, QVector3D endPoint, QGLPainter *painter);
+    void drawArc(QVector3D startPoint, QVector3D endPoint, QGLPainter *painter);
     void drawSphere(QGLPainter *painter, QVector3D position);
     void drawGraph(QGLPainter *painter);
-    void setGraph(Graph *a){std::cout<<"here"<<a->getVertexList().length();
-                            this->a=a;}
+    void setGraph(Graph *a);
 protected:
     void initializeGL(QGLPainter *painter);
     void paintGL(QGLPainter *painter);
@@ -35,11 +32,14 @@ private:
     QGLTexture2D text;
     QGLSceneNode *sphere;
     QVector3D startPoint;
-    Graph *a;
+    Graph *workGraph;
     QGLMaterial *sphereMaterial;
     QGLTexture2D *sphereTexture;
     QImage *textureImage;
-    bool rotated;
+    QVector3DArray coordinats;
+    QVector3DArray arcCoordinats;
+    QMatrix4x4 rotateZ;
+    QMatrix4x4 rotateY;
 };
 
 #endif

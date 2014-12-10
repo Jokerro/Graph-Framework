@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include <qdebug.h>
 #include "graphwidget.h"
-#include "modelview.h"
+
 #include "httprequest.h"
 #include <QSize>
 #include <QMessageBox>
@@ -183,9 +183,9 @@ void MainWindow::changePlay(){
 void MainWindow::press3d(){
     qDebug()<<graphWidget->geoLocation->isFinished();
     if (graphWidget->geoLocation->isFinished()){
-        ModelView *w1 = new ModelView();
-        w1->setGraph(graph);
-        w1->showMaximized();
+        viewport = new ModelView();
+        viewport->setGraph(graph);
+        viewport->showMaximized();
     }else{
         QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
     }

@@ -36,47 +36,42 @@ void ModelView::initializeGL(QGLPainter *painter)
 {
     Q_UNUSED(painter);
     m_scene = QGLAbstractScene::loadScene("res/Earth.obj");
-    sphereTexture=new QGLTexture2D();
+    //sphereTexture=new QGLTexture2D();
     QColor red(255,0,0,1);
-    textureImage=new QImage("res/logo.png");
-    sphereTexture->setImage(*textureImage);
-    sphereMaterial->setTexture(sphereTexture);
+    //textureImage=new QImage("res/logo.png");
+    //sphereTexture->setImage(*textureImage);
+    //sphereMaterial->setTexture(sphereTexture);
     sphereMaterial->setShininess(128);
     sphereMaterial->setSpecularColor(red);
-    sphereMaterial->setEmittedLight(29121358);
+    sphereMaterial->setEmittedLight(red);
     sphere->setMaterial(sphereMaterial);
-
-//    QGraphicsRotation3D *a = new QGraphicsRotation3D();
-//    a->setAngle(90);
-//    QVector3D position(0, 0, 25);
-//    a->setAxis(position);
-//    sphere->addTransform(a);
+    int len=workGraph->getVertexList().length();
+    for(int i=0; i<len; i++)
+    {
+        QVector3D temp=CalcCoordinate(workGraph->getVertexList()[i][0]->getLon(), workGraph->getVertexList()[i][0]->getLat());
+        int jLen=workGraph->getVertexList()[i].length();
+        for(int j=1; j<jLen; j++)
+        {
+            coordinats.append(temp);
+            coordinats.append(CalcCoordinate(workGraph->getVertexList()[i][j]->getLon(), workGraph->getVertexList()[i][j]->getLat()));
+        }
+    }
 }
 
 void ModelView::paintGL(QGLPainter *painter)
 {
-
      QGLSceneNode *o = m_scene->mainNode();
      o->draw(painter);
-    // drawGraph(painter);
-//    QVector3D a3(5,-2,5);
-//    QVector3D a2(-5,5,-7);
-
-//     drawSphere(painter, a2);
-//     drawSphere(painter, a3);
-//     drawArc(25,a3,a2,painter);
-
-    drawGraph(painter);
+     drawGraph(painter);
 }
 
-    QVector3DArray ModelView::CalcArc(float R, float cx, float cy, float cz, QVector3D normal, int segments){
+QVector3DArray ModelView::CalcArc(float R, float cx, float cy, float cz, QVector3D normal, int segments){
     QVector3DArray vertices;
     float a=normal.x();
     float b=normal.y();
     float c=normal.z();
     float constParam1=sqrtf(a*a+c*c);
     float constParam2=sqrtf(a*a+b*b+c*c);
-
     for (int ii = 0; ii < segments; ii++){
             float t = 2.0f * 3.1415926f * float(ii) / float(segments);
             float x=(R/constParam1)*(c*cosf(t)-(a*b*sinf(t))/constParam2);
@@ -91,8 +86,8 @@ void ModelView::paintGL(QGLPainter *painter)
 QVector3D ModelView::CalcCoordinate(float lat, float lon){
     float radlat = lat*PI/180.0;
     float radlon = lon*PI/180.0;
-    QMatrix4x4 rotateY;
     QVector3D coords;
+
     rotateY(0,0)=(cosf(-radlon));
     rotateY(0,1)=(0);
     rotateY(0,2)=(sinf(-radlon));
@@ -101,65 +96,61 @@ QVector3D ModelView::CalcCoordinate(float lat, float lon){
     rotateY(1,2)=(0);
     rotateY(2,0)=(-sinf(-radlon));
     rotateY(2,1)=(0);
-    rotateY(2,2)=(cosf(-radlon));
-    QMatrix4x4 rotateX;
-    rotateX(0,0)=(cosf(-radlat));
-    rotateX(0,1)=(-sinf(-radlat));
-    rotateX(0,2)=(0);
-    rotateX(1,0)=(sinf(-radlat));
-    rotateX(1,1)=(cosf(-radlat));
-    rotateX(1,2)=(0);
-    rotateX(2,0)=(0);
-    rotateX(2,1)=(0);
-    rotateX(2,2)=(1);
-    coords=startPoint*rotateX;
+
+    rotateZ(0,0)=(cosf(-radlat));
+    rotateZ(0,1)=(-sinf(-radlat));
+    rotateZ(0,2)=(0);
+    rotateZ(1,0)=(sinf(-radlat));
+    rotateZ(1,1)=(cosf(-radlat));
+    rotateZ(1,2)=(0);
+    rotateZ(2,0)=(0);
+    rotateZ(2,1)=(0);
+    rotateZ(2,2)=(1);
+
+    coords=startPoint*rotateZ;
     coords=coords*rotateY;
     return coords;
 }
 
-void ModelView::drawArc(float r, QVector3D startPoint, QVector3D endPoint, QGLPainter *painter){
+void ModelView::drawArc(QVector3D startPoint, QVector3D endPoint, QGLPainter *painter){
     QVector3D normal;
     normal=QVector3D::crossProduct(startPoint, endPoint);
     QVector3D sum;
     sum.setX((endPoint.x()+startPoint.x())/2.0);
     sum.setY((endPoint.y()+startPoint.y())/2.0);
     sum.setZ((endPoint.z()+startPoint.z())/2.0);
-//    sum=startPoint+endPoint;
-//    sum.normalize();
-//    sum=sum*r;
-//    drawSphere(painter,sum);
-    //drawSphere(painter,normal);
     float arcR;
-    QVector3D d=startPoint-sum;
-    arcR=d.length();
-    QVector3DArray vertices=CalcArc(arcR, sum.x(), sum.y(), sum.z(), normal, 64);
+    QVector3D radius=startPoint-sum;
+    arcR=radius.length();
+    QVector3DArray vertices=CalcArc(arcR, sum.x(), sum.y(), sum.z(), normal, ARC_SEGMENTS_COUNT);
     painter->clearAttributes();
     painter->setVertexAttribute(QGL::Position, vertices);
     painter->setStandardEffect(QGL::LitMaterial);
-//    painter->glEnable(GL_LINE_SMOOTH);
     painter->draw(QGL::LineLoop, ARC_SEGMENTS_COUNT);
     painter->clearAttributes();
 }
 
 void ModelView::drawGraph(QGLPainter *painter){
- //   std::cout<<a->getVertexList().length();
-   int len=a->getVertexList().length();
-
-   for(int i=0; i<len; i++)
-   {
-       QVector3D zero=CalcCoordinate(a->getVertexList()[i][0]->getLon(), a->getVertexList()[i][0]->getLat());
-       int jLen=a->getVertexList()[i].length();
-       for(int j=0; j<jLen; j++)
-        {
-        QVector3D temp=CalcCoordinate(a->getVertexList()[i][j]->getLon(), a->getVertexList()[i][j]->getLat());
-        drawSphere(painter, temp);
-        drawArc(25, zero, temp, painter);
-        }
-    }
+   QVector3D start;
+   QVector3D end;
+   int i=1;
+   foreach(QVector3D a, coordinats){
+        drawSphere(painter, a);
+       switch(i%2)
+       {
+            case 1: start=a; break;
+            case 0: end=a;  drawArc(start, end, painter); break;
+       }
+       i++;
+   }
 }
 
 void ModelView::drawSphere(QGLPainter *painter, QVector3D position){
     painter->clearAttributes();
     sphere->setPosition(position);
     sphere->draw(painter);
+}
+
+void ModelView::setGraph(Graph *a){
+    workGraph=a;
 }
