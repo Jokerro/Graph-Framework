@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     cbAntialiasing = new QCheckBox();
     connect(cbAntialiasing, SIGNAL(released()),this, SLOT(changeAntialiasing()));
 
+    viewport = NULL;
     graph=gr;
 
     btnDFS = new QPushButton("DFS",this);
@@ -183,7 +184,8 @@ void MainWindow::changePlay(){
 void MainWindow::press3d(){
     qDebug()<<graphWidget->geoLocation->isFinished();
     if (graphWidget->geoLocation->isFinished()){
-        viewport = new ModelView();
+        if (viewport == NULL)
+            viewport = new ModelView();
         viewport->setGraph(graph);
         viewport->showMaximized();
     }else{
