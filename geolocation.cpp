@@ -73,8 +73,13 @@ void GeoLocation::finishedSlot(QNetworkReply* reply)
         else
             vertexes[0]->SetCoords(0,0);
         vertexes.removeAt(0);
-        nam->get(QNetworkRequest(request+vertexes[0]->getCountry()+numberOfres));
+        if (vertexes.size()>0)
+            nam->get(QNetworkRequest(request+vertexes[0]->getCity()+numberOfres));
+        else{
+            finished = true;
+        }
     }
+
     delete reply;
     //delete ver->getHttpGeo();
 }

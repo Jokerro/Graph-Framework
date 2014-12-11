@@ -58,7 +58,11 @@ void ImagesDownloader::finishedSlot(QNetworkReply* reply)
         if (reply->error()!=203)
             vertexes.append(vertexes[0]);
         vertexes.removeAt(0);
-        nam->get(QNetworkRequest(vertexes[0]->getPhotoUrl()));
+        if (vertexes.size()>0)
+            nam->get(QNetworkRequest(vertexes[0]->getPhotoUrl()));
+        else{
+            finished = true;
+        }
     }
 
     delete reply;
