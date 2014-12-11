@@ -109,7 +109,7 @@ void Graph::OpenFileWithGraph(QString filename)
 bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
     QQueue<int> vertexQueue;
-    vector<int> p(vertexList.length());
+    QMap<int, int> p;
 
     //Индексы
     QList<int>*v=new QList<int>;
@@ -125,7 +125,7 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
     vertexQueue.enqueue(startVertex);
     visitedVertex->push_back(startVertex);
-    p[v->at(0)]=-1;
+    p.insert(v->at(0),-1);
 
     while(!vertexQueue.isEmpty()){
 
@@ -149,7 +149,7 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
                             vertexQueue.enqueue(vertexList[i][j]->GetUserId());
                             visitedVertex->push_back(vertexList[i][j]->GetUserId());
                             v->push_back(vertexList[i][j]->GetId());
-                            p[vertexList[i][j]->GetId()] = vertexList[i][0]->GetId();;
+                            p.insert(vertexList[i][j]->GetId(),vertexList[i][0]->GetId());
                         }
                     }
                     break;
