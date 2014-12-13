@@ -79,7 +79,7 @@ public:
     void setTrueId(int tid){true_id=tid;}
     void setImagePhoto(QImage img);
 
-
+    void resetEdges();
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 

@@ -69,6 +69,14 @@ void Node::addEdge(Edge *edge)
     edge->adjust();
 }
 
+void Node::resetEdges(){
+    for(int i=0;i<this->edgeList.size();i++)
+    {
+        this->edgeList.at(i)->color=Qt::black;
+        this->edgeList.at(i)->update();
+    }
+}
+
 void Node::setImagePhoto(QImage img){
 
     imgPhoto = img;
