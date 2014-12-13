@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 3.3.0, 2014-12-13T02:38:05. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
   <value type="QByteArray">{bd947dbd-dab4-45cb-9a74-0a61975b58dd}</value>
+=======
+<!-- Written by QtCreator 3.2.2, 2014-12-12T22:22:14. -->
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{2cb3eec7-c257-4d47-8088-bd77c887e353}</value>
+>>>>>>> 756b28790fe2f691a588b3f60e84201f0a4ef1f7
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -119,7 +127,11 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">F:/build-Graph_framework-Desktop_Qt_5_3_MinGW_32bit-Release</value>
+=======
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:/Qt/Tools/QtCreator/bin/Graph_framework</value>
+>>>>>>> 756b28790fe2f691a588b3f60e84201f0a4ef1f7
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -226,7 +238,11 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Graph_framework</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Graph_framework2</value>
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/Graph-Framework/Graph_framework.pro</value>
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/Qt/Tools/QtCreator/bin/Graph_framework/Graph_framework.pro</value>
+>>>>>>> 756b28790fe2f691a588b3f60e84201f0a4ef1f7
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">Graph_framework.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>

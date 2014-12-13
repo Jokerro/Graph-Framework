@@ -85,8 +85,8 @@ void MainWindow::BFS_handler()
     else
     {
         for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++){
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->edges()[0]->color=Qt::black;
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->edges()[0]->update();
+            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->resetEdges();//get_edges()[0]->color=Qt::black;
+            //this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
         }
 
         QList<int> *vertexes = new QList<int>;
@@ -100,17 +100,18 @@ void MainWindow::BFS_handler()
                 {
                     for(int k=0;k<this->graph->getVertexList()[j][0]->getNode()->edges().size();k++)
                     {
-                       if(this->graph->getVertexList()[j][0]->getNode()->edges()[k][0].dest->getTrueId()==vertexes->at(i))
-                        {this->graph->getVertexList()[j][0]->getNode()->edges()[k]->color=Qt::red;}
+                       if(
+                               ((this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].source->getTrueId()==vertexes->at(i))&&(this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].dest->getTrueId()==vertexes->at(i+1))) ||
+                               ((this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].dest->getTrueId()==vertexes->at(i))&&(this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].source->getTrueId()==vertexes->at(i+1)))
+                          )
+                       {this->graph->getVertexList()[j][0]->getNode()->edges()[k]->color=Qt::red;
+                        this->graph->getVertexList()[j][0]->getNode()->get_edges()[k]->update();}
                     }
                 }
             }
         }
 
 
-        for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->edges()[0]->update();
-        //QMessageBox::information(NULL,"Успех","Длина пути = "+QString::number(vertexes->size()));
 
         Graph::second_selected=0;
         Graph::first_selected =0;
@@ -125,8 +126,8 @@ void MainWindow::DFS_handler()
     else
     {
         for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++){
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->color=Qt::black;
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
+            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->resetEdges();//get_edges()[0]->color=Qt::black;
+            //this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
         }
 
         QList<int> *vertexes = new QList<int>;
@@ -142,20 +143,22 @@ void MainWindow::DFS_handler()
                 {
                     for(int k=0;k<this->graph->getVertexList()[j][0]->getNode()->get_edges().size();k++)
                     {
-                       if(this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].dest->getTrueId()==vertexes->at(i))
-                        {qDebug()<<this->graph->getVertexList()[j][0]->getNode()->get_edges()[k]->color;
+                       if(
+                               ((this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].source->getTrueId()==vertexes->at(i))&&(this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].dest->getTrueId()==vertexes->at(i+1))) ||
+                               ((this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].dest->getTrueId()==vertexes->at(i))&&(this->graph->getVertexList()[j][0]->getNode()->get_edges()[k][0].source->getTrueId()==vertexes->at(i+1)))
+                          )
+                       {
                            this->graph->getVertexList()[j][0]->getNode()->get_edges()[k]->color=Qt::red;
                            this->graph->getVertexList()[j][0]->getNode()->get_edges()[k]->update();
-                           this->graph->getVertexList()[j][0]->getNode()->el->at(k)->update();
-                           qDebug()<<this->graph->getVertexList()[j][0]->getNode()->get_edges()[k]->color;}
+                        }
                     }
                 }
             }
         }
 
-        this->graphWidget->upd();
-        for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
+       // this->graphWidget->upd();
+     //   for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
+       //     this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
         //QMessageBox::information(NULL,"Успех","Длина пути = "+QString::number(vertexes->size()));
 
         Graph::second_selected=0;
