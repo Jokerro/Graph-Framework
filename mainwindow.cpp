@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
 
     btnBFS = new QPushButton("BFS",this);
     connect(btnBFS, SIGNAL(released()), this, SLOT(BFS_handler()));
+    btnStong = new QPushButton("Strong components",this);
+    connect(btnStong, SIGNAL(released()), this, SLOT(strong_handler()));
 
     tlId = new QTextLine();
     teId = new QTextEdit();
@@ -49,13 +51,11 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     toolBar->addWidget(_3drender);
     toolBar->addWidget(btnDFS);
     toolBar->addWidget(btnBFS);
-
+    toolBar->addWidget(btnStong);
     toolBar->addSeparator();
     toolBar->addWidget(cbAntialiasing);
 
     this->addToolBar(toolBar);
-
-
 
 }
 
@@ -171,7 +171,37 @@ void MainWindow::pressGo(){
     req->processRequest(str, graph, teId->toPlainText().toInt(), req);
 }
 
+void MainWindow::strong_handler(){
+    QList<QList<int> >  components;
+    graph->getStrongComponents(&components);
+    int col=8;
+    for(int i=0;i<components.size();i++)
+    {
+        paintComponent(components[i], col);
+        col++;
+    }
+}
 
+void MainWindow::paintComponent(QList<int> component, int color ){
+    for(int i=0;i<component.size();i++)
+    {
+        for(int j=0;j<graph->getVertexList().size();j++)
+        {
+            if(graph->getVertexList()[j][0]->GetId()==component[i])
+            {
+                for(int k=0;k<this->graph->getVertexList()[j][0]->getNode()->edges().size();k++)
+                {
+                    if(this->graph->getVertexList()[j][0]->getNode()->edges()[k][0].dest->getTrueId()==graph->getVertexList()[j][0]->GetUserId())
+                    {this->graph->getVertexList()[j][0]->getNode()->edges()[k]->color=Qt::GlobalColor(color);}
+                }
+        }
+    }
+}
+
+
+for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
+    this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->edges()[0]->update();
+}
 
 void MainWindow::changePlay(){
     //action here

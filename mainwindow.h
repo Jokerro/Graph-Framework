@@ -31,8 +31,7 @@ private slots:
     void press3d();
     void changePlay();
     void changeAntialiasing();
-
-
+    void strong_handler();
     void DFS_handler();
     void BFS_handler();
 
@@ -46,10 +45,12 @@ private:
     QCheckBox *cbAntialiasing;
     QPushButton *btnDFS;
     QPushButton *btnBFS;
+    QPushButton *btnStong;
     QToolBar *toolBar;
     GraphWidget *graphWidget;
     HttpRequest* req;
     Graph *graph;
+    void paintComponent(QList<int> component, int color );
 
 };
 
