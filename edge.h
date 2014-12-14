@@ -60,7 +60,7 @@ public:
 Qt::GlobalColor color;
     enum { Type = UserType + 2 };
     int type() const { return Type; }
-
+    int getWeight() const { return weight; }
 
 protected:
     QRectF boundingRect() const;
@@ -73,6 +73,7 @@ private:
     QPointF sourcePoint;
     QPointF destPoint;
     qreal arrowSize;
+    int weight;
 };
 //! [0]
 

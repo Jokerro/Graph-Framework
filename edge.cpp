@@ -41,6 +41,8 @@
 #include "edge.h"
 #include "node.h"
 
+#include "QTime"
+
 #include <math.h>
 
 #include <QPainter>
@@ -57,6 +59,9 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     dest = destNode;
     source->addEdge(this);
     dest->addEdge(this);
+    QTime midnight(0,0,0);
+    qsrand(midnight.secsTo(QTime::currentTime()));
+    weight=qrand() % 20+1;
     color = Qt::black;
     adjust();
 }
