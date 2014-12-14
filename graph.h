@@ -23,8 +23,12 @@ private:
     QList< QList<vertex*> > vertexList;
     QList<int> used, order;
 
+    QList<int> main_users_indexes;
+
     void transposedGraphDFS(int v, QList<QList<int> >* transposedGraph, QList<int>* component);
     void strongComponentDFS(int v);
+
+    void correct(int);
 public:
     Graph();
     Graph(GraphWidget *wdg):widget(wdg){}
@@ -50,6 +54,8 @@ public:
 
     void setGraphFromVK(int uid, QList<VKResponse> friends);
     void addVertexFromVK(VKResponse user);
+
+    void resetGraph();
 
     /////////
     int ListSize(){return vertexList.size();}

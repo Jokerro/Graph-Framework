@@ -14,6 +14,7 @@ Graph::Graph()
 {
     vertexCounter=0;
     edgeCounter=0;
+    //main_users_indexes = new QList<int>();
 }
 
 Graph::~Graph() {
@@ -248,11 +249,25 @@ void Graph::addVertexFromVK(VKResponse user){
     }
 
 }
+void Graph::correct(int index)
+{
+    for(int i=0;i<main_users_indexes.size();i++){
+        if(main_users_indexes.at(i)>index)//?main_users_indexes->at(i)--:;
+            main_users_indexes[i]--;
+    }
+
+}
+
+void Graph::resetGraph()
+{
+    for(int i=0;i<main_users_indexes.size();i++)
+        for(int j=0;j<vertexList.at(main_users_indexes[i]).size();j++)
+            vertexList[main_users_indexes[i]][j]->getNode()->resetEdges();
+}
 
 void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
 {
     QList<vertex*> tempVertexList;
-
     QImage img;
 
     bool flag = false;
@@ -261,7 +276,11 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         if (friends[0].id == vertexList[i].at(0)->GetUserId()){
             flag = true;
             tempVertexList.append(vertexList[i].at(0));
+            //qDebug()<<i<<";;;";
             vertexList.removeAt(i);
+            if(i<vertexList.size()-1)
+                correct(i);
+            //qDebug()<<i<<";;;";
             break;
         }
     if (!flag){
@@ -325,9 +344,21 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
     for(int i=0;i<this->vertexList.size();i++)
         vertexList[i][0]->setID(i);
 
-    qDebug()<<vertexList.size();
-}
+    main_users_indexes.push_back(this->vertexList.size()-1);
 
+    qDebug()<<"main users";
+    for(int i=0;i<main_users_indexes.size();i++)
+        qDebug()<<vertexList[main_users_indexes.at(i)][0]->GetUserId();
+    qDebug()<<"//////////////";
+
+}
+//   2
+//   10
+//   15
+//
+//
+//
+//
 
 
 void Graph::transposeGraph(QList<QList<int> >* resultGraph){

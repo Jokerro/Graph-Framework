@@ -84,10 +84,7 @@ void MainWindow::BFS_handler()
         QMessageBox::information(NULL,"No selected vertexes", "Please, select two vertexes, before pushing this button");
     else
     {
-        for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++){
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->resetEdges();//get_edges()[0]->color=Qt::black;
-            //this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
-        }
+        this->graph->resetGraph();
 
         QList<int> *vertexes = new QList<int>;
         this->graph->BFS(Graph::first_selected,Graph::second_selected,vertexes);
@@ -125,10 +122,7 @@ void MainWindow::DFS_handler()
         QMessageBox::information(NULL,"No selected vertexes", "Please, select two vertexes, before pushing this button");
     else
     {
-        for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++){
-            this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->resetEdges();//get_edges()[0]->color=Qt::black;
-            //this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
-        }
+        this->graph->resetGraph();
 
         QList<int> *vertexes = new QList<int>;
         this->graph->DFS(Graph::first_selected,Graph::second_selected,vertexes);
@@ -159,7 +153,7 @@ void MainWindow::DFS_handler()
        // this->graphWidget->upd();
      //   for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
        //     this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
-        //QMessageBox::information(NULL,"Успех","Длина пути = "+QString::number(vertexes->size()));
+        QMessageBox::information(NULL,"Успех",QString::number(this->graph->getVertexList().size()));
 
         Graph::second_selected=0;
         Graph::first_selected =0;
@@ -176,6 +170,10 @@ void MainWindow::pressGo(){
 
 void MainWindow::strong_handler(){
     QList<QList<int> >  components;
+
+    for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
+        this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->resetEdges();
+
     graph->getStrongComponents(&components);
     int col=8;
     for(int i=0;i<components.size();i++)
