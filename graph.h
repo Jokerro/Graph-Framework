@@ -18,6 +18,12 @@ using namespace std;
 class Graph{
 
 private:
+
+    enum TYPE_VERTEX{WHITE,GRAY,BLACK};
+    vector<TYPE_VERTEX> used_topo;
+    void DFS_TOPO(int cur, vector<int> &ans);
+    void TOPOLOGICAL_SORT(vector<int> &ans);
+
     GraphWidget *widget;
     int edgeCounter;
     int vertexCounter;
@@ -25,6 +31,7 @@ private:
     QList<int> used, order;
 
     QList<int> main_users_indexes;
+
 
     void transposedGraphDFS(int v, QList<QList<int> >* transposedGraph, QList<int>* component);
     void strongComponentDFS(int v);

@@ -16,9 +16,7 @@ using namespace std;
 class vertex{
     private:
         int id;
-        //////
         int user_id;
-        /////
         QString first_name;
         QString last_name;
         QString country;
@@ -50,6 +48,7 @@ class vertex{
         int GetUserId(){return user_id;}
         void setID(int iid){this->id=iid;}
         void SetCoords(float lat, float lon){latitude = lat; longitude = lon;}
+        void setCity(QString mCity){ city = mCity;}
 };
 
 #endif

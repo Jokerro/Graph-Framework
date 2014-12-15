@@ -115,6 +115,10 @@ void Graph::OpenFileWithGraph(QString filename)
                  }else{
                      if(list.length()>1&& list[1]!="")
                         temp1.push_back(tempVertexList[list[1].toInt()-1]);
+                     widget->scene()->addItem(
+                                 new Edge(tempVertexList[list[1].toInt()-1]->getNode(),
+                                         tempVertexList[list[0].toInt()-1]->getNode()));
+                     tempVertexList[list[0].toInt()-1]->getNode()->edges().at(tempVertexList[list[0].toInt()-1]->getNode()->edges().size()-1)->setZValue(-99999);
                  }
 
             }vertexList.push_back(temp1);
@@ -125,7 +129,6 @@ void Graph::OpenFileWithGraph(QString filename)
             vertexList[i][0]->getNode()->setPos(i,i*5);
             widget->scene()->addItem(vertexList[i][0]->getNode());
         }
-        qDebug() << vertexList.size();
 }
 
 bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
@@ -252,8 +255,11 @@ bool Graph::saveGraph(QString path){
         QTextStream out(file);
 
         for (int i = 0; i<vertexList.size(); i++)
-            for (int j = 1; j<vertexList[i].size(); j++)
-                out << vertexList[i][0]->GetId() << "\t" << vertexList[i][j]->GetId() << "\n";
+            if (vertexList[i].size()>=2)
+                for (int j = 1; j<vertexList[i].size(); j++)
+                    out << vertexList[i][0]->GetId() << "\t" << vertexList[i][j]->GetId() << "\n";
+            else
+                out << vertexList[i][0]->GetId() << "\n";
 
         file->close();
 
@@ -321,11 +327,17 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
         if (friends[0].id == vertexList[i].at(0)->GetUserId()){
             flag = true;
             tempVertexList.append(vertexList[i].at(0));
-            //qDebug()<<i<<";;;";
             vertexList.removeAt(i);
             if(i<vertexList.size()-1)
                 correct(i);
-            //qDebug()<<i<<";;;";
+            if (tempVertexList[0]->getCity() == ""){
+                int i = 1;
+                while (friends[i].city == "")
+                    if (i < friends.size())
+                        i++;
+                tempVertexList[0]->setCity(friends[i].city);
+                widget->geoLocation->addGeotoDetect(tempVertexList[0]);
+            }
             break;
         }
     if (!flag){
@@ -388,13 +400,10 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
 
     for(int i=0;i<this->vertexList.size();i++)
         vertexList[i][0]->setID(i+1);
-
+    vertexCounter = vertexList.size();
     main_users_indexes.push_back(this->vertexList.size()-1);
 
-    qDebug()<<"main users";
-    for(int i=0;i<main_users_indexes.size();i++)
-        qDebug()<<vertexList[main_users_indexes.at(i)][0]->GetUserId();
-    qDebug()<<"//////////////";
+
 
 }
 //   2
@@ -477,3 +486,28 @@ void Graph::getStrongComponents(QList<QList<int> >* components) {
         }
     }
 }
+
+void Graph::DFS_TOPO(int cur, vector<int> &ans) {
+    used_topo[cur] = GRAY;
+    for (int i=1; i<vertexList[cur].size(); i++) {
+        int next = vertexList[cur][i]->GetId()-1;
+        // if (used_topo[next] == GRAY) // Circle
+        if (used_topo[next] == WHITE)
+            DFS_TOPO(next,ans);
+    }
+    used_topo[cur] = BLACK;
+    ans.push_back(vertexList[cur][0]->GetId());
+}
+void Graph::TOPOLOGICAL_SORT(vector<int> &ans) {
+    /*used_topo.resize(vertexCounter,WHITE);
+    vector<int> ans;
+    TOPOLOGICAL_SORT(ans);
+    for (int i=vertexList.size();i>=0;i--)
+        cout<<ans[i]<<' ';*/
+    for (int i=0;i<vertexCounter;i++) {
+        if (used_topo[i] == WHITE) {
+            DFS_TOPO(i,ans);
+        }
+    }
+}
+
