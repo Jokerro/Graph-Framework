@@ -30,6 +30,15 @@ void Graph::setChoosed(int f)
         Graph::second_selected=f;
 }
 
+vertex* Graph::checkVertex(int id){
+
+    for (int i = 0; i < vertexList.size(); i++)
+        if (vertexList[i][0]->GetId() == id)
+            return vertexList[i][0];
+    return NULL;
+
+}
+
 
 void Graph::cleanMemory(){
    for(int i=0; i<vertexList.length(); i++)
@@ -72,7 +81,7 @@ void Graph::OpenFileWithGraph(QString filename)
                   continue;
              QStringList list = str.split("\t");
              if(prev!=list[0].toInt())
-                 tempVertexList.push_back(new vertex(list[0].toInt()));
+                 tempVertexList.push_back(new vertex(list[0].toInt(), new Node(widget)));
              prev=list[0].toInt();
         }
     }
@@ -93,8 +102,14 @@ void Graph::OpenFileWithGraph(QString filename)
                             temp1.clear();
                         }
                         temp1.push_back(tempVertexList[list[0].toInt()-1]);
-                        if(list.length()>1 && list[1]!="" && list[1]!="\n")
+                        if(list.length()>1 && list[1]!="" && list[1]!="\n"){
                             temp1.push_back(tempVertexList[list[1].toInt()-1]);
+                            widget->scene()->addItem(
+                                        new Edge(tempVertexList[list[1].toInt()-1]->getNode(),
+                                                tempVertexList[list[0].toInt()-1]->getNode()));
+                            tempVertexList[list[0].toInt()-1]->getNode()->edges().at(tempVertexList[list[0].toInt()-1]->getNode()->edges().size()-1)->setZValue(-99999);
+
+                        }
                         curr=list[0].toInt();
                         flag=1;
                  }else{
@@ -105,7 +120,13 @@ void Graph::OpenFileWithGraph(QString filename)
             }vertexList.push_back(temp1);
         }
         tempVertexList.clear();
-  }
+        for(int i=0;i<this->vertexList.size();i++){
+            vertexList[i][0]->setID(i+1);
+            vertexList[i][0]->getNode()->setPos(i,i*5);
+            widget->scene()->addItem(vertexList[i][0]->getNode());
+        }
+        qDebug() << vertexList.size();
+}
 
 bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
@@ -223,6 +244,30 @@ void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
     }
 }
 
+bool Graph::saveGraph(QString path){
+
+    QFile* file = new QFile(path);
+    if (file->open(QIODevice::WriteOnly | QIODevice::Text)){
+
+        QTextStream out(file);
+
+        for (int i = 0; i<vertexList.size(); i++)
+            for (int j = 1; j<vertexList[i].size(); j++)
+                out << vertexList[i][0]->GetId() << "\t" << vertexList[i][j]->GetId() << "\n";
+
+        file->close();
+
+        return true;
+
+    }else{
+
+        return false;
+
+    }
+
+}
+
+
 void Graph::addVertexFromVK(VKResponse user){
 
     QImage img;
@@ -265,7 +310,7 @@ void Graph::resetGraph()
             vertexList[main_users_indexes[i]][j]->getNode()->resetEdges();
 }
 
-void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
+void Graph::setGraphFromVK(QList<VKResponse> friends)
 {
     QList<vertex*> tempVertexList;
     QImage img;
@@ -294,7 +339,7 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
         else
             tempVertexList[0]->getNode()->setImagePhoto(img);
         widget->scene()->addItem(tempVertexList[0]->getNode());
-        tempVertexList[0]->setID(vertexList.size());
+        tempVertexList[0]->setID(vertexList.size()+1);
     }
     for (int i = 1; i<friends.size(); i++){
         bool flag = false;
@@ -342,7 +387,7 @@ void Graph::setGraphFromVK(int uid, QList<VKResponse> friends)
     vertexList.append(tempVertexList);
 
     for(int i=0;i<this->vertexList.size();i++)
-        vertexList[i][0]->setID(i);
+        vertexList[i][0]->setID(i+1);
 
     main_users_indexes.push_back(this->vertexList.size()-1);
 

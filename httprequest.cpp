@@ -54,7 +54,7 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
                                 temp_friend.photoUrl = jsonDoc.object().value("response").toObject().value("items").toArray().takeAt(i).toObject().value("photo_50").toString();
                                 friends.append(temp_friend);
                             }
-                            graph->setGraphFromVK(uid, friends);
+                            graph->setGraphFromVK(friends);
                         }else if(jsonDoc.object().value("response").isArray()){
                             VKResponse centralUser;
                             centralUser.id=uid;

@@ -21,7 +21,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    saveMatrix.cpp \
     graph.cpp \
     httprequest.cpp \
     modelview.cpp \
@@ -39,7 +38,6 @@ HEADERS += \
     graph.h \
     path.h \
     vertex.h \
-    saveMatrix.h \
     httprequest.h \
     modelview.h \
     shaders.h \

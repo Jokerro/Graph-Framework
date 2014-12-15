@@ -10,6 +10,7 @@
 #include <iostream>
 #include <QFile>
 #include <QList>
+#include <QTextStream>
 #include "VKResponse.h"
 
 using namespace std;
@@ -29,6 +30,8 @@ private:
     void strongComponentDFS(int v);
 
     void correct(int);
+    vertex* checkVertex(int id);
+
 public:
     Graph();
     Graph(GraphWidget *wdg):widget(wdg){}
@@ -52,10 +55,12 @@ public:
     vertex getVertex(int i, int j){return *vertexList[i][j];}
     bool operator ==(Graph to_compare);
 
-    void setGraphFromVK(int uid, QList<VKResponse> friends);
+    void setGraphFromVK(QList<VKResponse> friends);
     void addVertexFromVK(VKResponse user);
 
     void resetGraph();
+
+    bool saveGraph(QString path);
 
     /////////
     int ListSize(){return vertexList.size();}
