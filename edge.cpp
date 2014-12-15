@@ -47,9 +47,6 @@
 
 #include <QPainter>
 
-static const double Pi = 3.141592653;
-static double TwoPi = 2.0 * Pi;
-
 //! [0]
 Edge::Edge(Node *sourceNode, Node *destNode)
     : arrowSize(10)

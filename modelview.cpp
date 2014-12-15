@@ -145,9 +145,29 @@ void ModelView::setGraph(Graph *a){
         for(int j=1; j<jLen; j++)
         {
             QVector3D end;
-            end=CalcCoordinate(workGraph->getVertexList()[i][j]->getLon(), workGraph->getVertexList()[i][j]->getLat());
+            QVector3D tbegin;
+            QVector3D tend;
+
+          end=CalcCoordinate(workGraph->getVertexList()[i][j]->getLon(), workGraph->getVertexList()[i][j]->getLat());
+          int ii=1;
+          bool exist=false;
+          foreach(QVector3D a, coordinats)
+            {
+                if(ii%2!=0)
+                    tbegin=a;
+                else{
+                    tend=a;
+                    if (end==tend && temp==tbegin)
+                    {
+                        exist=true;
+                    }
+                }
+                ii++;
+            }
+          if(!exist){
             coordinats.append(temp);
             coordinats.append(end);
+          }
         }
     }
 }
