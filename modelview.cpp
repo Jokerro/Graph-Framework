@@ -36,26 +36,11 @@ void ModelView::initializeGL(QGLPainter *painter)
 {
     Q_UNUSED(painter);
     m_scene = QGLAbstractScene::loadScene("res/Earth.obj");
-    //sphereTexture=new QGLTexture2D();
     QColor red(255,0,0,1);
-    //textureImage=new QImage("res/logo.png");
-    //sphereTexture->setImage(*textureImage);
-    //sphereMaterial->setTexture(sphereTexture);
     sphereMaterial->setShininess(128);
     sphereMaterial->setSpecularColor(red);
     sphereMaterial->setEmittedLight(red);
     sphere->setMaterial(sphereMaterial);
-    int len=workGraph->getVertexList().length();
-    for(int i=0; i<len; i++)
-    {
-        QVector3D temp=CalcCoordinate(workGraph->getVertexList()[i][0]->getLon(), workGraph->getVertexList()[i][0]->getLat());
-        int jLen=workGraph->getVertexList()[i].length();
-        for(int j=1; j<jLen; j++)
-        {
-            coordinats.append(temp);
-            coordinats.append(CalcCoordinate(workGraph->getVertexList()[i][j]->getLon(), workGraph->getVertexList()[i][j]->getLat()));
-        }
-    }
 }
 
 void ModelView::paintGL(QGLPainter *painter)
@@ -79,7 +64,6 @@ QVector3DArray ModelView::CalcArc(float R, float cx, float cy, float cz, QVector
             float z=-((R/constParam1)*(a*cosf(t)+(b*c*sinf(t))/constParam2));
             vertices.append(cx+x, cy+y, cz+z);
         }
-
     return vertices;
 }
 
@@ -153,4 +137,17 @@ void ModelView::drawSphere(QGLPainter *painter, QVector3D position){
 
 void ModelView::setGraph(Graph *a){
     workGraph=a;
+    int len=workGraph->getVertexList().length();
+    for(int i=0; i<len; i++)
+    {
+        QVector3D temp=CalcCoordinate(workGraph->getVertexList()[i][0]->getLon(), workGraph->getVertexList()[i][0]->getLat());
+        int jLen=workGraph->getVertexList()[i].length();
+        for(int j=1; j<jLen; j++)
+        {
+            QVector3D end;
+            end=CalcCoordinate(workGraph->getVertexList()[i][j]->getLon(), workGraph->getVertexList()[i][j]->getLat());
+            coordinats.append(temp);
+            coordinats.append(end);
+        }
+    }
 }
