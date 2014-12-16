@@ -43,6 +43,7 @@
 #include "node.h"
 #include <QDebug>
 #include <math.h>
+#include "mainwindow.h"
 #include <QKeyEvent>
 
 GraphWidget::GraphWidget(QWidget *parent)
@@ -92,6 +93,7 @@ void GraphWidget::itemMoved()
 {
     if (!timerId)
         timerId = startTimer(1000 / 50);
+    MainWindow::updateLabels(graph->getVertexCount(), graph->getEdgeCount());
 }
 
 void GraphWidget::keyPressEvent(QKeyEvent *event)

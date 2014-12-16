@@ -9,8 +9,10 @@
 
 int Graph::first_selected = 0;
 int Graph::second_selected = 0;
-bool GraphWidget::_isWeightVisible = false;
 
+QLabel* MainWindow::vertexInfo =0;
+QLabel* MainWindow::edgeInfo =0;
+bool GraphWidget::_isWeightVisible = false;
 MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     QMainWindow(parent)
 {
@@ -24,9 +26,13 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     connect(cbAntialiasing, SIGNAL(released()),this, SLOT(selectAntialiasing()));
     cbWeight = new QCheckBox();
     connect(cbWeight, SIGNAL(released()), this, SLOT(selectShowHideWeight()));
+    btnCuts = new QPushButton("Minimum cuts",this);
+    connect(btnCuts, SIGNAL(released()), this, SLOT(Cuts_handler()));
 
 
-//    viewport = NULL;
+
+    viewport = NULL;
+
     graph=gr;
 
     btnDFS = new QPushButton("DFS",this);
@@ -35,12 +41,19 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     btnBFS = new QPushButton("BFS",this);
     connect(btnBFS, SIGNAL(released()), this, SLOT(pressBFS()));
     btnStong = new QPushButton("Strong components",this);
+
+    connect(btnStong, SIGNAL(released()), this, SLOT(strong_handler()));
+    btnGo->setBaseSize(100, 23);
+    btnDFS->setBaseSize(100, 23);
+    btnBFS->setBaseSize(100, 23);
+    btnStong->setBaseSize(100, 23);
+
     connect(btnStong, SIGNAL(released()), this, SLOT(pressStrong()));
 
     tlId = new QTextLine();
     teId = new QTextEdit();
     QSize teIdSize = teId->document()->size().toSize();
-    teIdSize.setWidth(80);
+    teIdSize.setWidth(100);
     teIdSize.setHeight(23);
     teId->setMaximumSize(teIdSize);
     cbAntialiasing->setText("Antialiasing");
@@ -49,22 +62,56 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     cbWeight->setText("Show weight");
     cbWeight->setChecked(false);
 
-
+    vertexInfo=new QLabel("Vertices:     ");
+    edgeInfo=new QLabel("Edges:          ");
     toolBar = new QToolBar;
     toolBar->addWidget(teId);
     toolBar->addWidget(btnGo);
     toolBar->addSeparator();
+
     toolBar->addWidget(cbPlay);
+    toolBar->addWidget(cbAntialiasing);
+    toolBar->addWidget(cbWeight);
+    toolBar->addSeparator();
+
     toolBar->addWidget(btn3Drender);
     toolBar->addWidget(btnDFS);
     toolBar->addWidget(btnBFS);
     toolBar->addWidget(btnStong);
+    toolBar->addWidget(btnCuts);
     toolBar->addSeparator();
-    toolBar->addWidget(cbAntialiasing);
-    toolBar->addWidget(cbWeight);
+    toolBar->addWidget(vertexInfo);
+    toolBar->addWidget(edgeInfo);
 
-    this->addToolBar(toolBar);
+    this->addToolBar(toolBar);\
+}
 
+
+void MainWindow::createLabels(){
+    vertexInfo=new QLabel("Vertexes: ");
+    edgeInfo=new QLabel("Edges: ");
+}
+
+
+void MainWindow::Cuts_handler()
+{
+    QList<Node*>* cuts_vertexes = new QList<Node*>;
+
+    this->graph->minimum_cuts(cuts_vertexes);
+
+    for(int i=0;i<cuts_vertexes->size();i++)
+       { cuts_vertexes->at(i)->makeCut();
+         cuts_vertexes->at(i)->update();
+    }
+    qDebug()<<"res";
+    for(int i=0;i<cuts_vertexes->length();i++)
+        qDebug()<<cuts_vertexes->at(i)->getTrueId();
+}
+
+
+void MainWindow::updateLabels(int vert, int ed){
+    vertexInfo->setText("Vertices: "+QString::number(vert)+"    ");
+    edgeInfo->setText("Edges: "+QString::number(ed));
 }
 
 void MainWindow::selectAntialiasing(){
@@ -168,9 +215,6 @@ void MainWindow::pressDFS()
             }
         }
 
-       // this->graphWidget->upd();
-     //   for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
-       //     this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
         QMessageBox::information(NULL,"Успех",QString::number(this->graph->getVertexList().size()));
 
         Graph::second_selected=0;
@@ -185,6 +229,7 @@ void MainWindow::pressGo(){
     qDebug()<<str;
     req = new HttpRequest();
     req->processRequest(str, graph, teId->toPlainText().toInt(), req);
+    updateLabels(graph->getVertexCount(), graph->getEdgeCount());
 }
 
 void MainWindow::pressStrong(){
@@ -232,15 +277,15 @@ void MainWindow::selectPlay(){
 
 }
 void MainWindow::press3d(){
-//    qDebug()<<graphWidget->geoLocation->isFinished();
-//    if (graphWidget->geoLocation->isFinished()){
-//        if (viewport == NULL)
-//            viewport = new ModelView();
-//        viewport->setGraph(graph);
-//        viewport->showMaximized();
-//    }else{
-//        QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
-//    }
+    qDebug()<<graphWidget->geoLocation->isFinished();
+    if (graphWidget->geoLocation->isFinished()){
+        if (viewport == NULL)
+            viewport = new ModelView();
+        viewport->setGraph(graph);
+        viewport->showMaximized();
+    }else{
+        QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
+    }
 }
 
 MainWindow::~MainWindow()

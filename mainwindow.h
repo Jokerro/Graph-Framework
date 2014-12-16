@@ -6,10 +6,11 @@
 #include <QToolBar>
 #include <QTextEdit>
 #include <QTextLine>
+#include <QLabel>
 #include <QCheckBox>
 #include "graphwidget.h"
 #include "httprequest.h"
-//#include "modelview.h"
+#include "modelview.h"
 
 class MainWindow : public QMainWindow
 {
@@ -19,6 +20,12 @@ public:
     virtual ~MainWindow();
     void setGraphWidget(GraphWidget *widget);
     void setGraph(Graph* t);
+
+    static void updateLabels(int vert, int ed);
+    static void createLabels();
+
+    //////
+
 
 signals:
 
@@ -33,15 +40,21 @@ private slots:
     void selectPlay();
     void selectAntialiasing();
     void selectShowHideWeight();
+    void Cuts_handler();
 private:
-//    ModelView *viewport;
+    ModelView *viewport;
     QTextLine *tlId;
     QTextEdit *teId;
     QPushButton *btnGo;
     QPushButton *btn3Drender;
     QPushButton *btnDFS;
     QPushButton *btnBFS;
-    QPushButton *btnStong;
+    QPushButton *btnStong;    
+    QPushButton *btnCuts;
+
+    static QLabel *vertexInfo;
+    static QLabel *edgeInfo;
+
     QCheckBox *cbWeight;
     QCheckBox *cbPlay;
     QCheckBox *cbAntialiasing;
@@ -51,7 +64,6 @@ private:
     HttpRequest* req;
     Graph *graph;
     void paintComponent(QList<int> component, int color );
-
 };
 
 #endif // MAINWINDOW_H

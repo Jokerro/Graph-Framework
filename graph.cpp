@@ -108,6 +108,7 @@ void Graph::OpenFileWithGraph(QString filename)
                             widget->scene()->addItem(
                                         new Edge(tempVertexList[list[1].toInt()-1]->getNode(),
                                                 tempVertexList[list[0].toInt()-1]->getNode()));
+                            edgeCounter++;
                             tempVertexList[list[0].toInt()-1]->getNode()->edges().at(tempVertexList[list[0].toInt()-1]->getNode()->edges().size()-1)->setZValue(-99999);
 
                         }
@@ -119,6 +120,7 @@ void Graph::OpenFileWithGraph(QString filename)
                      widget->scene()->addItem(
                                  new Edge(tempVertexList[list[1].toInt()-1]->getNode(),
                                          tempVertexList[list[0].toInt()-1]->getNode()));
+                     edgeCounter++;
                      tempVertexList[list[0].toInt()-1]->getNode()->edges().at(tempVertexList[list[0].toInt()-1]->getNode()->edges().size()-1)->setZValue(-99999);
                  }
 
@@ -132,13 +134,12 @@ void Graph::OpenFileWithGraph(QString filename)
             widget->scene()->addItem(vertexList[i][0]->getNode());
         }
         vertexCounter = vertexList.size();
-
 }
 
 bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
     QQueue<int> vertexQueue;
-    QMap<int, int> p;
+    vector<int> p(vertexList.length());
 
     //Индексы
     QList<int>*v=new QList<int>;
@@ -146,15 +147,15 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
 
     for(int i=0;i<vertexList.size();i++){
          if(vertexList[i][0]->GetUserId()==startVertex)
-            v->push_back(vertexList[i][0]->GetId());
+            v->push_back(vertexList[i][0]->GetId()-1);
          if(vertexList[i][0]->GetUserId()==finishVertex)
-         { finishVertex_iterator=vertexList[i][0]->GetId();}
+         { finishVertex_iterator=vertexList[i][0]->GetId()-1;}
     }
 
 
     vertexQueue.enqueue(startVertex);
     visitedVertex->push_back(startVertex);
-    p.insert(v->at(0),-1);
+    p[v->at(0)]=-1;
 
     while(!vertexQueue.isEmpty()){
 
@@ -177,8 +178,8 @@ bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
                         if(visitedVertex->indexOf(vertexList[i][j]->GetUserId())==-1){
                             vertexQueue.enqueue(vertexList[i][j]->GetUserId());
                             visitedVertex->push_back(vertexList[i][j]->GetUserId());
-                            v->push_back(vertexList[i][j]->GetId());
-                            p.insert(vertexList[i][j]->GetId(),vertexList[i][0]->GetId());
+                            v->push_back(vertexList[i][j]->GetId()-1);
+                            p[vertexList[i][j]->GetId()-1] = vertexList[i][0]->GetId()-1;
                         }
                     }
                     break;
@@ -196,8 +197,34 @@ int Graph::getIndex(int id)
     for(int i=0;i<vertexList.size();i++)
         if(vertexList[i][0]->GetId()==id)
             return i;
+    return 0;
 }
 
+
+void Graph::minimum_cuts(QList<Node *> *res)
+{QList<Edge*> temp;
+    for(int i=0;i<main_users_indexes.length();i++)
+    {
+        temp.push_back(vertexList[main_users_indexes[i]][0]->getNode()->edges().at(0));
+        for(int j=1;j<vertexList[main_users_indexes[i]][0]->getNode()->edges().length();j++)
+        {
+            if(vertexList[main_users_indexes[i]][0]->getNode()->edges().at(j)->getWeight()<temp.at(temp.size()-1)->getWeight())
+            {
+                temp.clear();
+                temp.push_back(vertexList[main_users_indexes[i]][0]->getNode()->edges().at(j));
+            }
+            else if (vertexList[main_users_indexes[i]][0]->getNode()->edges().at(j)->getWeight() == temp.at(temp.size()-1)->getWeight())
+                 temp.push_back(vertexList[main_users_indexes[i]][0]->getNode()->edges().at(j));
+        }
+
+        for(int j=0;j<temp.size();j++){
+            if(temp.at(j)->destNode()->getTrueId()!=vertexList[main_users_indexes[0]][0]->GetUserId())
+                res->push_back(temp.at(j)->destNode());
+        }
+    }
+
+
+}
 
 void Graph::DFS(int vertex1, int vertex2,QList<int>* vertexes)
 {///!!!!!///ДОБАВИТЬ ПРОВЕРКУ, ЕСЛИ ИЗОЛИРОВАННАЯ ВЕРШИНА ВЫБРАНА!
@@ -395,6 +422,7 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
         }
         widget->scene()->addItem(
                     new Edge(tempVertexList[0]->getNode(), tempVertexList[tempVertexList.size()-1]->getNode()));
+        edgeCounter++;
 
         tempVertexList[0]->getNode()->edges().at(tempVertexList[0]->getNode()->edges().size()-1)->setZValue(-99999);
 
@@ -405,7 +433,6 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
         vertexList[i][0]->setID(i+1);
     vertexCounter = vertexList.size();
     main_users_indexes.push_back(this->vertexList.size()-1);
-
 
 }
 
@@ -495,7 +522,6 @@ void Graph::dfsTopo(int cur, QList<vertex*>* ans) {
 }
 
 void Graph::topoRecur(QList<vertex*>* ans) {
-
     for (int i=0;i<vertexCounter;i++) {
         if (used_topo[i] == WHITE) {
             dfsTopo(i,ans);
@@ -508,7 +534,7 @@ void Graph::topoSort(){
     QList<vertex*> ans;
     topoRecur(&ans);
     for (int i=vertexCounter-1;i >= 0;i--)
-        cout<<ans[i]->GetId()<<' ';
+        ans[i]->setID(vertexCounter-i);
 
 }
 int Graph::getEdgeWeigth(int v, int u){

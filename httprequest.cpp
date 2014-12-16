@@ -4,7 +4,6 @@ HttpRequest::HttpRequest(QObject *parent) :
     QObject(parent)
 {
     // 1. Создаем QNetworkAccessManager и ожидаем от него сигнала finished
-
     nam = new QNetworkAccessManager(this);
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)),
              this, SLOT(finishedSlot(QNetworkReply*)));
@@ -32,7 +31,6 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
         QByteArray bytes = reply->readAll();
 
         // Выводим ответ на экран
-
         QJsonParseError  parseError;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(bytes, &parseError);
         if(parseError.error == QJsonParseError::NoError)
@@ -74,7 +72,6 @@ void HttpRequest::finishedSlot(QNetworkReply* reply)
                 }
 
 
-        //qDebug() << string;
 
     }
     // Произошла какая-то ошибка

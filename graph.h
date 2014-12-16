@@ -41,7 +41,8 @@ private:
 
 public:
     Graph();
-    Graph(GraphWidget *wdg):widget(wdg){}
+    Graph(GraphWidget *wdg):widget(wdg){    vertexCounter=0;
+                                            edgeCounter=0;}
     ~Graph();
     void weightMatrixInit(); //выделение памяти под матрицу весов при необходимости
     void initVertexList();   //создание массивa вершин
@@ -51,6 +52,8 @@ public:
     void DFS(int vertex1, int vertex2, QList<int>* vertexes);
 
     void topoSort();
+
+    void minimum_cuts(QList<Node *> *res);
 
     void getStrongComponents(QList<QList<int> >* components);
     void transposeGraph(QList<QList<int> >* resultGraph);

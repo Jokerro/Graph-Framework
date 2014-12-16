@@ -6,7 +6,6 @@ ImagesDownloader::ImagesDownloader(QObject *parent) :
 {
     // 1. Создаем QNetworkAccessManager и ожидаем от него сигнала finished
     finished = true;
-    subDownloader = NULL;
     nam = new QNetworkAccessManager(this);
     QObject::connect(nam, SIGNAL(finished(QNetworkReply*)),
              this, SLOT(finishedSlot(QNetworkReply*)));
@@ -15,11 +14,7 @@ ImagesDownloader::ImagesDownloader(QObject *parent) :
 void ImagesDownloader::addImagetoDownload(vertex* vert)
 {
     // 2. осуществляем вызов нужного УРЛа
-   /* if (vertexes.size()>20){
-        if(subDownloader == NULL)
-            subDownloader = new ImagesDownloader();
-        subDownloader->addImagetoDownload(vert);
-    }else{*/
+
         vertexes.append(vert);
         if(finished){
             QUrl url(vert->getPhotoUrl());
@@ -66,5 +61,4 @@ void ImagesDownloader::finishedSlot(QNetworkReply* reply)
     }
 
     delete reply;
-  //  delete ver->getHttpImg();
 }
