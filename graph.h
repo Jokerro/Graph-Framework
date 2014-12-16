@@ -35,7 +35,7 @@ private:
 
     void transposedGraphDFS(int v, QList<QList<int> >* transposedGraph, QList<int>* component);
     void strongComponentDFS(int v);
-
+    int getEdgeWeigth(int v, int u);
     void correct(int);
     vertex* checkVertex(int id);
 
@@ -54,7 +54,7 @@ public:
 
     void getStrongComponents(QList<QList<int> >* components);
     void transposeGraph(QList<QList<int> >* resultGraph);
-
+    void getShortestPath(int vertex1, int vertex2);
     void OpenFileWithGraph(QString filename);
     bool compare_graphs(QString path1, QString path2);
     int getVertexCount();

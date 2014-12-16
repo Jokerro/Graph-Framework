@@ -511,3 +511,71 @@ void Graph::topoSort(){
         cout<<ans[i]->GetId()<<' ';
 
 }
+int Graph::getEdgeWeigth(int v, int u){
+    for(int j=0; j<vertexList.length(); j++){
+        if(v==vertexList[j][0]->GetId())
+        for(int k=0; k<vertexList[j][0]->getNode()->get_edges().length();k++){
+            cout<<vertexList[j][0]->getNode()->get_edges()[k]->getWeight()<<" ";
+           if (vertexList[j][0]->getNode()->get_edges()[k]->destNode()->getId()==u){
+                    return vertexList[j][0]->getNode()->get_edges()[k]->getWeight();
+            }
+        }
+    }
+   return -1;
+}
+
+void Graph::getShortestPath(int vertex1, int vertex2){
+    int v;
+    int infinity = 100000000000;
+    QMap<int, int> t;
+    QMap<int, int> x;
+    int h [vertexList.length()];
+    for(int i=0; i<vertexList.length(); i++){
+        int u=vertexList[i][0]->GetId();
+        t.insert(u,infinity);
+        x.insert(u,0);
+        if(u==vertex1){
+            h[u]=0;
+            t.insert(u,0);
+            x.insert(u, 1);
+        }
+    }
+    v=vertex1;
+
+    while(1){
+        for(int i=0; i<vertexList.length(); i++){
+            int u=vertexList[i][0]->GetId();
+            int weigth=getEdgeWeigth(v, u);
+            if (weigth>=0)
+               if (x[u]==0 && t[u]>t[v]+weigth){
+                t[u]=t[v]+weigth;
+                h[u]=v;
+            }
+        }
+
+        int w=infinity;
+        v=-1;
+        for(int i=0; i<vertexList.length(); i++){
+                int u=vertexList[i][0]->GetId();
+                if(x[u]==0 && t[u]<w){
+                    v=u;
+                    w=t[u];
+                }
+        }
+
+        if(v==-1){
+             std::cout<<"Not found";
+            break;
+        }
+        if(v==vertex2){
+            int u=vertex2;
+            while(u!=vertex1){
+                std::cout<<" "<<u;
+                u=h[u];
+            }
+            cout<<t[vertex2];
+            break;
+        }
+        x[v]=1;
+    }
+}

@@ -97,7 +97,7 @@ void MainWindow::setGraphWidget(GraphWidget *widget){
 
 void MainWindow::pressBFS()
 {
-    if(Graph::first_selected==0||Graph::second_selected==0)
+    /*if(Graph::first_selected==0||Graph::second_selected==0)
         QMessageBox::information(NULL,"No selected vertexes", "Please, select two vertexes, before pushing this button");
     else
     {
@@ -129,7 +129,8 @@ void MainWindow::pressBFS()
 
         Graph::second_selected=0;
         Graph::first_selected =0;
-    }
+    }*/
+    graph->getShortestPath(1, 3);
 }
 
 void MainWindow::pressDFS()
