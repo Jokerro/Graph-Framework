@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core opengl network widgets 3dquick
+QT       += core opengl network widgets #3dquick
 QT       -= gui
 
 #QMAKE_LIBS+=-static -lgomp -lpthread
@@ -23,28 +23,23 @@ TEMPLATE = app
 SOURCES += main.cpp \
     graph.cpp \
     httprequest.cpp \
-    modelview.cpp \
-    shaders.cpp \
+#    modelview.cpp \
     edge.cpp \
     graphwidget.cpp \
     node.cpp \
     mainwindow.cpp \
     imagedownloader.cpp \
-    uimainwindow.cpp \
     geolocation.cpp
 
 HEADERS += \
     edge.h \
     graph.h \
-    path.h \
     vertex.h \
     httprequest.h \
-    modelview.h \
-    shaders.h \
+#    modelview.h \
     graphwidget.h \
     node.h \
     mainwindow.h \
     imagedownloader.h \
-    uimainwindow.h \
     VKResponse.h \
     geolocation.h

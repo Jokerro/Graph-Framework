@@ -51,7 +51,6 @@ QT_BEGIN_NAMESPACE
 class QGraphicsSceneMouseEvent;
 QT_END_NAMESPACE
 
-//! [0]
 class Node : public QGraphicsItem
 {
 public:
@@ -95,6 +94,5 @@ private:
     int id;
     int true_id;
 };
-//! [0]
 
 #endif // NODE_H

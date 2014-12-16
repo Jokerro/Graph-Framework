@@ -9,28 +9,33 @@
 
 int Graph::first_selected = 0;
 int Graph::second_selected = 0;
+bool GraphWidget::_isWeightVisible = false;
+
 MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     QMainWindow(parent)
 {
     btnGo = new QPushButton("Go", this);
     connect(btnGo, SIGNAL(released()), this, SLOT(pressGo()));
-    _3drender = new QPushButton("3D", this);
-    connect(_3drender, SIGNAL(released()), this, SLOT(press3d()));
-    btnPlay = new QCheckBox("Physics", this);
-    connect(btnPlay, SIGNAL(released()), this, SLOT(changePlay()));
+    btn3Drender = new QPushButton("3D", this);
+    connect(btn3Drender, SIGNAL(released()), this, SLOT(press3d()));
+    cbPlay = new QCheckBox("Physics", this);
+    connect(cbPlay, SIGNAL(released()), this, SLOT(selectPlay()));
     cbAntialiasing = new QCheckBox();
-    connect(cbAntialiasing, SIGNAL(released()),this, SLOT(changeAntialiasing()));
+    connect(cbAntialiasing, SIGNAL(released()),this, SLOT(selectAntialiasing()));
+    cbWeight = new QCheckBox();
+    connect(cbWeight, SIGNAL(released()), this, SLOT(selectShowHideWeight()));
 
-    viewport = NULL;
+
+//    viewport = NULL;
     graph=gr;
 
     btnDFS = new QPushButton("DFS",this);
-    connect(btnDFS, SIGNAL(released()), this, SLOT(DFS_handler()));
+    connect(btnDFS, SIGNAL(released()), this, SLOT(pressDFS()));
 
     btnBFS = new QPushButton("BFS",this);
-    connect(btnBFS, SIGNAL(released()), this, SLOT(BFS_handler()));
+    connect(btnBFS, SIGNAL(released()), this, SLOT(pressBFS()));
     btnStong = new QPushButton("Strong components",this);
-    connect(btnStong, SIGNAL(released()), this, SLOT(strong_handler()));
+    connect(btnStong, SIGNAL(released()), this, SLOT(pressStrong()));
 
     tlId = new QTextLine();
     teId = new QTextEdit();
@@ -40,31 +45,43 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     teId->setMaximumSize(teIdSize);
     cbAntialiasing->setText("Antialiasing");
     cbAntialiasing->setChecked(true);
-    btnPlay->setChecked(true);
+    cbPlay->setChecked(true);
+    cbWeight->setText("Show weight");
+    cbWeight->setChecked(false);
 
 
     toolBar = new QToolBar;
     toolBar->addWidget(teId);
     toolBar->addWidget(btnGo);
     toolBar->addSeparator();
-    toolBar->addWidget(btnPlay);
-    toolBar->addWidget(_3drender);
+    toolBar->addWidget(cbPlay);
+    toolBar->addWidget(btn3Drender);
     toolBar->addWidget(btnDFS);
     toolBar->addWidget(btnBFS);
     toolBar->addWidget(btnStong);
     toolBar->addSeparator();
     toolBar->addWidget(cbAntialiasing);
+    toolBar->addWidget(cbWeight);
 
     this->addToolBar(toolBar);
 
 }
 
-void MainWindow::changeAntialiasing(){
+void MainWindow::selectAntialiasing(){
 
     if(cbAntialiasing->isChecked())
         graphWidget->setAntialiasingEnable(true);
     else
         graphWidget->setAntialiasingEnable(false);
+}
+
+void MainWindow::selectShowHideWeight(){
+    if(cbWeight->isChecked())
+        GraphWidget::setWeightVisible(true);
+    else
+        GraphWidget::setWeightVisible(false);
+    graphWidget->itemMoved();
+    graphWidget->scene()->update(-20000, -20000, 40000, 40000);
 }
 
 void MainWindow::setGraph(Graph* t)
@@ -78,7 +95,7 @@ void MainWindow::setGraphWidget(GraphWidget *widget){
 
 }
 
-void MainWindow::BFS_handler()
+void MainWindow::pressBFS()
 {
     if(Graph::first_selected==0||Graph::second_selected==0)
         QMessageBox::information(NULL,"No selected vertexes", "Please, select two vertexes, before pushing this button");
@@ -115,7 +132,7 @@ void MainWindow::BFS_handler()
     }
 }
 
-void MainWindow::DFS_handler()
+void MainWindow::pressDFS()
 {
     //qDebug()<<this->graph->test();
     if(Graph::first_selected==0||Graph::second_selected==0)
@@ -168,7 +185,7 @@ void MainWindow::pressGo(){
     req->processRequest(str, graph, teId->toPlainText().toInt(), req);
 }
 
-void MainWindow::strong_handler(){
+void MainWindow::pressStrong(){
     QList<QList<int> >  components;
 
     for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
@@ -204,7 +221,7 @@ for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++
     this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->edges()[0]->update();
 }
 
-void MainWindow::changePlay(){
+void MainWindow::selectPlay(){
     //action here
     if(graphWidget->isPhysicsDisabled())
         graphWidget->setPhysicsEnable(false);
@@ -213,15 +230,15 @@ void MainWindow::changePlay(){
 
 }
 void MainWindow::press3d(){
-    qDebug()<<graphWidget->geoLocation->isFinished();
-    if (graphWidget->geoLocation->isFinished()){
-        if (viewport == NULL)
-            viewport = new ModelView();
-        viewport->setGraph(graph);
-        viewport->showMaximized();
-    }else{
-        QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
-    }
+//    qDebug()<<graphWidget->geoLocation->isFinished();
+//    if (graphWidget->geoLocation->isFinished()){
+//        if (viewport == NULL)
+//            viewport = new ModelView();
+//        viewport->setGraph(graph);
+//        viewport->showMaximized();
+//    }else{
+//        QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
+//    }
 }
 
 MainWindow::~MainWindow()

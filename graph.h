@@ -69,7 +69,6 @@ public:
 
     bool saveGraph(QString path);
 
-    /////////
     int ListSize(){return vertexList.size();}
 
     //выбор вершин для поиска

@@ -324,7 +324,7 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
     bool flag = false;
 
     for (int i = 0; i< vertexList.size(); i++)
-        if (friends[0].id == vertexList[i].at(0)->GetUserId()){
+        if (friends[0].id == vertexList[i].at(0)->GetUserId()){qDebug()<<"Oyes";
             flag = true;
             tempVertexList.append(vertexList[i].at(0));
             vertexList.removeAt(i);
@@ -346,7 +346,7 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
             widget->geoLocation->addGeotoDetect(tempVertexList[0]);
         else
             tempVertexList[0]->SetCoords(0,0);
-        if(!img.load("images/"+QString::number(tempVertexList[0]->GetId())+".jpg"))
+        if(!img.load("images/"+QString::number(tempVertexList[0]->GetUserId())+".jpg"))
             widget->imgDownloader->addImagetoDownload(tempVertexList[0]);
         else
             tempVertexList[0]->getNode()->setImagePhoto(img);
@@ -394,7 +394,6 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
 
         tempVertexList[0]->getNode()->edges().at(tempVertexList[0]->getNode()->edges().size()-1)->setZValue(-99999);
 
-
     }
     vertexList.append(tempVertexList);
 
@@ -406,13 +405,6 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
 
 
 }
-//   2
-//   10
-//   15
-//
-//
-//
-//
 
 
 void Graph::transposeGraph(QList<QList<int> >* resultGraph){

@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QApplication>
-#include <qt3dversion.h>
-#include "modelview.h"
+//#include <qt3dversion.h>
+//#include "modelview.h"
 
 #include <QTime>
 #include <QMainWindow>
@@ -28,65 +28,6 @@ int main(int argc, char *argv[])
    mainWindow.setCentralWidget(graphWidget);
    mainWindow.showMaximized();
 
-
    return a.exec();
-
-
-}
-
-void showMenu()
-{
-    system("cls");
-
-    cout<<"\t\t\tSprint 2 Demo"<<endl<<
-        //  "1 - Load graph from .txt file"<<endl<<
-          "2 - Visualise"<<endl<<
-          "3 - BFS"<<endl<<
-          "4 - DFS"<<endl;
-}
-
-bool BFS_test(Graph* t, QList<int>* list)
-{
-    system("cls");
-
-    cout<<"Type first vertex:"<<endl;
-    int v1,v2;
-    cin>>v1;
-    cout<<"Type second vertex:"<<endl;
-    cin>>v2;
-
-    return t->BFS(v1,v2,list);
-}
-
-bool DFS_test(Graph* t, QList<int>* list)
-{
-    system("cls");
-
-
-    cout<<"Type first vertex:"<<endl;
-    int v1,v2;
-    cin>>v1;
-    cout<<"Type second vertex:"<<endl;
-    cin>>v2;
-
-    t->DFS(v1,v2,list);
-
-    if(list->length()==0)
-        return false;
-    else return true;
-}
-
-void getGraph(Graph* t)
-{
-    system("cls");
-
-    cout<<"Type full file path:"<<endl;
-
-    string path;
-
-    cin>>path;
-
-    t->OpenFileWithGraph(path.c_str());
-    system("cls");
 
 }

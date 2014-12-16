@@ -40,14 +40,11 @@
 
 #include "edge.h"
 #include "node.h"
-
+#include "graphwidget.h"
 #include "QTime"
-
 #include <math.h>
-
 #include <QPainter>
 
-//! [0]
 Edge::Edge(Node *sourceNode, Node *destNode)
     : arrowSize(10)
 {
@@ -58,13 +55,11 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     dest->addEdge(this);
     QTime midnight(0,0,0);
     qsrand(midnight.secsTo(QTime::currentTime()));
-    weight=qrand() % 20+1;
+    weight = 0;
     color = Qt::black;
     adjust();
 }
-//! [0]
 
-//! [1]
 Node *Edge::sourceNode() const
 {
     return source;
@@ -74,9 +69,7 @@ Node *Edge::destNode() const
 {
     return dest;
 }
-//! [1]
 
-//! [2]
 void Edge::adjust()
 {
     if (!source || !dest)
@@ -95,9 +88,7 @@ void Edge::adjust()
         sourcePoint = destPoint = line.p1();
     }
 }
-//! [2]
 
-//! [3]
 QRectF Edge::boundingRect() const
 {
     if (!source || !dest)
@@ -111,9 +102,7 @@ QRectF Edge::boundingRect() const
         .normalized()
         .adjusted(-extra, -extra, extra, extra);
 }
-//! [3]
 
-//! [4]
 void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     if (!source || !dest)
@@ -122,12 +111,18 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     QLineF line(sourcePoint, destPoint);
     if (qFuzzyCompare(line.length(), qreal(0.)))
         return;
-//! [4]
 
-//! [5]
+    int wX, wY;
+
+    if(GraphWidget::isWeightVisible()){
+        wX = (destPoint.x()+sourcePoint.x())*.5;
+        wY = (destPoint.y()+sourcePoint.y())*.5;
+
+        painter->drawText(wX, wY, QString::number(getWeight()));
+    }
+
     // Draw the line itself
     painter->setPen(QPen(color, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter->drawLine(line);
-//! [5]
 
 }

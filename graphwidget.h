@@ -47,7 +47,6 @@
 class Node;
 class Graph;
 
-//! [0]
 class GraphWidget : public QGraphicsView
 {
     Q_OBJECT
@@ -64,6 +63,8 @@ public:
     void upd(){repaint();}
     void setGraph(Graph* gr){graph = gr;}
     Graph* getGraph(){return graph;}
+    static void setWeightVisible(bool b) { _isWeightVisible =  b; }
+    static bool isWeightVisible() { return _isWeightVisible; }
 
 public slots:
     void shuffle();
@@ -86,8 +87,9 @@ private:
     bool isAntialiasingEnabled;
     Graph* graph;
     Node *centerNode;
+    static bool _isWeightVisible;
+
 
 };
-//! [0]
 
 #endif // GRAPHWIDGET_H
