@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <QApplication>
-//#include <qt3dversion.h>
-//#include "modelview.h"
+#include <qt3dversion.h>
+#include "modelview.h"
 
 #include <QTime>
 #include <QMainWindow>

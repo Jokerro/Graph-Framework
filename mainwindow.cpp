@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     connect(cbWeight, SIGNAL(released()), this, SLOT(selectShowHideWeight()));
 
 
-//    viewport = NULL;
+    viewport = NULL;
     graph=gr;
 
     btnDFS = new QPushButton("DFS",this);
@@ -261,15 +261,15 @@ void MainWindow::selectPlay(){
 
 }
 void MainWindow::press3d(){
-//    qDebug()<<graphWidget->geoLocation->isFinished();
-//    if (graphWidget->geoLocation->isFinished()){
-//        if (viewport == NULL)
-//            viewport = new ModelView();
-//        viewport->setGraph(graph);
-//        viewport->showMaximized();
-//    }else{
-//        QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
-//    }
+    qDebug()<<graphWidget->geoLocation->isFinished();
+    if (graphWidget->geoLocation->isFinished()){
+        if (viewport == NULL)
+            viewport = new ModelView();
+        viewport->setGraph(graph);
+        viewport->showMaximized();
+    }else{
+        QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
+    }
 }
 
 MainWindow::~MainWindow()

@@ -10,7 +10,7 @@
 #include <QCheckBox>
 #include "graphwidget.h"
 #include "httprequest.h"
-//#include "modelview.h"
+#include "modelview.h"
 
 class MainWindow : public QMainWindow
 {
@@ -41,7 +41,7 @@ private slots:
     void selectAntialiasing();
     void selectShowHideWeight();
 private:
-//    ModelView *viewport;
+    ModelView *viewport;
     QTextLine *tlId;
     QTextEdit *teId;
     QPushButton *btnGo;
@@ -62,7 +62,6 @@ private:
     HttpRequest* req;
     Graph *graph;
     void paintComponent(QList<int> component, int color );
-
 };
 
 #endif // MAINWINDOW_H

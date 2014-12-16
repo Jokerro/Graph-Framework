@@ -175,7 +175,8 @@ void ModelView::setGraph(Graph *a){
                 }
                 ii++;
             }
-            if(!exist){
+            QVector3D zero(0.0,0.0,25.0);
+            if(!exist&&end!=zero&&temp!=zero){
                 coordinats.append(temp);
                 coordinats.append(end);
             }
