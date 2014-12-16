@@ -31,7 +31,6 @@ private:
 
     QList<vertex*> vertexes;
     bool finished;
-    ImagesDownloader* subDownloader;
 
 };
 

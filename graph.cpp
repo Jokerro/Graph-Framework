@@ -197,6 +197,7 @@ int Graph::getIndex(int id)
     for(int i=0;i<vertexList.size();i++)
         if(vertexList[i][0]->GetId()==id)
             return i;
+    return 0;
 }
 
 
@@ -433,7 +434,6 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
     vertexCounter = vertexList.size();
     main_users_indexes.push_back(this->vertexList.size()-1);
 
-
 }
 
 
@@ -522,7 +522,6 @@ void Graph::dfsTopo(int cur, QList<vertex*>* ans) {
 }
 
 void Graph::topoRecur(QList<vertex*>* ans) {
-
     for (int i=0;i<vertexCounter;i++) {
         if (used_topo[i] == WHITE) {
             dfsTopo(i,ans);
