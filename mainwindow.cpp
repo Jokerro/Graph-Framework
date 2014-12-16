@@ -26,9 +26,13 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     connect(cbAntialiasing, SIGNAL(released()),this, SLOT(selectAntialiasing()));
     cbWeight = new QCheckBox();
     connect(cbWeight, SIGNAL(released()), this, SLOT(selectShowHideWeight()));
+    btnCuts = new QPushButton("Minimum cuts",this);
+    connect(btnCuts, SIGNAL(released()), this, SLOT(Cuts_handler()));
+
 
 
     viewport = NULL;
+
     graph=gr;
 
     btnDFS = new QPushButton("DFS",this);
@@ -74,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     toolBar->addWidget(btnDFS);
     toolBar->addWidget(btnBFS);
     toolBar->addWidget(btnStong);
+    toolBar->addWidget(btnCuts);
     toolBar->addSeparator();
     toolBar->addWidget(vertexInfo);
     toolBar->addWidget(edgeInfo);
@@ -88,7 +93,20 @@ void MainWindow::createLabels(){
 }
 
 
+void MainWindow::Cuts_handler()
+{
+    QList<Node*>* cuts_vertexes = new QList<Node*>;
 
+    this->graph->minimum_cuts(cuts_vertexes);
+
+    for(int i=0;i<cuts_vertexes->size();i++)
+       { cuts_vertexes->at(i)->makeCut();
+         cuts_vertexes->at(i)->update();
+    }
+    qDebug()<<"res";
+    for(int i=0;i<cuts_vertexes->length();i++)
+        qDebug()<<cuts_vertexes->at(i)->getTrueId();
+}
 
 
 void MainWindow::updateLabels(int vert, int ed){
@@ -196,9 +214,6 @@ void MainWindow::pressDFS()
             }
         }
 
-       // this->graphWidget->upd();
-     //   for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
-       //     this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
         QMessageBox::information(NULL,"Успех",QString::number(this->graph->getVertexList().size()));
 
         Graph::second_selected=0;

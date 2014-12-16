@@ -53,6 +53,8 @@ public:
 
     void topoSort();
 
+    void minimum_cuts(QList<Node *> *res);
+
     void getStrongComponents(QList<QList<int> >* components);
     void transposeGraph(QList<QList<int> >* resultGraph);
 
