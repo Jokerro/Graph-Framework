@@ -77,7 +77,7 @@ public:
     void setId(int iid){id= iid;}
     void setTrueId(int tid){true_id=tid;}
     void setImagePhoto(QImage img);
-
+    void makeCut();
     void resetEdges();
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
@@ -93,6 +93,8 @@ private:
     GraphWidget *graph;
     int id;
     int true_id;
+
+    bool isCut;
 };
 
 #endif // NODE_H

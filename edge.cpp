@@ -55,7 +55,7 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     dest->addEdge(this);
     QTime midnight(0,0,0);
     qsrand(midnight.secsTo(QTime::currentTime()));
-    weight = 0;
+    weight = QTime::currentTime().msec();
     color = Qt::black;
     adjust();
 }

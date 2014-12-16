@@ -58,6 +58,7 @@ Node::Node(GraphWidget *graphWidget)
     setCacheMode(DeviceCoordinateCache);
     setZValue(-1);
     el=&edgeList;
+    isCut=false;
 }
 
 void Node::addEdge(Edge *edge)
@@ -169,7 +170,14 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->setPen(Qt::SolidLine);
         painter->drawText(-5, 0,QString::number(getId()));
         painter->drawImage(rect, imgPhoto);
-    } else {
+    } else  {
+        if(isCut)
+        {
+            painter->setBrush(Qt::green);
+            painter->drawEllipse(*new QPoint(-15,-15),300,200);//drawRect(-15, -15, 210, 210);
+            QRect rect(-11,-11,21,21);
+            painter->drawImage(rect, imgPhoto);
+        }else{
         painter->drawRect(-10,-10,24,24);
         QRect rect(-12,-12,24,24);
         painter->setBrush(Qt::black);
@@ -177,7 +185,12 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->drawText(-5, 5,QString::number(getId()));
         painter->drawImage(rect, imgPhoto);
     }
+    }
 
+}
+void Node::makeCut()
+{
+    isCut=true;
 }
 
 QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)

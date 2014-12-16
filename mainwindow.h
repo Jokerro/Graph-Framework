@@ -40,6 +40,7 @@ private slots:
     void selectPlay();
     void selectAntialiasing();
     void selectShowHideWeight();
+    void Cuts_handler();
 private:
 //    ModelView *viewport;
     QTextLine *tlId;
@@ -48,7 +49,8 @@ private:
     QPushButton *btn3Drender;
     QPushButton *btnDFS;
     QPushButton *btnBFS;
-    QPushButton *btnStong;
+    QPushButton *btnStong;    
+    QPushButton *btnCuts;
 
     static QLabel *vertexInfo;
     static QLabel *edgeInfo;
