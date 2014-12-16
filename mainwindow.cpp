@@ -28,8 +28,8 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     connect(cbWeight, SIGNAL(released()), this, SLOT(selectShowHideWeight()));
     btnCuts = new QPushButton("Minimum cuts",this);
     connect(btnCuts, SIGNAL(released()), this, SLOT(Cuts_handler()));
-
-
+res = new QPushButton("reset",this);
+connect(res, SIGNAL(released()), this, SLOT(rest()));
 
     viewport = NULL;
 
@@ -79,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     toolBar->addWidget(btnBFS);
     toolBar->addWidget(btnStong);
     toolBar->addWidget(btnCuts);
+    toolBar->addWidget(res);
     toolBar->addSeparator();
     toolBar->addWidget(vertexInfo);
     toolBar->addWidget(edgeInfo);
@@ -92,6 +93,10 @@ void MainWindow::createLabels(){
     edgeInfo=new QLabel("Edges: ");
 }
 
+void MainWindow::rest()
+{
+    this->graph->resetGraph();
+}
 
 void MainWindow::Cuts_handler()
 {
@@ -124,7 +129,16 @@ void MainWindow::selectAntialiasing(){
 
 void MainWindow::selectShowHideWeight(){
     if(cbWeight->isChecked())
-        GraphWidget::setWeightVisible(true);
+//         if (graphWidget->geoLocation->isFinished()){
+
+
+//             for (int i = 0; i < graph->getVertexList().length(); i++)
+//             for(int j=0; j<graph->getVertexList()[i][0]->getNode()->get_edges().length();j++)
+//                 graph->getVertexList()[i][0]->getNode()->get_edges()[j]->initWeights();
+             GraphWidget::setWeightVisible(true);
+//         }else{
+//             QMessageBox::information(NULL,"Ожидайте!","Коордиаты друзей ещё не получены!");
+//         }
     else
         GraphWidget::setWeightVisible(false);
     graphWidget->itemMoved();
@@ -211,7 +225,6 @@ void MainWindow::pressDFS()
             }
         }
 
-        QMessageBox::information(NULL,"Успех",QString::number(this->graph->getVertexList().size()));
 
         Graph::second_selected=0;
         Graph::first_selected =0;

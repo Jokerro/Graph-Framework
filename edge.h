@@ -61,6 +61,7 @@ public:
     int type() const { return Type; }
     void setWeight(int weight){ this->weight = weight; }
     int getWeight() const { return weight; }
+    void initWeights();
 
 protected:
     QRectF boundingRect() const;

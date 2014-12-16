@@ -67,6 +67,11 @@ void Node::addEdge(Edge *edge)
     edge->adjust();
 }
 
+void Node::iW(){
+    for(int i=0; i<edgeList.length(); i++)
+        edgeList[i]->initWeights();
+}
+
 void Node::resetEdges(){
     for(int i=0;i<this->edgeList.size();i++)
     {

@@ -49,7 +49,9 @@ class vertex{
         void setID(int iid){
             node->setId(iid);
             this->id=iid;}
-        void SetCoords(float lat, float lon){latitude = lat; longitude = lon;}
+        void SetCoords(float lat, float lon){latitude = lat; longitude = lon;
+                                             node->latitude=lat;
+                                             node->longitude=lon;}
         void setCity(QString mCity){ city = mCity;}
 };
 

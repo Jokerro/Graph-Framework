@@ -78,7 +78,10 @@ public:
     void setTrueId(int tid){true_id=tid;}
     void setImagePhoto(QImage img);
     void makeCut();
+    void iW();
     void resetEdges();
+    float latitude;
+    float longitude;
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
@@ -87,13 +90,13 @@ protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
 private:
+
     QImage imgPhoto;
     QList<Edge *> edgeList;
     QPointF newPos;
     GraphWidget *graph;
     int id;
     int true_id;
-
     bool isCut;
 };
 

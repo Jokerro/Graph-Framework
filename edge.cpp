@@ -44,7 +44,7 @@
 #include "QTime"
 #include <math.h>
 #include <QPainter>
-
+#define PI 3.1415
 Edge::Edge(Node *sourceNode, Node *destNode)
     : arrowSize(10)
 {
@@ -55,7 +55,7 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     dest->addEdge(this);
     QTime midnight(0,0,0);
     qsrand(midnight.secsTo(QTime::currentTime()));
-    weight = QTime::currentTime().msec();
+    weight = QTime::currentTime().msec()%100;
     color = Qt::black;
     adjust();
 }
@@ -101,6 +101,30 @@ QRectF Edge::boundingRect() const
                                       destPoint.y() - sourcePoint.y()))
         .normalized()
         .adjusted(-extra, -extra, extra, extra);
+}
+
+void Edge::initWeights(){
+    unsigned int rad = 6372795;
+    float llat1= source->latitude;
+    float llong1=source->longitude;
+    float llat2= dest->latitude;
+    float llong2=dest->longitude;
+    float lat1 = llat1*PI/180.0;
+    float lat2 = llong1*PI/180.0;
+    float long1 = llat2*PI/180.0;
+    float long2 = llong2*PI/180.0;
+    float cl1 = cosf(lat1);
+    float cl2 = cosf(lat2);
+    float sl1 = sinf(lat1);
+    float sl2 = sinf(lat2);
+    float delta = long2 - long1;
+    float cdelta = cosf(delta);
+    float sdelta = sinf(delta);
+    float y = sqrtf(pow(cl2*sdelta,2)+pow(cl1*sl2-sl1*cl2*cdelta,2));
+    float x = sl1*sl2+cl1*cl2*cdelta;
+    float ad = atan2f(y,x);
+    float dist = ad*rad;
+    weight=(int)dist/10000;
 }
 
 void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)

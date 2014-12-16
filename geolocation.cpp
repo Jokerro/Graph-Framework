@@ -72,6 +72,7 @@ void GeoLocation::finishedSlot(QNetworkReply* reply)
             vertexes.append(vertexes[0]);
         else
             vertexes[0]->SetCoords(0,0);
+
         vertexes.removeAt(0);
         if (vertexes.size()>0)
             nam->get(QNetworkRequest(request+vertexes[0]->getCity()+numberOfres));
