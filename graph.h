@@ -21,8 +21,8 @@ private:
 
     enum TYPE_VERTEX{WHITE,GRAY,BLACK};
     vector<TYPE_VERTEX> used_topo;
-    void DFS_TOPO(int cur, vector<int> &ans);
-    void TOPOLOGICAL_SORT(vector<int> &ans);
+    void dfsTopo(int cur, QList<vertex*>* ans);
+    void topoRecur(QList<vertex*>* ans);
 
     GraphWidget *widget;
     int edgeCounter;
@@ -49,7 +49,9 @@ public:
     void cleanMemory();      //очищение памяти от существующих массивов
 
     bool BFS(int startVertex, int finishVertex, QList<int>* visitedVertex);
-    void DFS(int vertex1,int vertex2,QList<int>* vertexes);
+    void DFS(int vertex1, int vertex2, QList<int>* vertexes);
+
+    void topoSort();
 
     void getStrongComponents(QList<QList<int> >* components);
     void transposeGraph(QList<QList<int> >* resultGraph);
@@ -70,7 +72,6 @@ public:
 
     bool saveGraph(QString path);
 
-    /////////
     int ListSize(){return vertexList.size();}
 
     //выбор вершин для поиска

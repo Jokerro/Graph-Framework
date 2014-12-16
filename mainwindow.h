@@ -10,7 +10,8 @@
 #include <QCheckBox>
 #include "graphwidget.h"
 #include "httprequest.h"
-#include "modelview.h"
+//#include "modelview.h"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -18,8 +19,8 @@ public:
     explicit MainWindow(QWidget *parent = 0,Graph* gr=0);
     virtual ~MainWindow();
     void setGraphWidget(GraphWidget *widget);
-    /////
     void setGraph(Graph* t);
+
     static void updateLabels(int vert, int ed);
     static void createLabels();
 
@@ -33,26 +34,30 @@ public slots:
 private slots:
     void pressGo();
     void press3d();
-    void changePlay();
-    void changeAntialiasing();
-    void strong_handler();
-    void DFS_handler();
-    void BFS_handler();
-
+    void pressStrong();
+    void pressDFS();
+    void pressBFS();
+    void selectPlay();
+    void selectAntialiasing();
+    void selectShowHideWeight();
 private:
-    ModelView *viewport;
+//    ModelView *viewport;
     QTextLine *tlId;
     QTextEdit *teId;
     QPushButton *btnGo;
-    QPushButton *_3drender;
-    QCheckBox *btnPlay;
-    QCheckBox *cbAntialiasing;
+    QPushButton *btn3Drender;
     QPushButton *btnDFS;
     QPushButton *btnBFS;
     QPushButton *btnStong;
+
     static QLabel *vertexInfo;
     static QLabel *edgeInfo;
+
+    QCheckBox *cbWeight;
+    QCheckBox *cbPlay;
+    QCheckBox *cbAntialiasing;
     QToolBar *toolBar;
+
     GraphWidget *graphWidget;
     HttpRequest* req;
     Graph *graph;

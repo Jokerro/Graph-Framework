@@ -46,7 +46,6 @@
 
 class Node;
 
-//! [0]
 class Edge : public QGraphicsItem
 {
 public:
@@ -57,9 +56,10 @@ public:
 
     Node *source, *dest;
     void adjust();
-Qt::GlobalColor color;
+    Qt::GlobalColor color;
     enum { Type = UserType + 2 };
     int type() const { return Type; }
+    void setWeight(int weight){ this->weight = weight; }
     int getWeight() const { return weight; }
 
 protected:
@@ -67,14 +67,10 @@ protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    //Node *source, *dest;
-
-
     QPointF sourcePoint;
     QPointF destPoint;
     qreal arrowSize;
     int weight;
 };
-//! [0]
 
 #endif // EDGE_H

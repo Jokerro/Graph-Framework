@@ -32,7 +32,7 @@ class vertex{
         vertex(int iid, Node *nd){user_id=iid;node=nd;node->setTrueId(iid);}
         vertex(VKResponse resp, Node *nd):/* !!*/ user_id(resp.id),first_name(resp.first_name),last_name(resp.last_name),
                                         country(resp.country),city(resp.city),photoUrl(resp.photoUrl),node(nd){
-            node->setId(resp.id);
+//            node->setId(resp.id);
             node->setTrueId(user_id);
 
         }
@@ -46,7 +46,9 @@ class vertex{
         Node* getNode(){return node;}
 
         int GetUserId(){return user_id;}
-        void setID(int iid){this->id=iid;}
+        void setID(int iid){
+            node->setId(iid);
+            this->id=iid;}
         void SetCoords(float lat, float lon){latitude = lat; longitude = lon;}
         void setCity(QString mCity){ city = mCity;}
 };

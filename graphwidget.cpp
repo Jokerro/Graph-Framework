@@ -44,10 +44,8 @@
 #include <QDebug>
 #include <math.h>
 #include "mainwindow.h"
-
 #include <QKeyEvent>
 
-//! [0]
 GraphWidget::GraphWidget(QWidget *parent)
     : QGraphicsView(parent), timerId(0)
 {
@@ -66,12 +64,8 @@ GraphWidget::GraphWidget(QWidget *parent)
     imgDownloader = new ImagesDownloader();
     geoLocation = new GeoLocation();
     this->isPhysicsEnabled = true;
-//! [0]
-
-//! [1]
-
 }
-//! [1]
+
 void GraphWidget::setPhysicsEnable(bool enable){
     if(enable)
         this->isPhysicsEnabled = true;
@@ -95,17 +89,13 @@ bool GraphWidget::isPhysicsDisabled(){
     return this->isPhysicsEnabled;
 }
 
-//! [2]
 void GraphWidget::itemMoved()
 {
-
     if (!timerId)
         timerId = startTimer(1000 / 50);
     MainWindow::updateLabels(graph->getVertexCount(), graph->getEdgeCount());
 }
-//! [2]
 
-//! [3]
 void GraphWidget::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
@@ -135,9 +125,7 @@ void GraphWidget::keyPressEvent(QKeyEvent *event)
         QGraphicsView::keyPressEvent(event);
     }
 }
-//! [3]
 
-//! [4]
 void GraphWidget::timerEvent(QTimerEvent *event)
 {
     Q_UNUSED(event);
@@ -166,31 +154,20 @@ void GraphWidget::timerEvent(QTimerEvent *event)
         }
     }
 }
-//! [4]
 
 #ifndef QT_NO_WHEELEVENT
-//! [5]
 void GraphWidget::wheelEvent(QWheelEvent *event)
 {
     scaleView(pow((double)2, event->delta() / 240.0));
 }
-//! [5]
 #endif
 
-
-//! [6]
 void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect)
 {
     Q_UNUSED(rect);
 
     // Shadow
     QRectF sceneRect = this->sceneRect();
-    QRectF rightShadow(sceneRect.right(), sceneRect.top() + 5, 5, sceneRect.height());
-    QRectF bottomShadow(sceneRect.left() + 5, sceneRect.bottom(), sceneRect.width(), 5);
-    if (rightShadow.intersects(rect) || rightShadow.contains(rect))
-        painter->fillRect(rightShadow, Qt::darkGray);
-    if (bottomShadow.intersects(rect) || bottomShadow.contains(rect))
-        painter->fillRect(bottomShadow, Qt::darkGray);
 
     // Fill
     QLinearGradient gradient(sceneRect.topLeft(), sceneRect.bottomRight());
@@ -201,9 +178,7 @@ void GraphWidget::drawBackground(QPainter *painter, const QRectF &rect)
     painter->drawRect(sceneRect);
 
 }
-//! [6]
 
-//! [7]
 void GraphWidget::scaleView(qreal scaleFactor)
 {
     qreal factor = transform().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
@@ -212,7 +187,6 @@ void GraphWidget::scaleView(qreal scaleFactor)
 
     scale(scaleFactor, scaleFactor);
 }
-//! [7]
 
 void GraphWidget::shuffle()
 {
