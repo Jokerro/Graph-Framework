@@ -9,6 +9,8 @@
 
 int Graph::first_selected = 0;
 int Graph::second_selected = 0;
+QLabel* MainWindow::vertexInfo =0;
+QLabel* MainWindow::edgeInfo =0;
 MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     QMainWindow(parent)
 {
@@ -31,32 +33,53 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     connect(btnBFS, SIGNAL(released()), this, SLOT(BFS_handler()));
     btnStong = new QPushButton("Strong components",this);
     connect(btnStong, SIGNAL(released()), this, SLOT(strong_handler()));
+    btnGo->setBaseSize(100, 23);
+    _3drender->setBaseSize(100, 23);
+    btnDFS->setBaseSize(100, 23);
+    btnBFS->setBaseSize(100, 23);
+    btnStong->setBaseSize(100, 23);
 
     tlId = new QTextLine();
     teId = new QTextEdit();
     QSize teIdSize = teId->document()->size().toSize();
-    teIdSize.setWidth(80);
+    teIdSize.setWidth(100);
     teIdSize.setHeight(23);
     teId->setMaximumSize(teIdSize);
     cbAntialiasing->setText("Antialiasing");
     cbAntialiasing->setChecked(true);
     btnPlay->setChecked(true);
 
-
+    vertexInfo=new QLabel("Vertices:     ");
+    edgeInfo=new QLabel("Edges:          ");
     toolBar = new QToolBar;
     toolBar->addWidget(teId);
     toolBar->addWidget(btnGo);
     toolBar->addSeparator();
     toolBar->addWidget(btnPlay);
+    toolBar->addWidget(cbAntialiasing);
+    toolBar->addSeparator();
     toolBar->addWidget(_3drender);
     toolBar->addWidget(btnDFS);
     toolBar->addWidget(btnBFS);
     toolBar->addWidget(btnStong);
     toolBar->addSeparator();
-    toolBar->addWidget(cbAntialiasing);
+    toolBar->addWidget(vertexInfo);
+    toolBar->addWidget(edgeInfo);
 
-    this->addToolBar(toolBar);
 
+    this->addToolBar(toolBar);\
+}
+
+
+void MainWindow::createLabels(){
+    vertexInfo=new QLabel("Vertexes: ");
+    edgeInfo=new QLabel("Edges: ");
+}
+
+
+void MainWindow::updateLabels(int vert, int ed){
+    vertexInfo->setText("Vertices: "+QString::number(vert)+"    ");
+    edgeInfo->setText("Edges: "+QString::number(ed));
 }
 
 void MainWindow::changeAntialiasing(){
@@ -166,6 +189,7 @@ void MainWindow::pressGo(){
     qDebug()<<str;
     req = new HttpRequest();
     req->processRequest(str, graph, teId->toPlainText().toInt(), req);
+    updateLabels(graph->getVertexCount(), graph->getEdgeCount());
 }
 
 void MainWindow::strong_handler(){

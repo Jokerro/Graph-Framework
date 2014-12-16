@@ -6,6 +6,7 @@
 #include <QToolBar>
 #include <QTextEdit>
 #include <QTextLine>
+#include <QLabel>
 #include <QCheckBox>
 #include "graphwidget.h"
 #include "httprequest.h"
@@ -19,6 +20,9 @@ public:
     void setGraphWidget(GraphWidget *widget);
     /////
     void setGraph(Graph* t);
+    static void updateLabels(int vert, int ed);
+    static void createLabels();
+
     //////
 
 
@@ -46,6 +50,8 @@ private:
     QPushButton *btnDFS;
     QPushButton *btnBFS;
     QPushButton *btnStong;
+    static QLabel *vertexInfo;
+    static QLabel *edgeInfo;
     QToolBar *toolBar;
     GraphWidget *graphWidget;
     HttpRequest* req;

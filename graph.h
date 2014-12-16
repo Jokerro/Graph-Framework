@@ -41,7 +41,8 @@ private:
 
 public:
     Graph();
-    Graph(GraphWidget *wdg):widget(wdg){}
+    Graph(GraphWidget *wdg):widget(wdg){    vertexCounter=0;
+                                            edgeCounter=0;}
     ~Graph();
     void weightMatrixInit(); //выделение памяти под матрицу весов при необходимости
     void initVertexList();   //создание массивa вершин

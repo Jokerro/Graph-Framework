@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
    Graph* graph = new Graph(graphWidget);
 
    graphWidget->setGraph(graph);
+   MainWindow::createLabels();
    MainWindow mainWindow(NULL,graph);
-
    mainWindow.setGraphWidget(graphWidget);
    mainWindow.setCentralWidget(graphWidget);
    mainWindow.showMaximized();

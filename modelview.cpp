@@ -18,9 +18,12 @@
      startPoint.setZ(0);
      QGLBuilder builder;
      builder << QGL::Faceted;
-     builder << QGLSphere(0.1);
+     builder << QGLSphere(0.2);
      sphere = builder.finalizedSceneNode();
      sphereMaterial=new QGLMaterial;
+     camPosition.setX(0);
+     camPosition.setY(0);
+     camPosition.setZ(150);
  }
 
 ModelView::~ModelView()
@@ -29,9 +32,6 @@ ModelView::~ModelView()
     delete sphereTexture;
     delete sphereMaterial;
     delete textureImage;
-    camPosition.setX(0);
-    camPosition.setY(0);
-    camPosition.setZ(150);
 }
 
 
@@ -39,7 +39,6 @@ void ModelView::initializeGL(QGLPainter *painter)
 {
     Q_UNUSED(painter);
     m_scene = QGLAbstractScene::loadScene("res/Earth.obj");
-
     QColor red(255,0,0,0.3);
     sphereMaterial->setShininess(128);
     sphereMaterial->setSpecularColor(red);
@@ -51,7 +50,6 @@ void ModelView::initializeGL(QGLPainter *painter)
 
 void ModelView::paintGL(QGLPainter *painter)
 {
-   //  painter->setCamera(mainCam);
      QVector3D currentPosition=camera()->eye();
      if(currentPosition.length()<35){
          currentPosition.normalize();
@@ -61,7 +59,6 @@ void ModelView::paintGL(QGLPainter *painter)
      QGLSceneNode *o = m_scene->mainNode();
      o->draw(painter);
      drawGraph(painter);
-   //   painter->setCamera(mainCam);
 }
 
 QVector3DArray ModelView::CalcArc(float R, float cx, float cy, float cz, QVector3D normal, int segments){

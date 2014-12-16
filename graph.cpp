@@ -107,6 +107,7 @@ void Graph::OpenFileWithGraph(QString filename)
                             widget->scene()->addItem(
                                         new Edge(tempVertexList[list[1].toInt()-1]->getNode(),
                                                 tempVertexList[list[0].toInt()-1]->getNode()));
+                            edgeCounter++;
                             tempVertexList[list[0].toInt()-1]->getNode()->edges().at(tempVertexList[list[0].toInt()-1]->getNode()->edges().size()-1)->setZValue(-99999);
 
                         }
@@ -118,6 +119,7 @@ void Graph::OpenFileWithGraph(QString filename)
                      widget->scene()->addItem(
                                  new Edge(tempVertexList[list[1].toInt()-1]->getNode(),
                                          tempVertexList[list[0].toInt()-1]->getNode()));
+                     edgeCounter++;
                      tempVertexList[list[0].toInt()-1]->getNode()->edges().at(tempVertexList[list[0].toInt()-1]->getNode()->edges().size()-1)->setZValue(-99999);
                  }
 
@@ -391,6 +393,7 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
         }
         widget->scene()->addItem(
                     new Edge(tempVertexList[0]->getNode(), tempVertexList[tempVertexList.size()-1]->getNode()));
+        edgeCounter++;
 
         tempVertexList[0]->getNode()->edges().at(tempVertexList[0]->getNode()->edges().size()-1)->setZValue(-99999);
 
