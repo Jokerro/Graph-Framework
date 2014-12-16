@@ -37,9 +37,9 @@ private:
     QGLTexture2D *sphereTexture;
     QImage *textureImage;
     QVector3DArray coordinats;
-    QVector3DArray arcCoordinats;
     QMatrix4x4 rotateZ;
     QMatrix4x4 rotateY;
+    QVector3D camPosition;
 };
 
 #endif

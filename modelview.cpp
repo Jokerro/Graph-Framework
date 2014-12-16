@@ -29,6 +29,9 @@ ModelView::~ModelView()
     delete sphereTexture;
     delete sphereMaterial;
     delete textureImage;
+    camPosition.setX(0);
+    camPosition.setY(0);
+    camPosition.setZ(150);
 }
 
 
@@ -36,18 +39,29 @@ void ModelView::initializeGL(QGLPainter *painter)
 {
     Q_UNUSED(painter);
     m_scene = QGLAbstractScene::loadScene("res/Earth.obj");
-    QColor red(255,0,0,1);
+
+    QColor red(255,0,0,0.3);
     sphereMaterial->setShininess(128);
     sphereMaterial->setSpecularColor(red);
     sphereMaterial->setEmittedLight(red);
     sphere->setMaterial(sphereMaterial);
+    QVector3D eye(0,0,120);
+    camera()->setEye(eye);
 }
 
 void ModelView::paintGL(QGLPainter *painter)
 {
+   //  painter->setCamera(mainCam);
+     QVector3D currentPosition=camera()->eye();
+     if(currentPosition.length()<35){
+         currentPosition.normalize();
+         currentPosition*=35;
+         camera()->setEye(currentPosition);
+     }
      QGLSceneNode *o = m_scene->mainNode();
      o->draw(painter);
      drawGraph(painter);
+   //   painter->setCamera(mainCam);
 }
 
 QVector3DArray ModelView::CalcArc(float R, float cx, float cy, float cz, QVector3D normal, int segments){
@@ -148,10 +162,10 @@ void ModelView::setGraph(Graph *a){
             QVector3D tbegin;
             QVector3D tend;
 
-          end=CalcCoordinate(workGraph->getVertexList()[i][j]->getLon(), workGraph->getVertexList()[i][j]->getLat());
-          int ii=1;
-          bool exist=false;
-          foreach(QVector3D a, coordinats)
+            end=CalcCoordinate(workGraph->getVertexList()[i][j]->getLon(), workGraph->getVertexList()[i][j]->getLat());
+            int ii=1;
+            bool exist=false;
+            foreach(QVector3D a, coordinats)
             {
                 if(ii%2!=0)
                     tbegin=a;
@@ -164,10 +178,10 @@ void ModelView::setGraph(Graph *a){
                 }
                 ii++;
             }
-          if(!exist){
-            coordinats.append(temp);
-            coordinats.append(end);
-          }
+            if(!exist){
+                coordinats.append(temp);
+                coordinats.append(end);
+            }
         }
     }
 }
