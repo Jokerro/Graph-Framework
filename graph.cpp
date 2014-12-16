@@ -76,6 +76,7 @@ void Graph::OpenFileWithGraph(QString filename)
     {
         while(!file.atEnd())
         {
+
              QString str = file.readLine();
              if(str[0] == '#')
                   continue;
@@ -123,12 +124,15 @@ void Graph::OpenFileWithGraph(QString filename)
 
             }vertexList.push_back(temp1);
         }
+
         tempVertexList.clear();
         for(int i=0;i<this->vertexList.size();i++){
             vertexList[i][0]->setID(i+1);
             vertexList[i][0]->getNode()->setPos(i,i*5);
             widget->scene()->addItem(vertexList[i][0]->getNode());
         }
+        vertexCounter = vertexList.size();
+
 }
 
 bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
@@ -403,7 +407,6 @@ void Graph::setGraphFromVK(QList<VKResponse> friends)
     main_users_indexes.push_back(this->vertexList.size()-1);
 
 
-
 }
 
 
@@ -479,27 +482,32 @@ void Graph::getStrongComponents(QList<QList<int> >* components) {
     }
 }
 
-void Graph::DFS_TOPO(int cur, vector<int> &ans) {
+void Graph::dfsTopo(int cur, QList<vertex*>* ans) {
     used_topo[cur] = GRAY;
     for (int i=1; i<vertexList[cur].size(); i++) {
         int next = vertexList[cur][i]->GetId()-1;
         // if (used_topo[next] == GRAY) // Circle
         if (used_topo[next] == WHITE)
-            DFS_TOPO(next,ans);
+            dfsTopo(next,ans);
     }
     used_topo[cur] = BLACK;
-    ans.push_back(vertexList[cur][0]->GetId());
+    ans->append(vertexList[cur][0]);
 }
-void Graph::TOPOLOGICAL_SORT(vector<int> &ans) {
-    /*used_topo.resize(vertexCounter,WHITE);
-    vector<int> ans;
-    TOPOLOGICAL_SORT(ans);
-    for (int i=vertexList.size();i>=0;i--)
-        cout<<ans[i]<<' ';*/
+
+void Graph::topoRecur(QList<vertex*>* ans) {
+
     for (int i=0;i<vertexCounter;i++) {
         if (used_topo[i] == WHITE) {
-            DFS_TOPO(i,ans);
+            dfsTopo(i,ans);
         }
     }
 }
 
+void Graph::topoSort(){
+    used_topo.resize(vertexCounter,WHITE);
+    QList<vertex*> ans;
+    topoRecur(&ans);
+    for (int i=vertexCounter-1;i >= 0;i--)
+        cout<<ans[i]->GetId()<<' ';
+
+}

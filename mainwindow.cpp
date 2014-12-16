@@ -179,6 +179,7 @@ void MainWindow::pressDFS()
 
 
 void MainWindow::pressGo(){
+
     QString str="http://api.vk.com/method/users.get?user_ids="+teId->toPlainText()+"&fields=photo_100,country,city&v=5.27";
     qDebug()<<str;
     req = new HttpRequest();
