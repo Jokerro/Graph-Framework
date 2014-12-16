@@ -134,7 +134,6 @@ void Graph::OpenFileWithGraph(QString filename)
             widget->scene()->addItem(vertexList[i][0]->getNode());
         }
         vertexCounter = vertexList.size();
-
 }
 
 bool Graph::BFS(int startVertex, int finishVertex, QList<int>* visitedVertex){
@@ -511,6 +510,6 @@ void Graph::topoSort(){
     QList<vertex*> ans;
     topoRecur(&ans);
     for (int i=vertexCounter-1;i >= 0;i--)
-        cout<<ans[i]->GetId()<<' ';
+        ans[i]->setID(vertexCounter-i);
 
 }

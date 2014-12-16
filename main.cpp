@@ -2,7 +2,6 @@
 #include <QApplication>
 //#include <qt3dversion.h>
 //#include "modelview.h"
-
 #include <QTime>
 #include <QMainWindow>
 #include <QToolBar>

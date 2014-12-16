@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent, Graph* gr) :
     connect(cbWeight, SIGNAL(released()), this, SLOT(selectShowHideWeight()));
 
 
-//    viewport = NULL;
+   // viewport = NULL;
     graph=gr;
 
     btnDFS = new QPushButton("DFS",this);
@@ -196,9 +196,6 @@ void MainWindow::pressDFS()
             }
         }
 
-       // this->graphWidget->upd();
-     //   for(int i=0;i<graph->getVertexList()[graph->getVertexList().size()-1].size();i++)
-       //     this->graph->getVertexList()[graph->getVertexList().size()-1][i]->getNode()->get_edges()[0]->update();
         QMessageBox::information(NULL,"Успех",QString::number(this->graph->getVertexList().size()));
 
         Graph::second_selected=0;
