@@ -144,14 +144,13 @@ void MainWindow::setGraphWidget(GraphWidget *widget){
 
 void MainWindow::pressBFS()
 {
-    /*if(Graph::first_selected==0||Graph::second_selected==0)
+    if(Graph::first_selected==0||Graph::second_selected==0)
         QMessageBox::information(NULL,"No selected vertexes", "Please, select two vertexes, before pushing this button");
     else
     {
         this->graph->resetGraph();
-
-        QList<int> *vertexes = new QList<int>;
-        this->graph->BFS(Graph::first_selected,Graph::second_selected,vertexes);
+       QList<int> *vertexes = new QList<int>;
+       this->graph->BFS(Graph::first_selected,Graph::second_selected,vertexes);
 
         for(int i=0;i<vertexes->size();i++)
         {
@@ -172,12 +171,9 @@ void MainWindow::pressBFS()
             }
         }
 
-
-
         Graph::second_selected=0;
         Graph::first_selected =0;
-    }*/
-    graph->getShortestPath(1, 3);
+    }
 }
 
 void MainWindow::pressDFS()

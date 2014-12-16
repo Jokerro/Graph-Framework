@@ -2,6 +2,7 @@ INPUT(
 ./debug\main.o
 ./debug\graph.o
 ./debug\httprequest.o
+./debug\modelview.o
 ./debug\edge.o
 ./debug\graphwidget.o
 ./debug\node.o
@@ -9,6 +10,7 @@ INPUT(
 ./debug\imagedownloader.o
 ./debug\geolocation.o
 ./debug\moc_httprequest.o
+./debug\moc_modelview.o
 ./debug\moc_graphwidget.o
 ./debug\moc_mainwindow.o
 ./debug\moc_imagedownloader.o

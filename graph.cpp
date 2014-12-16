@@ -539,10 +539,9 @@ void Graph::topoSort(){
 }
 int Graph::getEdgeWeigth(int v, int u){
     for(int j=0; j<vertexList.length(); j++){
-        if(v==vertexList[j][0]->GetId())
+        if(v==vertexList[j][0]->GetUserId())
         for(int k=0; k<vertexList[j][0]->getNode()->get_edges().length();k++){
-            cout<<vertexList[j][0]->getNode()->get_edges()[k]->getWeight()<<" ";
-           if (vertexList[j][0]->getNode()->get_edges()[k]->destNode()->getId()==u){
+           if (vertexList[j][0]->getNode()->get_edges()[k]->destNode()->getTrueId()==u){
                     return vertexList[j][0]->getNode()->get_edges()[k]->getWeight();
             }
         }
@@ -555,22 +554,21 @@ void Graph::getShortestPath(int vertex1, int vertex2){
     int infinity = 100000000000;
     QMap<int, int> t;
     QMap<int, int> x;
-    int h [vertexList.length()];
+    QMap<int, int> h;
     for(int i=0; i<vertexList.length(); i++){
-        int u=vertexList[i][0]->GetId();
+        int u=vertexList[i][0]->GetUserId();
         t.insert(u,infinity);
         x.insert(u,0);
-        if(u==vertex1){
-            h[u]=0;
-            t.insert(u,0);
-            x.insert(u, 1);
-        }
     }
+
+    h.insert(vertex1,0);
+    t.insert(vertex1,0);
+    x.insert(vertex1, 1);
     v=vertex1;
 
     while(1){
         for(int i=0; i<vertexList.length(); i++){
-            int u=vertexList[i][0]->GetId();
+            int u=vertexList[i][0]->GetUserId();
             int weigth=getEdgeWeigth(v, u);
             if (weigth>=0)
                if (x[u]==0 && t[u]>t[v]+weigth){
@@ -582,7 +580,7 @@ void Graph::getShortestPath(int vertex1, int vertex2){
         int w=infinity;
         v=-1;
         for(int i=0; i<vertexList.length(); i++){
-                int u=vertexList[i][0]->GetId();
+                int u=vertexList[i][0]->GetUserId();
                 if(x[u]==0 && t[u]<w){
                     v=u;
                     w=t[u];
@@ -596,10 +594,9 @@ void Graph::getShortestPath(int vertex1, int vertex2){
         if(v==vertex2){
             int u=vertex2;
             while(u!=vertex1){
-                std::cout<<" "<<u;
+                std::cout<<"  "<<u;
                 u=h[u];
             }
-            cout<<t[vertex2];
             break;
         }
         x[v]=1;
